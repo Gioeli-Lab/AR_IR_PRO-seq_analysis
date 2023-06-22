@@ -178,11 +178,6 @@ Other types of archives you will encounter:\
 **.gzip** # compressed file\
 \pagebreak 
 
-```{r  out.width = "120%", echo=F, fig.align = "center", fig.cap="XKCD: valid `tar` command"}
-#library(knitr)
-knitr::include_graphics("./fig/tar.png") 
-```
-
 
 To view contents of archive:
 ```{r engine='bash', eval=F, echo=TRUE}
