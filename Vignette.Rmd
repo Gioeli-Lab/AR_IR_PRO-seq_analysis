@@ -884,14 +884,14 @@ tail -n +2 P53_fimo/fimo.gff | awk -v sco="$score" '{ if ($6 >= sco) { print } }
 
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
 #FIMO on dREG elements
-pdf("P53_fimo_barchart_batch1_recount.pdf")
+pdf("P53_fimo_barchart_batch1.pdf")
 P53 = PeaksWithMotif("P53_fimo/1000000_fimo.gff")
 dev.off()
 ```
 
 ```{r  out.height = "300px", out.width = "800px", fig.align = 'left', echo=F, fig.cap="Figure 1G"}
 #library(knitr)
-knitr::include_graphics("./Figures/P53_fimo_barchart_batch1_recount.pdf") 
+knitr::include_graphics("./Figures/P53_fimo_barchart_batch1.pdf") 
 ```
 
 # Figure 2 and Supplemental Figure 1
