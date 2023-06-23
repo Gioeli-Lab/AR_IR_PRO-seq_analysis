@@ -4,8 +4,6 @@ header-includes:
 - \usepackage{color}
 - \usepackage{float}
 - \DeclareUnicodeCharacter{2212}{-}
-- \usepackage{caption}
-- \captionsetup[figure]{labelformat=empty}
 output:
   bookdown::html_document2:
     toc: true
@@ -13,10 +11,6 @@ fontsize: 14pt
 geometry: margin=1in
 date: "Last compiled on `r format(Sys.time(), '%d %B %Y')`"
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 ```{css, echo=FALSE}
 body .main-container {
