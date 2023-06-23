@@ -183,12 +183,14 @@ paste -d'\t' *_batch1_gene_recounts.txt > Radiation_enzalutamide_batch1_gene_rec
 cp Radiation_enzalutamide_gene*_recounts.txt /Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R/
 cp *.pdf /Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R/
 cp /Volumes/External/Users/TScott/ER_Antagonists/210620_PRO/Homo_sapiens.GRCh38.104.bed \
-    c/GioeliLab/Radiation_enzalutamide_R/
+    /Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R/
 ```
 
 # Set up the R environment
 
-```{r, engine='R', eval=F, echo=T}
+R code chunks will be in light blue, to distinguish from bash code chunks in grey.
+
+```{r class.source="bg-success", engine='R', eval=F, echo=T}
 setwd("~/Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R")
 
 library(viridis)
