@@ -677,6 +677,11 @@ plotPCA.any(rld_LNCaP, intgroup="radiation") +
 dev.off()
 ```
 
+```{r  out.width = "120%", echo=F, fig.align = "center", fig.cap="Figure 1B"}
+#library(knitr)
+knitr::include_graphics("./Figures/PCA_batch1_recount.pdf") 
+```
+
 ## Heatmap (Figure 1C)
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
 wide_counts = counts(deseq.df[rownames(deseq.df) %in% rownames(res.deseq.radiation)[res.deseq.radiation$padj < .1 & !is.na(res.deseq.radiation$padj)],], normalized = TRUE)
