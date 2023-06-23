@@ -1627,7 +1627,7 @@ ks
 
 ## Classifying genes (Supplemental Figure 2A-C and Figure 3E)
 
-```{r engine='r', eval=F, echo=TRUE}
+```{r engine='R', eval=F, echo=TRUE}
 #Overlapping genes
 effects.lattice.enza = categorize.deseq.df.mods(res.deseq.enza, fdr = .1, log2fold = 0, treat = 'Enzalutamide')
 effects.lattice.radiation = categorize.deseq.df.mods(res.deseq.radiation, fdr = .1, log2fold = 0, treat = 'Radiation')
@@ -1842,7 +1842,7 @@ write.table(counts, file = "normalized_counts_enza_activated_radiation_repressed
 
 ## Over-representation analysis of gene classes (Supplemental Figure 2D)
 
-```{r engine='r', eval=F, echo=TRUE}
+```{r engine='R', eval=F, echo=TRUE}
 m_t2g <- msigdbr(species = "Homo sapiens", category = "H") %>% 
   dplyr::select(gs_name, human_gene_symbol)
 set.seed(0)
@@ -2137,7 +2137,7 @@ cp *_merged.bigWig $destination
 
 ## Convert to transcripts per million to match with similarly-expressed genes
 
-```{r engine='r', eval=F, echo=TRUE}
+```{r engine='R', eval=F, echo=TRUE}
 counts.mat = counts(deseq.df, normalized = F)
 counts.mat = merge(counts.mat, gene.file, by.x = 0, by.y = "gene")
 rownames(counts.mat) = counts.mat$Row.names
@@ -2151,7 +2151,7 @@ tpm.mat$gene_length = gene.length
 
 ## Radiation-activated genes composite plot (Figure 3A)
 
-```{r engine='r', eval=F, echo=TRUE}
+```{r engine='R', eval=F, echo=TRUE}
 isolated.genes = rownames(df.deseq.effects.lattice.radiation)[!is.na(df.deseq.effects.lattice.radiation$padj)]
 bed.input = gene.file[gene.file$gene %in% isolated.genes,]
 bed.input[,8] = bed.input[,7] + 1
@@ -2229,7 +2229,7 @@ plot.composites(composite.df, treatment = "Radiation_activated_vs_similar_densit
 
 ## Enzalutamide-repressed genes composite plot (Figure 3C)
 
-```{r engine='r', eval=F, echo=TRUE}
+```{r engine='R', eval=F, echo=TRUE}
 isolated.genes = rownames(df.deseq.effects.lattice.enza)[!is.na(df.deseq.effects.lattice.enza$padj)]
 bed.input = gene.file[gene.file$gene %in% isolated.genes,]
 bed.input[,8] = bed.input[,7] + 1
@@ -2305,7 +2305,7 @@ plot.composites(composite.df, treatment = "enzalutamide_repressed_vs_similar_den
 
 ## Pause ratio analysis for above gene classes (Figure 3B,D)
 
-```{r engine='r', eval=F, echo=TRUE}
+```{r engine='R', eval=F, echo=TRUE}
 isolated.genes = rownames(df.deseq.effects.lattice.enza)[df.deseq.effects.lattice.enza$treatment == "Enzalutamide Repressed"]
 bed.input = gene.file[gene.file$gene %in% isolated.genes,]
 bed.input[,8] = bed.input[,7] + 1
@@ -2416,7 +2416,7 @@ dev.off()
 
 ## Pause ratio analysis for the 16 genes repressed by enzalutamide and activated by IR (Figure 3F)
 
-```{r engine='r', eval=F, echo=TRUE}
+```{r engine='R', eval=F, echo=TRUE}
 df.deseq.effects.lattice.radiation = 
   categorize.deseq.df.mods(res.deseq.radiation, fdr = 0.1, log2fold = 0.0, treat = 'Radiation')
 df.deseq.effects.lattice.enza = 
