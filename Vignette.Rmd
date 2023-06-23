@@ -640,7 +640,7 @@ colnames(gene.symbol) = c("gene", "symbol")
 
 ## Identify differentially expressed genes 
 
-```{r, engine='R', eval=F, echo=T}
+```{r class.source="bg-info", engine='R', eval=F, echo=T}
 x = read.table("Radiation_enzalutamide_batch1_gene_recounts.txt", sep = '\t', header = TRUE)
 rownames(x) = x[,1]
 x = x[,seq(2,to=ncol(x),by=2)]
@@ -668,7 +668,7 @@ sum(res.deseq.radiation$padj < 0.1 & !is.na(res.deseq.radiation$padj) & res.dese
 ```
 
 ## Principle component analysis (Figure 1B)
-```{r, engine='R', eval=F, echo=T}
+```{r class.source="bg-info", engine='R', eval=F, echo=T}
 rld_LNCaP = rlogTransformation(deseq.df)
 pdf("PCA_batch1_recount.pdf", height = 2, width = 4)
 plotPCA.any(rld_LNCaP, intgroup="radiation") + 
@@ -678,7 +678,7 @@ dev.off()
 ```
 
 ## Heatmap (Figure 1C)
-```{r, engine='R', eval=F, echo=T}
+```{r class.source="bg-info", engine='R', eval=F, echo=T}
 wide_counts = counts(deseq.df[rownames(deseq.df) %in% rownames(res.deseq.radiation)[res.deseq.radiation$padj < .1 & !is.na(res.deseq.radiation$padj)],], normalized = TRUE)
 radiation <- vector(mode="character", length=ncol(wide_counts))
 radiation[grep("6GyIR", colnames(wide_counts))] = "Radiation"
@@ -695,7 +695,7 @@ dev.off()
 ```
 
 ## Volcano plot (Figure 1D)
-```{r, engine='R', eval=F, echo=T}
+```{r class.source="bg-info", engine='R', eval=F, echo=T}
 res.deseq.radiation.unshrunk <- results(deseq.df, contrast = c("radiation", "Radiation", "Control"))
 res.deseq.radiation.unshrunk = res.deseq.radiation.unshrunk[rownames(res.deseq.radiation.unshrunk) %in% gene.symbol$gene,]
 
@@ -733,7 +733,7 @@ dev.off()
 ```
 
 ## Gene set enrichment analysis (Figure 1E)
-```{r, engine='R', eval=F, echo=T}
+```{r class.source="bg-info", engine='R', eval=F, echo=T}
 original_gene_list <- res.deseq.radiation$log2FoldChange
 names(original_gene_list) <- rownames(res.deseq.radiation)
 gene_list<-na.omit(original_gene_list)
@@ -775,7 +775,7 @@ seqOutBias $genome $bams --no-scale --stranded --bw=LNCaP_batch1_combined_no_sca
 
 Now count PRO-seq reads in these peaks and identify differential PRO signal
 
-```{r, engine='R', eval=F, echo=T}
+```{r class.source="bg-info", engine='R', eval=F, echo=T}
 counts.dreg = get.raw.counts.full.dREG(df = 'LNCaP_batch1.dREG.peak.full.bed',
           path.to.bigWig = "/Volumes/External/Users/TScott/Radiation_enzalutamide_PRO/", file.prefix = 'LNCaP_')
 counts.dreg = counts.dreg[,grep("batch1", colnames(counts.dreg))]
@@ -882,7 +882,7 @@ tail -n +2 P53_fimo_DHS.bed | awk -v sco="$score" '{ if ($6 >= sco) { print } }'
     awk '{OFS="\t";} {print $1,$4,$5}' > P53_fimo_DHS_5000.bed
 ```
 
-```{r, engine='R', eval=F, echo=T}
+```{r class.source="bg-info", engine='R', eval=F, echo=T}
 #FIMO on dREG elements
 pdf("P53_fimo_barchart_batch1_recount.pdf")
 P53 = PeaksWithMotif("P53_fimo/1000000_fimo.gff")
@@ -897,7 +897,7 @@ dev.off()
 
 ## Identify differentially expressed genes
 
-```{r, engine='R', eval=F, echo=T}
+```{r class.source="bg-info", engine='R', eval=F, echo=T}
 x = read.table("Radiation_enzalutamide_gene_recounts.txt", sep = '\t', header = TRUE)
 rownames(x) = x[,1]
 x = x[,seq(2,to=ncol(x),by=2)]
@@ -927,7 +927,7 @@ res.deseq.radiation = res.deseq.radiation[rownames(res.deseq.radiation) %in% gen
 
 ## Principle component analysis plot (Figure 2D)
 
-```{r, engine='R', eval=F, echo=T}
+```{r class.source="bg-info", engine='R', eval=F, echo=T}
 rld_LNCaP = rlogTransformation(deseq.df)
 pdf("PCA_PC1_PC3_recount.pdf")
 plotPCA.any(rld_LNCaP, intgroup="treatment", pcs = c(1,3)) +
@@ -938,7 +938,7 @@ dev.off()
 
 ## Heatmap (Figure 2E)
 
-```{r, engine='R', eval=F, echo=T}
+```{r class.source="bg-info", engine='R', eval=F, echo=T}
 wide_counts = counts(deseq.df[rownames(deseq.df) %in% 
                                 c(rownames(res.deseq.enza)[res.deseq.enza$padj < .1 & !is.na(res.deseq.enza$padj)],
                                   rownames(res.deseq.radiation)[res.deseq.radiation$padj < .1 & !is.na(res.deseq.radiation$padj)]),],
