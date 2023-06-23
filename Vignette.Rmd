@@ -753,7 +753,7 @@ EnhancedVolcano(res.deseq.radiation.unshrunk,
 dev.off()
 ```
 
-```{r  out.height = "600px", out.width = "800px", fig.align = 'left', echo=F, fig.cap="Figure 1D"}
+```{r  out.height = "300px", out.width = "800px", fig.align = 'left', echo=F, fig.cap="Figure 1D"}
 #library(knitr)
 knitr::include_graphics("./Figures/Radiation_Volcano_batch1_recount.pdf") 
 ```
@@ -876,7 +876,7 @@ done
 
 ```{r  out.height = "300px", out.width = "800px", fig.align = 'left', echo=F, fig.cap="Figure 1F"}
 #library(knitr)
-knitr::include_graphics("./Figures/P53.eps") 
+knitr::include_graphics("./Figures/P53.png") 
 ```
 
 ## Differential motif abundance in putative regulatory elements (Figure 1G)
