@@ -708,58 +708,2532 @@ function toggle_visibility(id1) {
 <h1>Contents</h1>
 <div id="TOC">
 <ul>
-<li><a href="#readings" id="toc-readings"><span class="toc-section-number">1</span> Readings</a></li>
-<li><a href="#last-time" id="toc-last-time"><span class="toc-section-number">2</span> Last Time:</a>
+<li><a href="#download-the-raw-sequencing-data" id="toc-download-the-raw-sequencing-data"><span class="toc-section-number">1</span> Download the raw sequencing data</a></li>
+<li><a href="#process-the-raw-sequencing-data-to-get-to-gene-counts" id="toc-process-the-raw-sequencing-data-to-get-to-gene-counts"><span class="toc-section-number">2</span> Process the raw sequencing data to get to gene counts</a></li>
+<li><a href="#set-up-the-r-environment" id="toc-set-up-the-r-environment"><span class="toc-section-number">3</span> Set up the R environment</a></li>
+<li><a href="#figure-1" id="toc-figure-1"><span class="toc-section-number">4</span> Figure 1</a>
 <ul>
-<li><a href="#command-line-navigation" id="toc-command-line-navigation"><span class="toc-section-number">2.1</span> Command line navigation:</a></li>
-<li><a href="#command-line-utlities-so-far" id="toc-command-line-utlities-so-far"><span class="toc-section-number">2.2</span> Command line utlities so far:</a></li>
+<li><a href="#identify-differentially-expressed-genes" id="toc-identify-differentially-expressed-genes"><span class="toc-section-number">4.1</span> Identify differentially expressed genes</a></li>
+<li><a href="#principle-component-analysis-figure-1b" id="toc-principle-component-analysis-figure-1b"><span class="toc-section-number">4.2</span> Principle component analysis (Figure 1B)</a></li>
+<li><a href="#heatmap-figure-1c" id="toc-heatmap-figure-1c"><span class="toc-section-number">4.3</span> Heatmap (Figure 1C)</a></li>
+<li><a href="#volcano-plot-figure-1d" id="toc-volcano-plot-figure-1d"><span class="toc-section-number">4.4</span> Volcano plot (Figure 1D)</a></li>
+<li><a href="#gene-set-enrichment-analysis-figure-1e" id="toc-gene-set-enrichment-analysis-figure-1e"><span class="toc-section-number">4.5</span> Gene set enrichment analysis (Figure 1E)</a></li>
+<li><a href="#putative-regulatory-element-identification-with-dreg" id="toc-putative-regulatory-element-identification-with-dreg"><span class="toc-section-number">4.6</span> Putative regulatory element identification with dREG</a></li>
+<li><a href="#de-novo-motif-identification-in-differentially-active-putative-regulatory-elements-figure-1f" id="toc-de-novo-motif-identification-in-differentially-active-putative-regulatory-elements-figure-1f"><span class="toc-section-number">4.7</span> de novo motif identification in differentially active putative regulatory elements (Figure 1F)</a></li>
+<li><a href="#differential-motif-abundance-in-putative-regulatory-elements-figure-1g" id="toc-differential-motif-abundance-in-putative-regulatory-elements-figure-1g"><span class="toc-section-number">4.8</span> Differential motif abundance in putative regulatory elements (Figure 1G)</a></li>
+</ul></li>
+<li><a href="#figure-2-and-supplemental-figure-1" id="toc-figure-2-and-supplemental-figure-1"><span class="toc-section-number">5</span> Figure 2 and Supplemental Figure 1</a>
+<ul>
+<li><a href="#identify-differentially-expressed-genes-1" id="toc-identify-differentially-expressed-genes-1"><span class="toc-section-number">5.1</span> Identify differentially expressed genes</a></li>
+<li><a href="#principle-component-analysis-plot-figure-2d" id="toc-principle-component-analysis-plot-figure-2d"><span class="toc-section-number">5.2</span> Principle component analysis plot (Figure 2D)</a></li>
+<li><a href="#heatmap-figure-2e" id="toc-heatmap-figure-2e"><span class="toc-section-number">5.3</span> Heatmap (Figure 2E)</a></li>
+<li><a href="#volcano-plots-figure-2f-i-and-ma-plots-supplementary-figure-1" id="toc-volcano-plots-figure-2f-i-and-ma-plots-supplementary-figure-1"><span class="toc-section-number">5.4</span> Volcano plots (Figure 2F-I) and MA plots (Supplementary Figure 1)</a></li>
+<li><a href="#proximity-analysis-figure-2j" id="toc-proximity-analysis-figure-2j"><span class="toc-section-number">5.5</span> Proximity analysis (Figure 2J)</a></li>
+</ul></li>
+<li><a href="#supplemental-figure-2" id="toc-supplemental-figure-2"><span class="toc-section-number">6</span> Supplemental Figure 2</a>
+<ul>
+<li><a href="#classifying-genes-supplemental-figure-2a-c-and-figure-3e" id="toc-classifying-genes-supplemental-figure-2a-c-and-figure-3e"><span class="toc-section-number">6.1</span> Classifying genes (Supplemental Figure 2A-C and Figure 3E)</a></li>
+<li><a href="#over-representation-analysis-of-gene-classes-supplemental-figure-2d" id="toc-over-representation-analysis-of-gene-classes-supplemental-figure-2d"><span class="toc-section-number">6.2</span> Over-representation analysis of gene classes (Supplemental Figure 2D)</a></li>
+</ul></li>
+<li><a href="#figure-3" id="toc-figure-3"><span class="toc-section-number">7</span> Figure 3</a>
+<ul>
+<li><a href="#merge-bigwigs-for-composite-plots" id="toc-merge-bigwigs-for-composite-plots"><span class="toc-section-number">7.1</span> Merge bigWigs for composite plots</a></li>
+<li><a href="#convert-to-transcripts-per-million-to-match-with-similarly-expressed-genes" id="toc-convert-to-transcripts-per-million-to-match-with-similarly-expressed-genes"><span class="toc-section-number">7.2</span> Convert to transcripts per million to match with similarly-expressed genes</a></li>
+<li><a href="#radiation-activated-genes-composite-plot-figure-3a" id="toc-radiation-activated-genes-composite-plot-figure-3a"><span class="toc-section-number">7.3</span> Radiation-activated genes composite plot (Figure 3A)</a></li>
+<li><a href="#enzalutamide-repressed-genes-composite-plot-figure-3c" id="toc-enzalutamide-repressed-genes-composite-plot-figure-3c"><span class="toc-section-number">7.4</span> Enzalutamide-repressed genes composite plot (Figure 3C)</a></li>
+<li><a href="#pause-ratio-analysis-for-above-gene-classes-figure-3bd" id="toc-pause-ratio-analysis-for-above-gene-classes-figure-3bd"><span class="toc-section-number">7.5</span> Pause ratio analysis for above gene classes (Figure 3B,D)</a></li>
+<li><a href="#pause-ratio-analysis-for-the-16-genes-repressed-by-enzalutamide-and-activated-by-ir-figure-3f" id="toc-pause-ratio-analysis-for-the-16-genes-repressed-by-enzalutamide-and-activated-by-ir-figure-3f"><span class="toc-section-number">7.6</span> Pause ratio analysis for the 16 genes repressed by enzalutamide and activated by IR (Figure 3F)</a></li>
 </ul></li>
 </ul>
 </div>
 
-<div id="readings" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Readings</h1>
-<p>Practical Computing for Biologists: Chapters 2, 5, 6, 16, Appendices 2, 3.<br />
-</p>
-<p>Unix “Basics” and “Finding Things” from UConn CBC: <a href="http://bioinformatics.uconn.edu/unix-basics/" class="uri">http://bioinformatics.uconn.edu/unix-basics/</a><br />
-</p>
-<p>Software Carpentry Shell Novice lesson: Episodes 5-7:
-<a href="https://swcarpentry.github.io/shell-novice/" class="uri">https://swcarpentry.github.io/shell-novice/</a></p>
-<p>Review basic commands and server access from <a href="http://bioinformatics.uconn.edu/unix-basics">UConn_Unix_basics</a></p>
+<div id="download-the-raw-sequencing-data" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Download the raw sequencing data</h1>
+<p>Note to self: once we upload these files to GEO, we can update the SRR numbers.</p>
+<pre class="bash"><code>directory=/Volumes/External/Users/TScott/Radiation_enzalutamide_PRO
+mkdir -p $directory
+cd $directory
+fasterq-dump SRRTBD</code></pre>
 </div>
-<div id="last-time" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Last Time:</h1>
-<div id="command-line-navigation" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Command line navigation:</h2>
-<p><br />
-1. Complete path:</p>
-<pre class="bash"><code>head /home/username/MEDS5420/lec02_files/the_raven.txt
-head /Users/username/MEDS5420/lec02_files/the_raven.txt
-</code></pre>
-<pre class="bash"><code>head ~/MEDS5420/lec02_files/the_raven.txt</code></pre>
-<p><strong>OR</strong><br />
-<br />
-2. By using the <strong>relative path</strong> starting from where you are:<br />
-</p>
-<pre class="bash"><code>head ./username/MEDS5420/lec02_files/the_raven.txt</code></pre>
-<pre class="bash"><code>head username/MEDS5420/lec02_files/the_raven.txt</code></pre>
+<div id="process-the-raw-sequencing-data-to-get-to-gene-counts" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Process the raw sequencing data to get to gene counts</h1>
+<p>For the initial basic processing steps, we used a pipeline we have thoroughly described elsewhere (<a href="https://github.com/guertinlab/Nascent_RNA_Methods" class="uri">https://github.com/guertinlab/Nascent_RNA_Methods</a>).
+Please see the above GitHub repository for detailed explanations of the steps, as well as software dependencies and preprocessing steps (e.g., gene annotation file downloads).</p>
+<pre class="bash"><code>#Initialize variables
+directory=/Volumes/External/Users/TScott/Radiation_enzalutamide_PRO
+annotation_prefix=/Volumes/External/Users/TScott/ER_Antagonists/210620_PRO/Homo_sapiens.GRCh38.104 
+UMI_length=8
+read_size=46
+cores=6
+genome=~/Library/CloudStorage/Box-Box/GuertinLab/hg38/hg38.fa
+genome_index=~/Library/CloudStorage/Box-Box/GuertinLab/hg38/hg38
+prealign_rdna=/Volumes/External/Users/TScott/ER_Antagonists/210620_PRO/human_rDNA
+
+cd $directory 
+
+#Loop through the files
+for filename in LNCaP*_PE1.fastq.gz
+do
+    name=$(echo $filename | awk -F&quot;_PE1.fastq.gz&quot; &#39;{print $1}&#39;)
+    echo $name
+    echo &#39;unzipping raw&#39; $name &#39;files&#39;
+    gunzip ${name}_PE*.fastq.gz
+    echo &#39;removing dual adapter ligations and calculating the fraction of adapter/adapters in&#39; $name
+    conda activate cutadaptenv
+    cutadapt --cores=$cores -m $((UMI_length+2)) -O 1 \
+        -a TGGAATTCTCGGGTGCCAAGG ${name}_PE1.fastq -o ${name}_PE1_noadap.fastq \
+        --too-short-output ${name}_PE1_short.fastq &gt; ${name}_PE1_cutadapt.txt
+    cutadapt --cores=$cores -m $((UMI_length+10)) -O 1 \
+        -a GATCGTCGGACTGTAGAACTCTGAAC ${name}_PE2.fastq -o ${name}_PE2_noadap.fastq \
+        --too-short-output ${name}_PE2_short.fastq &gt; ${name}_PE2_cutadapt.txt
+    conda deactivate
+    PE1_total=$(wc -l ${name}_PE1.fastq | awk &#39;{print $1/4}&#39;)
+    PE1_w_Adapter=$(wc -l ${name}_PE1_short.fastq | awk &#39;{print $1/4}&#39;)
+    AAligation=$(echo &quot;scale=2 ; $PE1_w_Adapter / $PE1_total&quot; | bc)
+    echo -e  &quot;value\texperiment\tthreshold\tmetric&quot; &gt; ${name}_QC_metrics.txt
+    echo -e &quot;$AAligation\t$name\t0.80\tAdapter/Adapter&quot; &gt;&gt; ${name}_QC_metrics.txt
+    echo &#39;removing short RNA insertions and reverse complementing in&#39; $name
+    seqtk seq -L $((UMI_length+10)) -r ${name}_PE1_noadap.fastq &gt; ${name}_PE1_noadap_trimmed.fastq
+    echo &#39;removing PCR duplicates from&#39; $name
+    fqdedup -i ${name}_PE1_noadap_trimmed.fastq -o ${name}_PE1_dedup.fastq
+    PE1_noAdapter=$(wc -l ${name}_PE1_noadap.fastq | awk &#39;{print $1/4}&#39;)
+    fastq_pair -t $PE1_noAdapter ${name}_PE1_noadap.fastq ${name}_PE2_noadap.fastq
+    echo &#39;calculating and plotting RNA insert sizes from&#39; $name
+    flash -q --compress-prog=gzip --suffix=gz ${name}_PE1_noadap.fastq.paired.fq \
+        ${name}_PE2_noadap.fastq.paired.fq -o ${name}
+    insert_size.R ${name}.hist ${UMI_length}
+    echo &#39;trimming off the UMI from&#39; $name
+    seqtk trimfq -e ${UMI_length} ${name}_PE1_dedup.fastq &gt; ${name}_PE1_processed.fastq
+    seqtk trimfq -e ${UMI_length} ${name}_PE2_noadap.fastq | seqtk seq -r - &gt; ${name}_PE2_processed.fastq
+    echo &#39;aligning&#39; $name &#39;to rDNA and removing aligned reads&#39;
+    bowtie2 -p $cores -x $prealign_rdna -U ${name}_PE1_processed.fastq 2&gt;${name}_bowtie2_rDNA.log | \
+        samtools sort -n - | samtools fastq -f 0x4 - &gt; ${name}_PE1.rDNA.fastq
+    reads=$(wc -l ${name}_PE1.rDNA.fastq | awk &#39;{print $1/4}&#39;)
+    fastq_pair -t $reads ${name}_PE1.rDNA.fastq ${name}_PE2_processed.fastq
+    echo &#39;aligning&#39; $name &#39;to the genome&#39;
+    bowtie2 -p $cores --maxins 1000 -x $genome_index --rf -1 ${name}_PE1.rDNA.fastq.paired.fq \
+        -2 ${name}_PE2_processed.fastq.paired.fq 2&gt;${name}_bowtie2.log | \
+        samtools view -b - | samtools sort - -o ${name}.bam
+    PE1_prior_rDNA=$(wc -l ${name}_PE1_processed.fastq | awk &#39;{print $1/4}&#39;)
+    PE1_post_rDNA=$(wc -l ${name}_PE1.rDNA.fastq | awk &#39;{print $1/4}&#39;)
+    total_rDNA=$(echo &quot;$(($PE1_prior_rDNA-$PE1_post_rDNA))&quot;) 
+    echo &#39;calculating rDNA and genomic alignment rates for&#39; $name
+    concordant_pe1=$(samtools view -c -f 0x42 ${name}.bam)
+    total=$(echo &quot;$(($concordant_pe1+$total_rDNA))&quot;)
+    rDNA_alignment=$(echo &quot;scale=2 ; $total_rDNA / $total&quot; | bc)
+    echo -e &quot;$rDNA_alignment\t$name\t0.20\trDNA Alignment Rate&quot; &gt;&gt; ${name}_QC_metrics.txt
+    map_pe1=$(samtools view -c -f 0x42 ${name}.bam)
+    pre_alignment=$(wc -l ${name}_PE1.rDNA.fastq.paired.fq | awk &#39;{print $1/4}&#39;)
+    alignment_rate=$(echo &quot;scale=2 ; $map_pe1 / $pre_alignment&quot; | bc)
+    echo -e &quot;$alignment_rate\t$name\t0.80\tAlignment Rate&quot; &gt;&gt; ${name}_QC_metrics.txt
+    echo &#39;plotting and calculating complexity for&#39; $name
+    fqComplexity -i ${name}_PE1_noadap_trimmed.fastq
+    echo &#39;calculating and plotting theoretical sequencing depth&#39; 
+    echo &#39;to achieve a defined number of concordantly aligned reads for&#39; $name
+    PE1_total=$(wc -l ${name}_PE1.fastq | awk &#39;{print $1/4}&#39;)
+    PE1_noadap_trimmed=$(wc -l ${name}_PE1_noadap_trimmed.fastq | awk &#39;{print $1/4}&#39;)
+    factorX=$(echo &quot;scale=2 ; $PE1_noadap_trimmed / $PE1_total&quot; | bc)
+    echo fraction of reads that are not adapter/adapter ligation products or below 10 base inserts
+    echo $factorX 
+    PE1_dedup=$(wc -l ${name}_PE1_dedup.fastq | awk &#39;{print $1/4}&#39;)
+    factorY=$(echo &quot;scale=2 ; $concordant_pe1 / $PE1_dedup&quot; | bc)
+    fqComplexity -i ${name}_PE1_noadap_trimmed.fastq -x $factorX -y $factorY
+    echo &#39;Separating paired end reads and creating genomic BED and bigWig intensity files for&#39; $name
+    seqOutBias $genome ${name}.bam --no-scale --stranded --bed-stranded-positive \
+        --bw=$name.bigWig --bed=$name.bed --out-split-pairends --only-paired \
+        --tail-edge --read-size=$read_size
+    grep -v &quot;random&quot; ${name}_not_scaled_PE1.bed | grep -v &quot;chrUn&quot; | grep -v &quot;chrEBV&quot; | sort -k1,1 -k2,2n &gt; ${name}_tmp.txt 
+    mv ${name}_tmp.txt ${name}_not_scaled_PE1.bed 
+    echo &#39;Calculating pause indices for&#39; $name  
+    mapBed -null &quot;0&quot; -s -a $annotation_prefix.pause.bed -b ${name}_not_scaled_PE1.bed | \
+      awk &#39;$7&gt;0&#39; | sort -k5,5 -k7,7nr | sort -k5,5 -u &gt; ${name}_pause.bed
+    join -1 5 -2 5 ${name}_pause.bed $annotation_prefix.bed | \
+        awk &#39;{OFS=&quot;\t&quot;;} $2==$8 &amp;&amp; $6==$12 {print $2, $3, $4, $1, $6, $7, $9, $10}&#39; | \
+        awk &#39;{OFS=&quot;\t&quot;;} $5 == &quot;+&quot; {print $1,$2+480,$8,$4,$6,$5} $5 == &quot;-&quot; {print $1,$7,$2 - 380,$4,$6,$5}&#39; |  \
+        awk  &#39;{OFS=&quot;\t&quot;;} $3&gt;$2 {print $1,$2,$3,$4,$5,$6}&#39; | \
+        sort -k1,1 -k2,2n &gt; ${name}_pause_counts_body_coordinates.bed
+    mapBed -null &quot;0&quot; -s -a ${name}_pause_counts_body_coordinates.bed \
+        -b ${name}_not_scaled_PE1.bed | awk &#39;$7&gt;0&#39; | \
+        awk &#39;{OFS=&quot;\t&quot;;} {print $1,$2,$3,$4,$5,$6,$7,$5/100,$7/($3 - $2)}&#39; | \
+        awk &#39;{OFS=&quot;\t&quot;;} {print $1,$2,$3,$4,$5,$6,$7,$8,$9,$8/$9}&#39; &gt; ${name}_pause_body.bed
+    pause_index.R ${name}_pause_body.bed
+    echo &#39;Calculating exon density / intron density as a metric for nascent RNA purity for&#39; $name
+    mapBed -null &quot;0&quot; -s -a $annotation_prefix.introns.bed \
+        -b ${name}_not_scaled_PE1.bed | awk &#39;$7&gt;0&#39; | \
+        awk &#39;{OFS=&quot;\t&quot;;} {print $1,$2,$3,$5,$5,$6,$7,($3 - $2)}&#39; &gt; ${name}_intron_counts.bed
+    mapBed -null &quot;0&quot; -s -a $annotation_prefix.no.first.exons.named.bed \
+        -b ${name}_not_scaled_PE1.bed | awk &#39;$7&gt;0&#39; | \
+        awk &#39;{OFS=&quot;\t&quot;;} {print $1,$2,$3,$4,$4,$6,$7,($3 - $2)}&#39; &gt; ${name}_exon_counts.bed
+    exon_intron_ratio.R ${name}_exon_counts.bed ${name}_intron_counts.bed
+    echo &#39;Counting reads in genes&#39; for $name
+    echo -e  &quot;\t${name}&quot; &gt; ${name}_gene_counts.txt
+    mapBed -null &quot;0&quot; -s -a $annotation_prefix_sorted.bed -b ${name}_not_scaled_PE1.bed | \
+        awk &#39;{OFS=&quot;\t&quot;;} {print $4,$7}&#39; &gt;&gt; ${name}_gene_counts.txt
+    #clean up intermediate files and gzip
+    rm ${name}_PE1_short.fastq
+    rm ${name}_PE2_short.fastq
+    rm ${name}_PE1_noadap.fastq
+    rm ${name}_PE2_noadap.fastq
+    rm ${name}_PE1_noadap_trimmed.fastq
+    rm ${name}_PE1_dedup.fastq
+    rm ${name}_PE1_processed.fastq
+    rm ${name}_PE2_processed.fastq
+    rm ${name}_PE1_noadap.fastq.paired.fq   
+    rm ${name}_PE2_noadap.fastq.paired.fq
+    rm ${name}_PE1_noadap.fastq.single.fq
+    rm ${name}_PE2_noadap.fastq.single.fq
+    rm ${name}_PE1.rDNA.fastq.paired.fq
+    rm ${name}_PE1.rDNA.fastq.single.fq
+    rm ${name}_PE2_processed.fastq.paired.fq
+    rm ${name}_PE2_processed.fastq.single.fq
+    rm ${name}.extendedFrags.fastq.gz
+    rm ${name}.notCombined_1.fastq.gz
+    rm ${name}.notCombined_2.fastq.gz
+    gzip ${name}_PE1.fastq
+    gzip ${name}_PE2.fastq
+done
+
+#Combine and plot the QC metrics
+cat *_QC_metrics.txt | awk &#39;!x[$0]++&#39; &gt; Radiation_enzalutamide_project_QC_metrics.txt 
+plot_all_metrics.R Radiation_enzalutamide_project_QC_metrics.txt Radiation_enzalutamide
+
+#Combine the gene counts into one file for each batch for use in downstream analysis
+paste -d&#39;\t&#39; *_batch2_gene_recounts.txt &gt; Radiation_enzalutamide_gene_recounts.txt
+paste -d&#39;\t&#39; *_batch1_gene_recounts.txt &gt; Radiation_enzalutamide_batch1_gene_recounts.txt
+
+#Copying to Box for use later when I don&#39;t have my external hard drive
+cp Radiation_enzalutamide_gene*_recounts.txt /Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R/
+cp *.pdf /Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R/
+cp /Volumes/External/Users/TScott/ER_Antagonists/210620_PRO/Homo_sapiens.GRCh38.104.bed \
+    c/GioeliLab/Radiation_enzalutamide_R/</code></pre>
 </div>
-<div id="command-line-utlities-so-far" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Command line utlities so far:</h2>
-<p><strong>1.</strong> <code>pwd</code> - print working directory<br />
-<strong>2.</strong> <code>ls</code> - list directory contents<br />
-<strong>3.</strong> <code>mkdir</code> - create a directory<br />
-<strong>4.</strong> <code>unzip</code> - decompression<br />
-<strong>5.</strong> <code>mv</code> - move file<br />
-<strong>6.</strong> <code>cp</code> - copy file<br />
-<strong>7.</strong> <code>cat</code> - print contents of file<br />
-<strong>8.</strong> <code>touch</code> - create empty file<br />
-<strong>9.</strong> <code>rm</code> - remove file<br />
-<strong>10.</strong> <code>wc</code> - count lines/words/characters/ in file<br />
-<strong>11.</strong> <code>&gt;</code> - redirects output to new file<br />
-<strong>12.</strong> <code>&gt;&gt;</code> - redirects output to append to existing file<br />
-<strong>13.</strong> <code>*</code> - wildcard that specifies any input<br />
-</p>
+<div id="set-up-the-r-environment" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Set up the R environment</h1>
+<pre class="r"><code>setwd(&quot;~/Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R&quot;)
+
+library(viridis)
+library(lattice)
+library(latticeExtra)
+library(DESeq2)
+library(EnhancedVolcano)
+library(pheatmap)
+library(viridis)
+library(dendsort)
+library(RColorBrewer)
+library(&quot;org.Hs.eg.db&quot;, character.only = TRUE)
+library(clusterProfiler)
+library(enrichplot)
+library(DOSE)
+library(msigdbr)
+library(PPInfer)
+library(tidyverse)
+library(sjPlot)
+library(ggpubr)
+library(fgsea)
+library(MatchIt)
+library(tidyverse)
+library(bigWig)
+library(grid)
+library(zoo)
+library(grid)
+
+source(&#39;https://raw.githubusercontent.com/mjg54/znf143_pro_seq_analysis/master/docs/ZNF143_functions.R&#39;)
+
+plot.ma.lattice &lt;- function(ma.df, filename = &#39;file.name&#39;, p = 0.01, title.main = &quot;Differential PRO Expression&quot;,log2fold = 0.5)
+{
+  pdf(paste(&quot;MA_plot_&quot;, filename, &quot;_recount.pdf&quot;, sep=&#39;&#39;), width=3.83, height=3.83)
+  print(xyplot(ma.df$log2FoldChange ~ log(ma.df$baseMean, base=10),
+               groups=(ma.df$padj &lt; p &amp; abs(ma.df$log2FoldChange) &gt; log2fold &amp; !is.na(ma.df$padj)),
+               col=c(&quot;grey40&quot;,&quot;red&quot;), main=title.main, scales=&quot;free&quot;, aspect=1, pch=20, cex=0.25,
+               ylab=expression(&quot;log&quot;[2]~&quot;PRO fold change&quot;), xlab=expression(&quot;log&quot;[10]~&quot;Mean of Normalized Counts&quot;),
+               par.settings=list(par.xlab.text=list(cex=1.1,font=2), par.ylab.text=list(cex=1.1,font=2))))
+  dev.off()
+}
+
+plotPCA.any &lt;-  function(object, intgroup=&quot;condition&quot;, ntop=500, returnData=FALSE, pcs = c(1,2))
+{
+  
+  stopifnot(length(pcs) == 2)    ### added this to check number of PCs ####
+  # calculate the variance for each gene
+  rv &lt;- rowVars(assay(object))
+  
+  # select the ntop genes by variance
+  select &lt;- order(rv, decreasing=TRUE)[seq_len(min(ntop, length(rv)))]
+  
+  # perform a PCA on the data in assay(x) for the selected genes
+  pca &lt;- prcomp(t(assay(object)[select,]))
+  
+  # the contribution to the total variance for each component
+  percentVar &lt;- pca$sdev^2 / sum( pca$sdev^2 )
+  
+  if (!all(intgroup %in% names(colData(object)))) {
+    stop(&quot;the argument &#39;intgroup&#39; should specify columns of colData(dds)&quot;)
+  }
+  
+  intgroup.df &lt;- as.data.frame(colData(object)[, intgroup, drop=FALSE])
+  
+  # add the intgroup factors together to create a new grouping factor
+  group &lt;- if (length(intgroup) &gt; 1) {
+    factor(apply( intgroup.df, 1, paste, collapse=&quot; : &quot;))
+  } else {
+    colData(object)[[intgroup]]
+  }
+  
+  # assembly the data for the plot
+  ########## Here we just use the pcs object passed by the end user ####
+  d &lt;- data.frame(PC1=pca$x[,pcs[1]], PC2=pca$x[,pcs[2]], group=group, intgroup.df, name=colnames(object))
+  
+  if (returnData) {
+    attr(d, &quot;percentVar&quot;) &lt;- percentVar[c(pcs[1], pcs[2])]
+    return(d)
+  }
+  
+  col = viridis(length(unique(colData(object)[[intgroup]])))
+  ggplot(data = d, aes(x = PC1, y = PC2, color = group)) + 
+    geom_point(size = 3) + xlab(paste0(&quot;PC&quot;, pcs[1], &quot;: &quot;, round(percentVar[pcs[1]] * 100), &quot;% variance&quot;)) + 
+    ylab(paste0(&quot;PC&quot;, pcs[2], &quot;: &quot;, round(percentVar[pcs[2]] * 100), &quot;% variance&quot;)) + 
+    coord_equal() +
+    theme_bw() +
+    scale_color_manual(values = col)
+}
+
+categorize.deseq.df.mods &lt;- function(df, fdr = 0.05, log2fold = 0.0, treat = &#39;Estrogen&#39;) 
+{
+  df.activated = df[df$padj &lt; fdr &amp; !is.na(df$padj) &amp; df$log2FoldChange &gt; log2fold,]
+  df.repressed = df[df$padj &lt; fdr &amp; !is.na(df$padj) &amp; df$log2FoldChange &lt; -log2fold,]
+  df.unchanged = df[df$padj &gt; 0.5 &amp; !is.na(df$padj) &amp; abs(df$log2FoldChange) &lt; 0.25,]
+  df.dregs = df[!(df$padj &lt; fdr &amp; !is.na(df$padj) &amp; df$log2FoldChange &gt; log2fold) &amp;
+                  !(df$padj &lt; fdr &amp; !is.na(df$padj) &amp; df$log2FoldChange &lt; -log2fold) &amp;
+                  !(df$padj &gt; 0.5 &amp; !is.na(df$padj) &amp; abs(df$log2FoldChange) &lt; 0.25), ]
+  df.unchanged$treatment = paste(treat, &#39;Unchanged&#39;)
+  df.activated$treatment = paste(treat, &#39;Activated&#39;)
+  df.repressed$treatment = paste(treat, &#39;Repressed&#39;)
+  df.dregs$treatment = paste(treat, &#39;All Other Genes&#39;)
+  df.effects.lattice =
+    rbind(df.activated,
+          df.unchanged,
+          df.repressed,
+          df.dregs)
+  df.effects.lattice$treatment = factor(df.effects.lattice$treatment)
+  df.effects.lattice$treatment = relevel(df.effects.lattice$treatment, ref = paste(treat, &#39;Activated&#39;))
+  df.effects.lattice$treatment = relevel(df.effects.lattice$treatment, ref = paste(treat, &#39;Repressed&#39;))
+  df.effects.lattice$treatment = relevel(df.effects.lattice$treatment, ref = paste(treat, &#39;Unchanged&#39;))
+  df.effects.lattice$treatment = relevel(df.effects.lattice$treatment, ref = paste(treat, &#39;All Other Genes&#39;))
+  return(df.effects.lattice)
+}
+
+get.tss &lt;- function(bedfile) 
+{
+  if (ncol(bedfile) &gt; 6) {
+    bedfile = bedfile[,c(1:6)]
+  }
+  for (i in 1:nrow(bedfile)) {
+    if (bedfile[i,6] == &#39;+&#39;) {
+      bedfile[i,3] = bedfile[i,2] + 1
+    } else {
+      bedfile[i,2] = bedfile[i,3] - 1
+    }
+  }
+  return(bedfile)
+}
+
+filter.deseq.into.bed &lt;- function(deseq.df, gene.file, cat = &#39;R1881 Activated&#39;) {
+  deseq.df = deseq.df[deseq.df$treatment == cat,]
+  #print(dim(deseq.df))
+  #scientific notation was messing this up occasionally
+  x = gene.file$V4
+  #print(length(x))
+  y = gene.file[x %in% rownames(deseq.df),]
+  #print(dim(y))
+  z = get.tss(y)
+  #print(dim(z))
+  return(z)
+}
+
+bedTools.closest &lt;- function(functionstring=&quot;/usr/local/anaconda3/bin/closestBed&quot;,bed1,bed2,opt.string=&quot;&quot;) {
+  
+  options(scipen =99) # not to use scientific notation when writing out
+  
+  #write bed formatted dataframes to tempfile
+  write.table(bed1,file= &#39;a.file.bed&#39;, quote=F,sep=&quot;\t&quot;,col.names=F,row.names=F)
+  write.table(bed2,file= &#39;b.file.bed&#39;, quote=F,sep=&quot;\t&quot;,col.names=F,row.names=F)
+  
+  # create the command string and call the command using system()
+  command1=paste(&#39;sort -k1,1 -k2,2n&#39;, &#39;a.file.bed&#39;, &#39;&gt; a.file.sorted.bed&#39;)
+  cat(command1,&quot;\n&quot;)
+  try(system(command1))
+  command2=paste(&#39;sort -k1,1 -k2,2n&#39;, &#39;b.file.bed&#39;, &#39;&gt; b.file.sorted.bed&#39;)
+  cat(command2,&quot;\n&quot;)
+  try(system(command2))
+  
+  command=paste(functionstring, opt.string,&quot;-a&quot;,&#39;a.file.sorted.bed&#39;,&quot;-b&quot;,&#39;b.file.sorted.bed&#39;,&quot;&gt;&quot;,&#39;out.file.bed&#39;,sep=&quot; &quot;)
+  cat(command,&quot;\n&quot;)
+  try(system(command))
+  
+  res=read.table(&#39;out.file.bed&#39;,header=F, comment.char=&#39;&#39;)
+  
+  command3=paste(&#39;rm&#39;, &#39;a.file.bed&#39;, &#39;b.file.bed&#39;, &#39;a.file.sorted.bed&#39;, &#39;b.file.sorted.bed&#39;, &#39;out.file.bed&#39;)
+  cat(command3,&quot;\n&quot;)
+  try(system(command3))
+  
+  colnames(res) = c(colnames(bed1), colnames(bed2)[1:ncol(bed2)], &#39;dis&#39; )
+  return(res)
+}
+
+get.raw.counts.full.dREG &lt;- function(df, path.to.bigWig, file.prefix = &#39;LNCaP_&#39;) 
+{
+  vec.names = c()
+  df.full = read.table(df)[,c(1:3)]
+  inten.df=data.frame(matrix(ncol = 0, nrow = nrow(df.full)))
+  for (mod.bigWig in Sys.glob(file.path(path.to.bigWig,
+                                        paste(file.prefix, &quot;*_plus_PE1.bigWig&quot;, sep =&#39;&#39;)))) {
+    factor.name = strsplit(strsplit(mod.bigWig,
+                                    &quot;/&quot;)[[1]][length(strsplit(mod.bigWig, &quot;/&quot;)[[1]])], &#39;_plus&#39;)[[1]][1]
+    print(factor.name)
+    vec.names = c(vec.names, factor.name)
+    loaded.bw.plus = load.bigWig(mod.bigWig)
+    print(mod.bigWig)
+    print(paste(path.to.bigWig,&#39;/&#39;,factor.name, &#39;_minus_PE1.bigWig&#39;, sep=&#39;&#39;))
+    loaded.bw.minus = load.bigWig(paste(path.to.bigWig,&#39;/&#39;,factor.name,
+                                        &#39;_minus_PE1.bigWig&#39;, sep=&#39;&#39;))
+    mod.inten.plus = bed.region.bpQuery.bigWig(loaded.bw.plus, df.full)
+    mod.inten.minus = bed.region.bpQuery.bigWig(loaded.bw.minus, df.full)
+    inten.df = cbind(inten.df, mod.inten.plus - mod.inten.minus)
+  }
+  colnames(inten.df) = vec.names
+  r.names = paste(df.full[,1], &#39;:&#39;, df.full[,2], &#39;-&#39;, df.full[,3], sep=&#39;&#39;)
+  row.names(inten.df) = r.names
+  return(inten.df)
+}
+
+process.deseq.df &lt;- function(df, filename = &#39;file.name&#39;, fdr = 0.05, log2fold = 0.0) 
+{
+  increased = df[df$padj &lt; fdr &amp; !is.na(df$padj) &amp; df$log2FoldChange &gt; log2fold,]
+  decreased = df[df$padj &lt; fdr &amp; !is.na(df$padj) &amp; df$log2FoldChange &lt; -log2fold,]
+  unchanged = df[df$padj &gt; 0.5 &amp; !is.na(df$padj) &amp; abs(df$log2FoldChange) &lt; 0.25,]
+  dregs = df[!(df$padj &lt; fdr &amp; !is.na(df$padj) &amp; df$log2FoldChange &gt; log2fold) &amp;
+               !(df$padj &lt; fdr &amp; !is.na(df$padj) &amp; df$log2FoldChange &lt; -log2fold) &amp;
+               !(df$padj &gt; 0.5 &amp; !is.na(df$padj) &amp; abs(df$log2FoldChange) &lt; 0.25), ]
+  lst = list(increased, decreased, unchanged, dregs)
+  process.rows &lt;- function(i, str) {
+    coor = rownames(i)
+    coor.start = sapply(strsplit(sapply(strsplit(as.character(coor),&#39;:&#39;), &quot;[&quot;, 2), &quot;-&quot;), &quot;[&quot;, 1);
+    coor.end = sapply(strsplit(as.character(coor),&#39;-&#39;), &quot;[&quot;, 2)
+    coor.chr = sapply(strsplit(as.character(coor),&#39;:&#39;), &quot;[&quot;, 1)
+    df.coor = cbind(coor.chr, coor.start, coor.end, as.character(i$baseMean),
+                    as.character(i$log2FoldChange), &#39;+&#39;, as.character(i$lfcSE),
+                    as.character(i$pvalue), as.character(i$padj))
+    write.table(df.coor, file = paste(str,&#39;_&#39;, filename, &#39;_&#39;, fdr, &#39;_FDR.bed&#39;, sep =&#39;&#39;),
+                sep = &#39;\t&#39;, quote=F, row.names=F, col.names=F)
+  }
+  process.rows(increased, &#39;increased&#39;)
+  process.rows(decreased, &#39;decreased&#39;)
+  process.rows(unchanged, &#39;unchanged&#39;)
+  process.rows(dregs, &#39;dregs&#39;)
+}
+
+sort_hclust &lt;- function(...) as.hclust(dendsort(as.dendrogram(...)))
+
+bedTools.intersect &lt;- function(functionstring=&quot;/usr/local/anaconda3/bin/intersectBed&quot;,bed1,bed2,opt.string=&quot;&quot;) 
+{
+  command=paste(functionstring, opt.string,&quot;-a&quot;, bed1,&quot;-b&quot;, bed2,&quot;&gt;&quot;,&#39;out.file.bed&#39;,sep=&quot; &quot;)
+  cat(command,&quot;\n&quot;)
+  try(system(command))
+  
+  res=read.table(&#39;out.file.bed&#39;,header=F, comment.char=&#39;&#39;)
+  
+  command3=paste(&#39;rm&#39;, &#39;out.file.bed&#39;)
+  cat(command3,&quot;\n&quot;)
+  try(system(command3))
+  
+  return(res)
+}
+
+PeaksWithMotif &lt;- function(motif)
+{
+  #Hard-coded name and bed files
+  name = sapply(strsplit(motif, &quot;_fimo&quot;), &quot;[&quot;, 1)
+  act = &quot;increased_df.deseq.effects.dREG.radiation.lattice.batch1_0.1_FDR.bed&quot;
+  unc = &quot;unchanged_df.deseq.effects.dREG.radiation.lattice.batch1_0.1_FDR.bed&quot;
+  rep = &quot;decreased_df.deseq.effects.dREG.radiation.lattice.batch1_0.1_FDR.bed&quot;
+  act.intersect = bedTools.intersect(bed1 = act, bed2 = motif, opt.string = &quot;-wao&quot;)
+  ncol = ncol(act.intersect)
+  act.with = sum(as.numeric(act.intersect[,ncol]) &gt; 0)
+  act.without = sum(as.numeric(act.intersect[,ncol]) == 0)
+  unc.intersect = bedTools.intersect(bed1 = unc, bed2 = motif, opt.string = &quot;-wao&quot;)
+  ncol = ncol(unc.intersect)
+  unc.with = sum(as.numeric(unc.intersect[,ncol]) &gt; 0)
+  unc.without = sum(as.numeric(unc.intersect[,ncol]) == 0)
+  rep.intersect = bedTools.intersect(bed1 = rep, bed2 = motif, opt.string = &quot;-wao&quot;)
+  ncol = ncol(rep.intersect)
+  rep.with = sum(as.numeric(rep.intersect[,ncol]) &gt; 0)
+  rep.without = sum(as.numeric(rep.intersect[,ncol]) == 0)
+  result = cbind(c(act.with, act.without),
+                 c(unc.with, unc.without),
+                 c(rep.with, rep.without))
+  colnames(result) &lt;- c(&quot;Activated&quot;, &quot;Unchanged&quot;, &quot;Repressed&quot;)
+  rownames(result) &lt;- c(&quot;With motif&quot;, &quot;Without motif&quot;)
+  print(chisq.test(result))
+  #Can remove this line if you want the actual counts
+  result = 100*sweep(result, 2, colSums(result), &quot;/&quot;)
+  barplot(result, col = c(&quot;red&quot;, &quot;darkblue&quot;), main = paste0(name, &quot; motif prevalance in\nputative regulatory elements&quot;), legend.text = TRUE, args.legend = list(x = &quot;topright&quot;, bg = &quot;white&quot;, cex = 2), cex.axis = 2.5, cex.names = 1.8, cex.main=2)
+  return(result)
+}
+
+cdf.deseq.df &lt;- function(df, genes = gene.file,
+                         chip.peaks = &#39;Znf143_K562_GM12878_peaks_merged.sorted.bed&#39;,
+                         class = &#39;Enzalutamide Repressed Genes&#39;, tf.name = &#39;ZNF143&#39;) {
+  bed.tss.activated = filter.deseq.into.bed(df, genes, cat = class)
+  paste(head(bed.tss.activated))
+  bed.tss.unchanged = filter.deseq.into.bed(df, genes, cat = &#39;Similarly Expressed Genes&#39;)
+  peaks = read.table(chip.peaks, sep = &#39;\t&#39;)
+  print(head(peaks))
+  act.distance = bedTools.closest(bed1 = bed.tss.activated, bed2 = peaks[,c(1:3)], opt.string = &#39;-D a&#39;)
+  unreg.distance = bedTools.closest(bed1 = bed.tss.unchanged, bed2 = peaks[,c(1:3)], opt.string = &#39;-D a&#39;)
+
+  df.up.can = cbind(act.distance[,c(4, 10)], class)
+  df.un.can = cbind(unreg.distance[,c(4, 10)], &quot;Similarly Expressed Genes&quot;)
+
+  colnames(df.up.can) = c(colnames(df.up.can)[1:2], &#39;status&#39;)
+  colnames(df.un.can) = c(colnames(df.up.can)[1:2], &#39;status&#39;)
+
+  df.all = rbind(df.up.can, df.un.can)
+  return(df.all)
+}
+
+plot.composites &lt;- function(dat, treatment = &quot;enzalutamide&quot;, summit = &#39;TSS&#39;, class= &#39;&#39;, num.m = -200, num.p =90, y.low =0, y.high = 0.2, col.lines = c(&quot;#0000FF&quot;, &quot;grey60&quot;)) {
+  pdf(file = paste0(&#39;~/Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R/composite_PolII_density_around_&#39;,treatment,&#39;_genes.pdf&#39;), width=6, height=6)
+  print(xyplot(est ~ x, group = treatment, data = dat,
+               type = &#39;l&#39;,
+               scales=list(x=list(cex=1,relation = &quot;free&quot;,font=2), y =list(cex=1, relation=&quot;free&quot;,font=2)),
+               col = col.lines,
+               #main=list(label=class, cex=0.6),
+               auto.key = list(points=F, lines=T, cex=1.2,font=2),
+               par.settings = list(strip.background=list(col=&quot;grey85&quot;),
+                                   superpose.symbol = list(pch = c(16),
+                                                           col=col.lines, cex =0.5),
+                                   superpose.line = list(col = col.lines, lwd=c(2),
+                                                         lty = c(1))),
+               cex.axis=1.0,
+               par.strip.text=list(cex=0.9, font=1, col=&#39;black&#39;),
+               aspect=1.0,
+               between=list(y=0.5, x=0.5),
+               # index.cond = list(c(1,3,4,2)),
+               lwd=2,
+               ylab = list(label = &quot;PolII Density&quot;, cex =1.2,font=2),
+               xlab = list(label = paste(&quot;Distance from &quot;, summit, sep=&#39;&#39;), cex =1.2,font=2),
+               xlim = c(-200,1200)
+  ))
+  dev.off()
+}
+
+bwplot.input.pause &lt;- function(bed.input, treatment=&#39;enzalutamide&#39;, upstream = 350, downstream = 1399) {
+  #isolate TSSs and define 1000 bp window centered around TSS
+  tss.df = bed.input[,c(1,7:8,4:6)]
+  tss.df[,3] = tss.df[,2] + 500
+  tss.df[,2] = tss.df[,2] - 500
+  #sum polymerase density for each position in window
+  combined.plus.bw = load.bigWig(&#39;/Volumes/External/Users/TScott/Radiation_enzalutamide_PRO/pro_batch2_plus_merged.bigWig&#39;)
+  combined.minus.bw = load.bigWig(&#39;/Volumes/External/Users/TScott/Radiation_enzalutamide_PRO/pro_batch2_minus_merged.bigWig&#39;)
+  dat.x = bed6.step.probeQuery.bigWig(combined.plus.bw, combined.minus.bw, tss.df, step = 1, as.matrix = TRUE, op = &quot;sum&quot;, follow.strand = FALSE)
+  dat.x[is.na(dat.x)] &lt;- 0
+  dat.x.win = t(apply(dat.x, 1, function(x){rollapply(x, width = 50, FUN = mean, by = 1, by.column = FALSE,align = &quot;left&quot;)}))
+  index.max = apply(dat.x.win, 1, which.max)
+  the.max = apply(dat.x.win, 1, max)
+  #find highest value in window to use as pause summit and take a 50 bp window around it - this is the &#39;pause region&#39;
+  pause.df = tss.df
+  pause.df[2][pause.df$strand == &#39;-&#39;,] = pause.df[2][pause.df$strand == &#39;-&#39;,] + index.max[pause.df$strand == &#39;-&#39;]
+  pause.df[2][pause.df$strand == &#39;+&#39;,] = pause.df[2][pause.df$strand == &#39;+&#39;,] + index.max[pause.df$strand == &#39;+&#39;]
+  pause.df[3] = pause.df[2] + 50
+  #pause.df[3] = pause.df[2] + 25
+  #pause.df[2] = pause.df[2] - 25
+  #define &#39;body region&#39; as end of pause region to the end of the plotting window (strand specific)
+  body.df = fiveprime.bed(pause.df, upstreamWindow = upstream, downstreamWindow = downstream)
+  body.df[body.df$strand == &#39;+&#39;,2] = pause.df[pause.df$strand == &#39;+&#39;,3]+1
+  body.df[body.df$strand == &#39;-&#39;,3] = pause.df[pause.df$strand == &#39;-&#39;,2]-1
+  #measure polymerase density within pause and body regions (sum for pause, average for body)
+  output.df=cbind.data.frame(bed.input[,c(1:6)], rep(treatment, nrow(bed.input)))
+  colnames(output.df)[7] = &quot;treatment&quot;
+  wiggle.plus = load.bigWig(paste0(&#39;/Volumes/External/Users/TScott/Radiation_enzalutamide_PRO/pro_&#39;, treatment, &#39;_batch2_plus_merged.bigWig&#39;))
+  wiggle.minus = load.bigWig(paste0(&#39;/Volumes/External/Users/TScott/Radiation_enzalutamide_PRO/pro_&#39;, treatment, &#39;_batch2_minus_merged.bigWig&#39;))
+  output.df[,8] = bed6.region.bpQuery.bigWig(wiggle.plus, wiggle.minus, pause.df, op = &quot;sum&quot;)
+  output.df[,9] = bed6.region.bpQuery.bigWig(wiggle.plus, wiggle.minus, body.df, op = &quot;avg&quot;)
+  colnames(output.df)[c(8,9)] = c(&#39;pause_sum&#39;,&#39;body_avg&#39;)
+  return(output.df)
+}
+
+panel.violin.hack &lt;-
+  function (x, y, box.ratio = 1, box.width = box.ratio/(1 + box.ratio),
+            horizontal = TRUE, alpha = plot.polygon$alpha, border =  
+              plot.polygon$border,
+            lty = plot.polygon$lty, lwd = plot.polygon$lwd, col = plot.polygon 
+            $col,
+            varwidth = FALSE, bw = NULL, adjust = NULL, kernel = NULL,
+            window = NULL, width = NULL, n = 50, from = NULL, to = NULL,
+            cut = NULL, na.rm = TRUE, ...)
+  {
+    if (all(is.na(x) | is.na(y)))
+      return()
+    x &lt;- as.numeric(x)
+    y &lt;- as.numeric(y)
+    plot.polygon &lt;- trellis.par.get(&quot;plot.polygon&quot;)
+    darg &lt;- list()
+    darg$bw &lt;- bw
+    darg$adjust &lt;- adjust
+    darg$kernel &lt;- kernel
+    darg$window &lt;- window
+    darg$width &lt;- width
+    darg$n &lt;- n
+    darg$from &lt;- from
+    darg$to &lt;- to
+    darg$cut &lt;- cut
+    darg$na.rm &lt;- na.rm
+    my.density &lt;- function(x) {
+      ans &lt;- try(do.call(&quot;density&quot;, c(list(x = x), darg)),
+                 silent = TRUE)
+      if (inherits(ans, &quot;try-error&quot;))
+        list(x = rep(x[1], 3), y = c(0, 1, 0))
+      else ans
+    }
+    numeric.list &lt;- if (horizontal)
+      split(x, factor(y))
+    else split(y, factor(x))
+    levels.fos &lt;- as.numeric(names(numeric.list))
+    d.list &lt;- lapply(numeric.list, my.density)
+    dx.list &lt;- lapply(d.list, &quot;[[&quot;, &quot;x&quot;)
+    dy.list &lt;- lapply(d.list, &quot;[[&quot;, &quot;y&quot;)
+    max.d &lt;- sapply(dy.list, max)
+    if (varwidth)
+      max.d[] &lt;- max(max.d)
+    xscale &lt;- current.panel.limits()$xlim
+    yscale &lt;- current.panel.limits()$ylim
+    height &lt;- box.width
+    if (horizontal) {
+      for (i in seq_along(levels.fos)) {
+        if (is.finite(max.d[i])) {
+          pushViewport(viewport(y = unit(levels.fos[i],
+                                         &quot;native&quot;), height = unit(height, &quot;native&quot;),
+                                yscale = c(max.d[i] * c(-1, 1)), xscale = xscale))
+          grid.polygon(x = c(dx.list[[i]], rev(dx.list[[i]])),
+                       y = c(dy.list[[i]], -rev(dy.list[[i]])),  
+                       default.units = &quot;native&quot;,
+                       # this is the point at which the index is added
+                       gp = gpar(fill = col[i], col = border, lty = lty,
+                                 lwd = lwd, alpha = alpha))
+          popViewport()
+        }
+      }
+    }
+    else {
+      for (i in seq_along(levels.fos)) {
+        if (is.finite(max.d[i])) {
+          pushViewport(viewport(x = unit(levels.fos[i],
+                                         &quot;native&quot;), width = unit(height, &quot;native&quot;),
+                                xscale = c(max.d[i] * c(-1, 1)), yscale = yscale))
+          grid.polygon(y = c(dx.list[[i]], rev(dx.list[[i]])),
+                       x = c(dy.list[[i]], -rev(dy.list[[i]])),  
+                       default.units = &quot;native&quot;,
+                       # this is the point at which the index is added
+                       gp = gpar(fill = col[i], col = border, lty = lty,
+                                 lwd = lwd, alpha = alpha))
+          popViewport()
+        }
+      }
+    }
+    invisible()
+  }
+
+#Viridis color scheme
+col = viridis(5)
+
+#For converting gene names
+gene.file = read.table(&quot;Homo_sapiens.GRCh38.104_sorted.bed&quot;, sep = &#39;\t&#39;, header = FALSE)
+`%notin%` &lt;- Negate(`%in%`)
+gene.file = gene.file[gene.file$V5 %notin% c(&quot;havana&quot;, &quot;havana_tagene&quot;, &quot;ensembl_havana&quot;, &quot;ensembl&quot;),]
+gene.symbol = gene.file[,c(4,5)]
+colnames(gene.symbol) = c(&quot;gene&quot;, &quot;symbol&quot;)</code></pre>
+</div>
+<div id="figure-1" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Figure 1</h1>
+<div id="identify-differentially-expressed-genes" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Identify differentially expressed genes</h2>
+<pre class="r"><code>x = read.table(&quot;Radiation_enzalutamide_batch1_gene_recounts.txt&quot;, sep = &#39;\t&#39;, header = TRUE)
+rownames(x) = x[,1]
+x = x[,seq(2,to=ncol(x),by=2)]
+
+#Size factors for scaling composite plots
+size_factors &lt;- estimateSizeFactorsForMatrix(x)
+write.table(estimateSizeFactorsForMatrix(x),
+            file = &#39;norm.bedGraph.sizeFactor_batch1_recount.txt&#39;, quote =F, col.names=F)
+
+radiation &lt;- vector(mode=&quot;character&quot;, length=ncol(x))
+radiation[grep(&quot;6GyIR&quot;, colnames(x))] = &quot;Radiation&quot;
+radiation[c(1:length(colnames(x)))[!(c(1:length(colnames(x))) %in% grep(&quot;6GyIR&quot;, colnames(x)))]] = &quot;Control&quot;
+radiation = relevel(factor(radiation), ref = &quot;Control&quot;)
+rep = factor(sapply(strsplit(sapply(strsplit(colnames(x), &#39;rep&#39;), &#39;[&#39;, 2), &#39;_batch&#39;), &#39;[&#39;, 1))
+deseq.df = DESeqDataSetFromMatrix(x, cbind.data.frame(radiation, rep), ~ rep + radiation)
+deseq.df = DESeq(deseq.df)
+res.deseq.radiation &lt;- lfcShrink(deseq.df, coef = &quot;radiation_Radiation_vs_Control&quot;, type=&quot;apeglm&quot;)
+#Too harsh shrinkage
+plotMA(res.deseq.radiation, ylim = c(-5,5))
+res.deseq.radiation &lt;- lfcShrink(deseq.df, coef = &quot;radiation_Radiation_vs_Control&quot;, type=&quot;ashr&quot;)
+plotMA(res.deseq.radiation, ylim = c(-5,5))
+res.deseq.radiation = res.deseq.radiation[rownames(res.deseq.radiation) %in% gene.symbol$gene,]
+sum(res.deseq.radiation$padj &lt; 0.1 &amp; !is.na(res.deseq.radiation$padj) &amp; res.deseq.radiation$log2FoldChange &gt; 0)
+sum(res.deseq.radiation$padj &lt; 0.1 &amp; !is.na(res.deseq.radiation$padj) &amp; res.deseq.radiation$log2FoldChange &lt; 0)</code></pre>
+</div>
+<div id="principle-component-analysis-figure-1b" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Principle component analysis (Figure 1B)</h2>
+<pre class="r"><code>rld_LNCaP = rlogTransformation(deseq.df)
+pdf(&quot;PCA_batch1_recount.pdf&quot;, height = 2, width = 4)
+plotPCA.any(rld_LNCaP, intgroup=&quot;radiation&quot;) + 
+  scale_color_manual(values = col[c(2,4)]) +
+  labs(color = &quot;Condition&quot;)
+dev.off()</code></pre>
+</div>
+<div id="heatmap-figure-1c" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Heatmap (Figure 1C)</h2>
+<pre class="r"><code>wide_counts = counts(deseq.df[rownames(deseq.df) %in% rownames(res.deseq.radiation)[res.deseq.radiation$padj &lt; .1 &amp; !is.na(res.deseq.radiation$padj)],], normalized = TRUE)
+radiation &lt;- vector(mode=&quot;character&quot;, length=ncol(wide_counts))
+radiation[grep(&quot;6GyIR&quot;, colnames(wide_counts))] = &quot;Radiation&quot;
+radiation[c(1:length(colnames(wide_counts)))[!(c(1:length(colnames(wide_counts))) %in% grep(&quot;6GyIR&quot;, colnames(wide_counts)))]] = &quot;Control&quot;
+rep = factor(sapply(strsplit(sapply(strsplit(colnames(wide_counts), &#39;rep&#39;), &#39;[&#39;, 2), &#39;_batch&#39;), &#39;[&#39;, 1))
+#colnames(wide_counts) = paste(radiation, rep(&quot;rep&quot;, length(rep)), rep, sep = &quot; &quot;)
+colnames(wide_counts) = radiation
+pdf(&quot;Heatmap_batch1_recount.pdf&quot;, width = 8, height = 5)
+pheatmap(wide_counts, scale = &quot;row&quot;, show_rownames = F, angle_col = 0, fontsize = 24,
+         color = rev(brewer.pal(11,&quot;RdBu&quot;)),
+                     cluster_cols = sort_hclust(hclust(dist(scale(t(wide_counts))))),
+                     cluster_rows = sort_hclust(hclust(dist(t(scale(t(wide_counts)))))))
+dev.off()</code></pre>
+</div>
+<div id="volcano-plot-figure-1d" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Volcano plot (Figure 1D)</h2>
+<pre class="r"><code>res.deseq.radiation.unshrunk &lt;- results(deseq.df, contrast = c(&quot;radiation&quot;, &quot;Radiation&quot;, &quot;Control&quot;))
+res.deseq.radiation.unshrunk = res.deseq.radiation.unshrunk[rownames(res.deseq.radiation.unshrunk) %in% gene.symbol$gene,]
+
+keyvals &lt;- ifelse(
+  res.deseq.radiation.unshrunk$padj &lt; .1 &amp; res.deseq.radiation.unshrunk$log2FoldChange &lt; 0, &#39;blue&#39;,
+  ifelse(res.deseq.radiation.unshrunk$padj &lt; .1 &amp; res.deseq.radiation.unshrunk$log2FoldChange &gt; 0, &#39;red&#39;,
+         &#39;black&#39;))
+keyvals[is.na(keyvals)] &lt;- &#39;black&#39;
+names(keyvals)[keyvals == &#39;red&#39;] &lt;- &#39;Up&#39;
+names(keyvals)[keyvals == &#39;black&#39;] &lt;- &#39;Not Significant&#39;
+names(keyvals)[keyvals == &#39;blue&#39;] &lt;- &#39;Down&#39;
+
+pdf(&quot;Radiation_Volcano_batch1_recount.pdf&quot;)
+EnhancedVolcano(res.deseq.radiation.unshrunk,
+                lab = gene.symbol$symbol[gene.symbol$gene == rownames(res.deseq.radiation.unshrunk)],
+                x = &#39;log2FoldChange&#39;,
+                y = &#39;padj&#39;,
+                xlab = bquote(~log[2]~ &#39;(fold change)&#39;),
+                ylab = bquote(&#39;-&#39; ~log[10]~ &#39;(q-value)&#39;),
+                title = &#39;Radiation versus Control&#39;,
+                subtitle = NULL,
+                caption = NULL,
+                pCutoff = 0.1,
+                FCcutoff = 0.0,
+                pointSize = 2.0,
+                labSize = 3.0,
+                xlim = c(-4,4),
+                colCustom = keyvals,
+                colAlpha = .25,
+                legendPosition = &#39;right&#39;,
+                legendLabSize = 10,
+                legendIconSize = 5.0) +
+  theme(plot.title = element_text(hjust = 0.5))
+dev.off()</code></pre>
+</div>
+<div id="gene-set-enrichment-analysis-figure-1e" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> Gene set enrichment analysis (Figure 1E)</h2>
+<pre class="r"><code>original_gene_list &lt;- res.deseq.radiation$log2FoldChange
+names(original_gene_list) &lt;- rownames(res.deseq.radiation)
+gene_list&lt;-na.omit(original_gene_list)
+gene_list = sort(gene_list, decreasing = TRUE)
+
+h_gene_sets = msigdbr(species = &quot;Homo sapiens&quot;, category = &quot;H&quot;)
+msigdbr_list = split(x = h_gene_sets$ensembl_gene, f = h_gene_sets$gs_name)
+set.seed(0)
+fgseaRes &lt;- fgsea(msigdbr_list, gene_list, eps = 0)
+
+fgseaResTidy &lt;- fgseaRes %&gt;%
+  as_tibble() %&gt;%
+  arrange(desc(NES))
+
+print(fgseaResTidy[fgseaResTidy$padj &lt; 0.05,], n = 100)
+gse_top = fgseaResTidy[fgseaResTidy$padj &lt; 0.05,]
+
+pdf(&quot;Hallmark_GSEA_batch1_FDR_0.05_recount.pdf&quot;, width = 14)
+ggplot(gse_top, aes(reorder(pathway, NES), NES, fill = log(padj, base = 10))) +
+  geom_col() +
+  coord_flip() +
+  labs(x=&quot;Pathway&quot;, y=&quot;Normalized Enrichment Score&quot;,
+       title=&quot;Hallmark pathways&quot;) + 
+  theme_minimal() + 
+  theme(text = element_text(size = 20)) +
+  labs(fill = &quot;log(padj)&quot;)
+dev.off()</code></pre>
+</div>
+<div id="putative-regulatory-element-identification-with-dreg" class="section level2" number="4.6">
+<h2><span class="header-section-number">4.6</span> Putative regulatory element identification with dREG</h2>
+<p>We used these output files in <a href="https://dreg.dnasequence.org/" class="uri">https://dreg.dnasequence.org/</a></p>
+<pre class="bash"><code>bams=$(ls *_batch1.bam)
+seqOutBias $genome $bams --no-scale --stranded --bw=LNCaP_batch1_combined_no_scale.bigWig \
+    --skip-bed --only-paired --out-split-pairends --tail-edge --read-size=$read_size</code></pre>
+<p>Now count PRO-seq reads in these peaks and identify differential PRO signal</p>
+<pre class="r"><code>counts.dreg = get.raw.counts.full.dREG(df = &#39;LNCaP_batch1.dREG.peak.full.bed&#39;,
+          path.to.bigWig = &quot;/Volumes/External/Users/TScott/Radiation_enzalutamide_PRO/&quot;, file.prefix = &#39;LNCaP_&#39;)
+counts.dreg = counts.dreg[,grep(&quot;batch1&quot;, colnames(counts.dreg))]
+save(counts.dreg, file = &#39;batch1.counts.dreg.Rdata&#39;)
+load(&quot;batch1.counts.dreg.RData&quot;)
+
+radiation &lt;- vector(mode=&quot;character&quot;, length=ncol(counts.dreg))
+radiation[grep(&quot;6GyIR&quot;, colnames(counts.dreg))] = &quot;Radiation&quot;
+radiation[c(1:length(colnames(counts.dreg)))[!(c(1:length(colnames(counts.dreg))) %in% grep(&quot;6GyIR&quot;, colnames(counts.dreg)))]] = &quot;Control&quot;
+rep = factor(sapply(strsplit(sapply(strsplit(colnames(counts.dreg), &#39;rep&#39;), &#39;[&#39;, 2), &#39;_batch&#39;), &#39;[&#39;, 1))
+deseq.df = DESeqDataSetFromMatrix(counts.dreg, cbind.data.frame(radiation, rep), ~ rep + radiation)
+deseq.df = DESeq(deseq.df)
+
+res.deseq.radiation = results(deseq.df, contrast = c(&quot;radiation&quot;, &quot;Radiation&quot;, &quot;Control&quot;))
+
+df.deseq.effects.dREG.radiation.lattice = categorize.deseq.df(res.deseq.radiation, fdr = 0.1, log2fold = 0.0, treat = &#39;Radiation&#39;)
+
+process.deseq.df(df = df.deseq.effects.dREG.radiation.lattice,
+                 filename = &#39;df.deseq.effects.dREG.radiation.lattice.batch1&#39;, fdr = 0.1, log2fold = 0)</code></pre>
+</div>
+<div id="de-novo-motif-identification-in-differentially-active-putative-regulatory-elements-figure-1f" class="section level2" number="4.7">
+<h2><span class="header-section-number">4.7</span> de novo motif identification in differentially active putative regulatory elements (Figure 1F)</h2>
+<pre class="bash"><code>#Making .fasta files for MEME
+cd ~/Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R/
+
+sizes=~/Library/CloudStorage/Box-Box/GuertinLab/hg38/hg38.chrom.sizes
+
+for bed in *creased*0.1_FDR.bed
+do
+    direction=$(echo $bed | awk -F&quot;_df.deseq.effects.dREG&quot; &#39;{print $1}&#39;)
+    batch=$(echo $bed | awk -F&quot;_0.1_FDR.bed&quot; &#39;{print $1}&#39; | awk -F&quot;lattice&quot; &#39;{print $2}&#39;)
+    batch=${batch/./_}
+    fastaFromBed -fi $genome -bed $bed -fo ${direction}${batch}.fasta
+    intersectBed -sorted -u -a LNCaP${batch}.dREG.peak.full.bed -b $bed | \
+        awk &#39;{OFS=&quot;\t&quot;;} {print $1,$2,$2+1}&#39; | \
+        slopBed -b 50 -i stdin -g $sizes | \
+        fastaFromBed -fi $genome -bed stdin -fo ${direction}${batch}_summit_window.fasta
+done
+
+#MEME on Rivanna
+scp ~/Library/CloudStorage/Box-Box/GuertinLab/Code/220118_meme_pro_clusters.sh \
+    ts2hx@rivanna.hpc.virginia.edu:/scratch/ts2hx
+scp *creased*.fasta ts2hx@rivanna.hpc.virginia.edu:/scratch/ts2hx
+ssh -Y ts2hx@rivanna.hpc.virginia.edu
+cd /scratch/ts2hx
+chmod +x 220118_meme_pro_clusters.sh
+for i in *.fasta
+do
+    name=$(echo $i |  awk -F&quot;.fasta&quot; &#39;{print $1}&#39;)
+    sbatch --export=ALL,i=$i,name=$name --output=220118_meme_pro_clusters_${name}.out 220118_meme_pro_clusters.sh
+done
+exit
+scp -r ts2hx@rivanna.hpc.virginia.edu:/scratch/ts2hx/*out* .
+
+#TOMTOM
+motifs=~/Library/CloudStorage/Box-Box/GuertinLab/Motif_databases/tomtom_db/homer_uniprobe_jaspar_edited.txt
+for i in *_meme_output/meme.txt
+do
+    name=$(echo $i |  awk -F&quot;_meme_output&quot; &#39;{print $1}&#39;)
+    tomtom -no-ssc -oc ${name}_tomtom_output -verbosity 1 -incomplete-scores \
+        -min-overlap 1 -dist ed -evalue -thresh 0.1 $i $motifs
+done</code></pre>
+</div>
+<div id="differential-motif-abundance-in-putative-regulatory-elements-figure-1g" class="section level2" number="4.8">
+<h2><span class="header-section-number">4.8</span> Differential motif abundance in putative regulatory elements (Figure 1G)</h2>
+<pre class="bash"><code>#FIMO 
+motif_directory=~/Library/CloudStorage/Box-Box/GuertinLab/Motif_databases/individual_memes
+fimo --max-stored-scores 2000000 -oc ARE_fimo ${motif_directory}/AR-halfsite_meme.txt $genome
+fimo --max-stored-scores 2000000 -oc Full_ARE_fimo ${motif_directory}/ARE_meme.txt $genome
+fimo --max-stored-scores 2500000 -oc P53_fimo ${motif_directory}/p53_homer_uniprobe_jaspar_edited.txt_meme.txt $genome
+
+#Take the top 1000000 most stringent matches
+score=$(tail -n +2 P53_fimo/fimo.gff | sort -nrk6,6 | awk &#39;FNR == 1000000 {print $6}&#39;)
+tail -n +2 P53_fimo/fimo.gff | awk -v sco=&quot;$score&quot; &#39;{ if ($6 &gt;= sco) { print } }&#39; | \
+    awk &#39;{OFS=&quot;\t&quot;;} {print $1,$4,$5}&#39; &gt; P53_fimo/1000000_fimo.gff
+score=$(tail -n +2 ARE_fimo/fimo.gff | sort -nrk6,6 | awk &#39;FNR == 1000000 {print $6}&#39;)
+tail -n +2 ARE_fimo/fimo.gff | awk -v sco=&quot;$score&quot; &#39;{ if ($6 &gt;= sco) { print } }&#39; | \
+    awk &#39;{OFS=&quot;\t&quot;;} {print $1,$4,$5}&#39; &gt; ARE_fimo/1000000_fimo.gff
+score=$(tail -n +2 Full_ARE_fimo/fimo.gff | sort -nrk6,6 | awk &#39;FNR == 1000000 {print $6}&#39;)
+tail -n +2 Full_ARE_fimo/fimo.gff | awk -v sco=&quot;$score&quot; &#39;{ if ($6 &gt;= sco) { print } }&#39; | \
+    awk &#39;{OFS=&quot;\t&quot;;} {print $1,$4,$5}&#39; &gt; Full_ARE_fimo/1000000_fimo.gff
+
+#Intersect motifs with ENCODE DNAse hypersensitivity sites
+wget https://www.encodeproject.org/files/ENCFF422MXW/@@download/ENCFF422MXW.bed.gz
+gunzip ENCFF422MXW.bed.gz
+intersectBed -a ARE_fimo/fimo.gff -b ENCFF422MXW.bed &gt; ARE_fimo_DHS.bed
+intersectBed -u -a Full_ARE_fimo/fimo.gff -b ENCFF422MXW.bed &gt; Full_ARE_fimo_DHS.bed
+intersectBed -a P53_fimo/fimo.gff -b ENCFF422MXW.bed &gt; P53_fimo_DHS.bed
+
+#Take the top 5000 scores
+score=$(tail -n +2 ARE_fimo_DHS.bed | sort -nrk6,6 | awk &#39;FNR == 5000 {print $6}&#39;)
+tail -n +2 ARE_fimo_DHS.bed | awk -v sco=&quot;$score&quot; &#39;{ if ($6 &gt;= sco) { print } }&#39; | \
+    awk &#39;{OFS=&quot;\t&quot;;} {print $1,$4,$5}&#39; &gt; ARE_fimo_DHS_5000.bed
+score=$(tail -n +2 Full_ARE_fimo_DHS.bed | sort -nrk6,6 | awk &#39;FNR == 5000 {print $6}&#39;)
+tail -n +2 Full_ARE_fimo_DHS.bed | awk -v sco=&quot;$score&quot; &#39;{ if ($6 &gt;= sco) { print } }&#39; | \
+    awk &#39;{OFS=&quot;\t&quot;;} {print $1,$4,$5}&#39; &gt; Full_ARE_fimo_DHS_5000.bed
+score=$(tail -n +2 P53_fimo_DHS.bed | sort -nrk6,6 | awk &#39;FNR == 5000 {print $6}&#39;)
+tail -n +2 P53_fimo_DHS.bed | awk -v sco=&quot;$score&quot; &#39;{ if ($6 &gt;= sco) { print } }&#39; | \
+    awk &#39;{OFS=&quot;\t&quot;;} {print $1,$4,$5}&#39; &gt; P53_fimo_DHS_5000.bed</code></pre>
+<pre class="r"><code>#FIMO on dREG elements
+pdf(&quot;P53_fimo_barchart_batch1_recount.pdf&quot;)
+P53 = PeaksWithMotif(&quot;P53_fimo/1000000_fimo.gff&quot;)
+dev.off()
+
+pdf(&quot;ARE_fimo_barchart_batch1_recount.pdf&quot;)
+ARE = PeaksWithMotif(&quot;ARE_fimo/1000000_fimo.gff&quot;)
+dev.off()</code></pre>
+</div>
+</div>
+<div id="figure-2-and-supplemental-figure-1" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Figure 2 and Supplemental Figure 1</h1>
+<div id="identify-differentially-expressed-genes-1" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Identify differentially expressed genes</h2>
+<pre class="r"><code>x = read.table(&quot;Radiation_enzalutamide_gene_recounts.txt&quot;, sep = &#39;\t&#39;, header = TRUE)
+rownames(x) = x[,1]
+x = x[,seq(2,to=ncol(x),by=2)]
+
+#Size factors for scaling composite plots
+size_factors &lt;- estimateSizeFactorsForMatrix(x)
+write.table(estimateSizeFactorsForMatrix(x),
+            file = &#39;norm.bedGraph.sizeFactor_batch2_recount.txt&#39;, quote =F, col.names=F)
+
+enza &lt;- vector(mode=&quot;character&quot;, length=ncol(x))
+enza[grep(&quot;10uMEnza&quot;, colnames(x))] = &quot;Enzalutamide&quot;
+enza[c(1:length(colnames(x)))[!(c(1:length(colnames(x))) %in% grep(&quot;10uMEnza&quot;, colnames(x)))]] = &quot;Vehicle&quot;
+enza = relevel(factor(enza), ref = &quot;Vehicle&quot;)
+radiation &lt;- vector(mode=&quot;character&quot;, length=ncol(x))
+radiation[grep(&quot;6GyIR&quot;, colnames(x))] = &quot;Radiation&quot;
+radiation[c(1:length(colnames(x)))[!(c(1:length(colnames(x))) %in% grep(&quot;6GyIR&quot;, colnames(x)))]] = &quot;Control&quot;
+radiation = relevel(factor(radiation), ref = &quot;Control&quot;)
+rep = factor(sapply(strsplit(sapply(strsplit(colnames(x), &#39;rep&#39;), &#39;[&#39;, 2), &#39;_batch&#39;), &#39;[&#39;, 1))
+treatment = factor(paste(radiation, enza, sep = &quot;/&quot;), levels = c(&quot;Radiation/Enzalutamide&quot;, &quot;Radiation/Vehicle&quot;, &quot;Control/Enzalutamide&quot;, &quot;Control/Vehicle&quot;))
+deseq.df = DESeqDataSetFromMatrix(x, cbind.data.frame(enza, radiation, rep, treatment), ~ rep + radiation + enza)
+deseq.df = DESeq(deseq.df)
+res.deseq.enza = results(deseq.df, contrast = c(&quot;enza&quot;, &quot;Enzalutamide&quot;, &quot;Vehicle&quot;))
+res.deseq.enza = res.deseq.enza[rownames(res.deseq.enza) %in% gene.symbol$gene,]
+res.deseq.radiation = results(deseq.df, contrast = c(&quot;radiation&quot;, &quot;Radiation&quot;, &quot;Control&quot;))
+res.deseq.radiation = res.deseq.radiation[rownames(res.deseq.radiation) %in% gene.symbol$gene,]</code></pre>
+</div>
+<div id="principle-component-analysis-plot-figure-2d" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Principle component analysis plot (Figure 2D)</h2>
+<pre class="r"><code>rld_LNCaP = rlogTransformation(deseq.df)
+pdf(&quot;PCA_PC1_PC3_recount.pdf&quot;)
+plotPCA.any(rld_LNCaP, intgroup=&quot;treatment&quot;, pcs = c(1,3)) +
+  scale_color_manual(values = col[1:4]) +
+  labs(color = &quot;Condition&quot;)
+dev.off()</code></pre>
+</div>
+<div id="heatmap-figure-2e" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Heatmap (Figure 2E)</h2>
+<pre class="r"><code>wide_counts = counts(deseq.df[rownames(deseq.df) %in% 
+                                c(rownames(res.deseq.enza)[res.deseq.enza$padj &lt; .1 &amp; !is.na(res.deseq.enza$padj)],
+                                  rownames(res.deseq.radiation)[res.deseq.radiation$padj &lt; .1 &amp; !is.na(res.deseq.radiation$padj)]),],
+                     normalized = TRUE)
+for(i in seq(1, ncol(wide_counts), by = 2)) wide_counts[,i] &lt;- (wide_counts[,i] + wide_counts[,i+1])/2
+wide_counts = wide_counts[,seq(1, ncol(wide_counts), by = 2)]
+enza &lt;- vector(mode=&quot;character&quot;, length=ncol(wide_counts))
+enza[grep(&quot;10uMEnza&quot;, colnames(wide_counts))] = &quot;Enzalutamide&quot;
+enza[c(1:length(colnames(wide_counts)))[!(c(1:length(colnames(wide_counts))) %in% grep(&quot;10uMEnza&quot;, colnames(wide_counts)))]] = &quot;Vehicle&quot;
+radiation &lt;- vector(mode=&quot;character&quot;, length=ncol(wide_counts))
+radiation[grep(&quot;6GyIR&quot;, colnames(wide_counts))] = &quot;Radiation&quot;
+radiation[c(1:length(colnames(wide_counts)))[!(c(1:length(colnames(wide_counts))) %in% grep(&quot;6GyIR&quot;, colnames(wide_counts)))]] = &quot;Control&quot;
+colnames(wide_counts) = paste(radiation,enza, sep = &quot;/&quot;)
+pdf(&quot;Heatmap_recount.pdf&quot;, width = 8, height = 5)
+pheatmap(wide_counts, scale = &quot;row&quot;, show_rownames = F, angle_col = 0, fontsize = 24,
+         color = rev(brewer.pal(11,&quot;RdBu&quot;)),
+         cluster_cols = sort_hclust(hclust(dist(scale(t(wide_counts))))),
+         cluster_rows = sort_hclust(hclust(dist(t(scale(t(wide_counts)))))))
+dev.off()</code></pre>
+</div>
+<div id="volcano-plots-figure-2f-i-and-ma-plots-supplementary-figure-1" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Volcano plots (Figure 2F-I) and MA plots (Supplementary Figure 1)</h2>
+<pre class="bash"><code>#Enzalutamide volcano plot
+keyvals &lt;- ifelse(
+  res.deseq.enza$padj &lt; .1 &amp; res.deseq.enza$log2FoldChange &lt; 0, &#39;blue&#39;,
+  ifelse(res.deseq.enza$padj &lt; .1 &amp; res.deseq.enza$log2FoldChange &gt; 0, &#39;red&#39;,
+         &#39;black&#39;))
+keyvals[is.na(keyvals)] &lt;- &#39;black&#39;
+names(keyvals)[keyvals == &#39;red&#39;] &lt;- &#39;Up&#39;
+names(keyvals)[keyvals == &#39;black&#39;] &lt;- &#39;Not Significant&#39;
+names(keyvals)[keyvals == &#39;blue&#39;] &lt;- &#39;Down&#39;
+
+pdf(&quot;Enzalutamide_Volcano_recount.pdf&quot;)
+EnhancedVolcano(res.deseq.enza,
+                lab = gene.symbol$symbol[gene.symbol$gene == rownames(res.deseq.enza)],
+                x = &#39;log2FoldChange&#39;,
+                y = &#39;padj&#39;,
+                xlab = bquote(~log[2]~ &#39;(fold change)&#39;),
+                ylab = bquote(&#39;-&#39; ~log[10]~ &#39;(q-value)&#39;),
+                title = &#39;Enzalutamide versus Vehicle&#39;,
+                subtitle = NULL,
+                caption = NULL,
+                pCutoff = 0.1,
+                FCcutoff = 0.0,
+                pointSize = 2.0,
+                labSize = 3.0,
+                xlim = c(-1,1),
+                ylim = c(0,70),
+                colCustom = keyvals,
+                colAlpha = .25,
+                legendPosition = &#39;right&#39;,
+                legendLabSize = 10,
+                legendIconSize = 5.0) +
+  theme(plot.title = element_text(hjust = 0.5))
+dev.off()
+
+Enzalutamide_Volcano_plot_data &lt;- as.data.frame(res.deseq.enza)
+Enzalutamide_Volcano_plot_data &lt;- merge.data.frame(Enzalutamide_Volcano_plot_data, gene.symbol, 
+                                                   by.x = &quot;row.names&quot;, by.y = &quot;gene&quot;)
+Enzalutamide_Volcano_plot_data &lt;- Enzalutamide_Volcano_plot_data[,c(&quot;symbol&quot;, &quot;log2FoldChange&quot;, &quot;padj&quot;)]
+write.table(Enzalutamide_Volcano_plot_data, file = &quot;Enzalutamide_Volcano_plot_data_recount.tsv&quot;, row.names=FALSE, sep=&quot;\t&quot;, quote = FALSE)
+
+#MA plot
+repressed = as.data.frame(res.deseq.enza[!is.na(res.deseq.enza$padj) &amp; res.deseq.enza$padj &lt; .1 &amp; res.deseq.enza$log2FoldChange &lt; 0,])
+activated = as.data.frame(res.deseq.enza[!is.na(res.deseq.enza$padj) &amp; res.deseq.enza$padj &lt; .1 &amp; res.deseq.enza$log2FoldChange &gt; 0,])
+unchanged = as.data.frame(res.deseq.enza[rownames(res.deseq.enza) %notin% c(rownames(repressed), rownames(activated)),])
+repressed$status = &quot;Down&quot;
+activated$status = &quot;Up&quot;
+unchanged$status = &quot;Not Significant&quot;
+MA.df = rbind.data.frame(unchanged, activated, repressed)
+MA.df$status = factor(MA.df$status, levels = c(&quot;Not Significant&quot;, &quot;Up&quot;, &quot;Down&quot;))
+pdf(&quot;Enzalutamide_MA_plot_recount.pdf&quot;, width = 7, height = 3.5)
+ggplot(MA.df, aes(x = log(baseMean, 10), y = log2FoldChange, color = status)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype=&quot;dashed&quot;) +
+  scale_color_manual(values = c(&quot;grey60&quot;, &quot;red&quot;, &quot;blue&quot;)) +
+  ylim(-4, 4) +
+  xlim(-1, 5) +
+  ylab(expression(&quot;log&quot;[2]~&quot;(fold change in PRO signal)&quot;)) +
+  xlab(expression(&quot;log&quot;[10]~&quot;(mean of normalized intensity)&quot;)) +
+  ggtitle(&quot;Enzalutamide versus Vehicle&quot;) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5), legend.title = NULL) +
+  labs(color=NULL)
+dev.off()
+
+#Enzalutamide volcano plot just with DNA repair hallmark gene set
+DNA_repair = read.table(&quot;DNA_repair_hallmark.txt&quot;)$V1
+DNA_repair = gene.symbol$gene[gene.symbol$symbol %in% DNA_repair]
+DNA_repair = res.deseq.enza[rownames(res.deseq.enza) %in% DNA_repair,]
+
+DNA_repair_gene_symbol = gene.symbol[gene.symbol$gene %in% rownames(DNA_repair),]
+
+keyvals &lt;- ifelse(
+  DNA_repair$padj &lt; .1 &amp; DNA_repair$log2FoldChange &lt; 0, &#39;blue&#39;,
+  ifelse(DNA_repair$padj &lt; .1 &amp; DNA_repair$log2FoldChange &gt; 0, &#39;red&#39;,
+         &#39;black&#39;))
+keyvals[is.na(keyvals)] &lt;- &#39;black&#39;
+names(keyvals)[keyvals == &#39;red&#39;] &lt;- &#39;Up&#39;
+names(keyvals)[keyvals == &#39;black&#39;] &lt;- &#39;Not Significant&#39;
+names(keyvals)[keyvals == &#39;blue&#39;] &lt;- &#39;Down&#39;
+
+pdf(&quot;Enzalutamide_Volcano_DNA_repair_hallmark_recount.pdf&quot;)
+EnhancedVolcano(DNA_repair,
+                lab = DNA_repair_gene_symbol$symbol[DNA_repair_gene_symbol$gene == rownames(DNA_repair)],
+                x = &#39;log2FoldChange&#39;,
+                y = &#39;padj&#39;,
+                xlab = bquote(~log[2]~ &#39;(fold change)&#39;),
+                ylab = bquote(&#39;-&#39; ~log[10]~ &#39;(q-value)&#39;),
+                title = &#39;Enzalutamide versus Vehicle&#39;,
+                subtitle = NULL,
+                caption = NULL,
+                pCutoff = 0.1,
+                FCcutoff = 0.0,
+                pointSize = 2.0,
+                labSize = 3.0,
+                xlim = c(-1,1),
+                ylim = c(0, 40),
+                colCustom = keyvals,
+                colAlpha = .25,
+                legendPosition = &#39;right&#39;,
+                legendLabSize = 10,
+                legendIconSize = 5.0) +
+  theme(plot.title = element_text(hjust = 0.5))
+dev.off()
+
+Enzalutamide_Volcano_plot_data &lt;- as.data.frame(DNA_repair)
+Enzalutamide_Volcano_plot_data &lt;- merge.data.frame(Enzalutamide_Volcano_plot_data, gene.symbol, 
+                                                   by.x = &quot;row.names&quot;, by.y = &quot;gene&quot;)
+Enzalutamide_Volcano_plot_data &lt;- Enzalutamide_Volcano_plot_data[,c(&quot;symbol&quot;, &quot;log2FoldChange&quot;, &quot;padj&quot;)]
+write.table(Enzalutamide_Volcano_plot_data, file = &quot;Enzalutamide_Volcano_DNA_repair_hallmark_plot_data_recount.tsv&quot;, row.names=FALSE, sep=&quot;\t&quot;, quote = FALSE)
+
+#MA plot
+# repressed = as.data.frame(DNA_repair[!is.na(DNA_repair$padj) &amp; DNA_repair$padj &lt; .1 &amp; DNA_repair$log2FoldChange &lt; 0,])
+# activated = as.data.frame(DNA_repair[!is.na(DNA_repair$padj) &amp; DNA_repair$padj &lt; .1 &amp; DNA_repair$log2FoldChange &gt; 0,])
+unchanged = as.data.frame(DNA_repair[rownames(DNA_repair) %notin% c(rownames(repressed), rownames(activated)),])
+# repressed$status = &quot;Down&quot;
+# activated$status = &quot;Up&quot;
+unchanged$status = &quot;Not Significant&quot;
+MA.df = unchanged
+MA.df$status = factor(MA.df$status, levels = c(&quot;Not Significant&quot;, &quot;Up&quot;, &quot;Down&quot;))
+pdf(&quot;Enzalutamide_MA_plot_DNA_repair_hallmark_recount.pdf&quot;, width = 7, height = 3.5)
+ggplot(MA.df, aes(x = log(baseMean, 10), y = log2FoldChange, color = status)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype=&quot;dashed&quot;) +
+  scale_color_manual(values = c(&quot;grey60&quot;, &quot;red&quot;, &quot;blue&quot;)) +
+  ylim(-4, 4) +
+  xlim(-1, 5) +
+  ylab(expression(&quot;log&quot;[2]~&quot;(fold change in PRO signal)&quot;)) +
+  xlab(expression(&quot;log&quot;[10]~&quot;(mean of normalized intensity)&quot;)) +
+  ggtitle(&quot;Enzalutamide versus Vehicle&quot;) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5), legend.title = NULL) +
+  labs(color=NULL)
+dev.off()
+
+#Enzalutamide volcano plot just with Androgen_response hallmark gene set
+Androgen_response = read.table(&quot;Androgen_response_hallmark.txt&quot;)$V1
+Androgen_response = gene.symbol$gene[gene.symbol$symbol %in% Androgen_response]
+Androgen_response = res.deseq.enza[rownames(res.deseq.enza) %in% Androgen_response,]
+
+Androgen_response_gene_symbol = gene.symbol[gene.symbol$gene %in% rownames(Androgen_response),]
+
+keyvals &lt;- ifelse(
+  Androgen_response$padj &lt; .1 &amp; Androgen_response$log2FoldChange &lt; 0, &#39;blue&#39;,
+  ifelse(Androgen_response$padj &lt; .1 &amp; Androgen_response$log2FoldChange &gt; 0, &#39;red&#39;,
+         &#39;black&#39;))
+keyvals[is.na(keyvals)] &lt;- &#39;black&#39;
+names(keyvals)[keyvals == &#39;red&#39;] &lt;- &#39;Up&#39;
+names(keyvals)[keyvals == &#39;black&#39;] &lt;- &#39;Not Significant&#39;
+names(keyvals)[keyvals == &#39;blue&#39;] &lt;- &#39;Down&#39;
+
+pdf(&quot;Enzalutamide_Volcano_Androgen_response_hallmark_recount.pdf&quot;)
+EnhancedVolcano(Androgen_response,
+                lab = Androgen_response_gene_symbol$symbol[Androgen_response_gene_symbol$gene == rownames(Androgen_response)],
+                x = &#39;log2FoldChange&#39;,
+                y = &#39;padj&#39;,
+                xlab = bquote(~log[2]~ &#39;(fold change)&#39;),
+                ylab = bquote(&#39;-&#39; ~log[10]~ &#39;(q-value)&#39;),
+                title = &#39;Enzalutamide versus Vehicle&#39;,
+                subtitle = NULL,
+                caption = NULL,
+                pCutoff = 0.1,
+                FCcutoff = 0.0,
+                pointSize = 2.0,
+                labSize = 3.0,
+                xlim = c(-.75,.75),
+                ylim = c(0, 25),
+                colCustom = keyvals,
+                colAlpha = .25,
+                legendPosition = &#39;right&#39;,
+                legendLabSize = 10,
+                legendIconSize = 5.0) +
+  theme(plot.title = element_text(hjust = 0.5))
+dev.off()
+
+Enzalutamide_Volcano_plot_data &lt;- as.data.frame(Androgen_response)
+Enzalutamide_Volcano_plot_data &lt;- merge.data.frame(Enzalutamide_Volcano_plot_data, gene.symbol, 
+                                                   by.x = &quot;row.names&quot;, by.y = &quot;gene&quot;)
+Enzalutamide_Volcano_plot_data &lt;- Enzalutamide_Volcano_plot_data[,c(&quot;symbol&quot;, &quot;log2FoldChange&quot;, &quot;padj&quot;)]
+write.table(Enzalutamide_Volcano_plot_data, file = &quot;Enzalutamide_Volcano_Androgen_response_hallmark_plot_data_recount.tsv&quot;, row.names=FALSE, sep=&quot;\t&quot;, quote = FALSE)
+
+#MA plot
+repressed = as.data.frame(Androgen_response[!is.na(Androgen_response$padj) &amp; Androgen_response$padj &lt; .1 &amp; Androgen_response$log2FoldChange &lt; 0,])
+# activated = as.data.frame(Androgen_response[!is.na(Androgen_response$padj) &amp; Androgen_response$padj &lt; .1 &amp; Androgen_response$log2FoldChange &gt; 0,])
+unchanged = as.data.frame(Androgen_response[rownames(Androgen_response) %notin% c(rownames(repressed), rownames(activated)),])
+repressed$status = &quot;Down&quot;
+# activated$status = &quot;Up&quot;
+unchanged$status = &quot;Not Significant&quot;
+MA.df = rbind.data.frame(unchanged, repressed)
+MA.df$status = factor(MA.df$status, levels = c(&quot;Not Significant&quot;, &quot;Up&quot;, &quot;Down&quot;))
+pdf(&quot;Enzalutamide_MA_plot_Androgen_response_hallmark_recount.pdf&quot;, width = 7, height = 3.5)
+ggplot(MA.df, aes(x = log(baseMean, 10), y = log2FoldChange, color = status)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype=&quot;dashed&quot;) +
+  scale_color_manual(values = c(&quot;grey60&quot;, &quot;blue&quot;)) +
+  ylim(-4, 4) +
+  xlim(-1, 5) +
+  ylab(expression(&quot;log&quot;[2]~&quot;(fold change in PRO signal)&quot;)) +
+  xlab(expression(&quot;log&quot;[10]~&quot;(mean of normalized intensity)&quot;)) +
+  ggtitle(&quot;Enzalutamide versus Vehicle&quot;) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5), legend.title = NULL) +
+  labs(color=NULL)
+dev.off()
+
+#Radiation volcano plot
+keyvals &lt;- ifelse(
+  res.deseq.radiation$padj &lt; .1 &amp; res.deseq.radiation$log2FoldChange &lt; 0, &#39;blue&#39;,
+  ifelse(res.deseq.radiation$padj &lt; .1 &amp; res.deseq.radiation$log2FoldChange &gt; 0, &#39;red&#39;,
+         &#39;black&#39;))
+keyvals[is.na(keyvals)] &lt;- &#39;black&#39;
+names(keyvals)[keyvals == &#39;red&#39;] &lt;- &#39;Up&#39;
+names(keyvals)[keyvals == &#39;black&#39;] &lt;- &#39;Not Significant&#39;
+names(keyvals)[keyvals == &#39;blue&#39;] &lt;- &#39;Down&#39;
+
+pdf(&quot;Radiation_Volcano_batch2_recount.pdf&quot;)
+EnhancedVolcano(res.deseq.radiation,
+                lab = gene.symbol$symbol[gene.symbol$gene == rownames(res.deseq.radiation)],
+                x = &#39;log2FoldChange&#39;,
+                y = &#39;padj&#39;,
+                xlab = bquote(~log[2]~ &#39;(fold change)&#39;),
+                ylab = bquote(&#39;-&#39; ~log[10]~ &#39;(q-value)&#39;),
+                title = &#39;Radiation versus Control&#39;,
+                subtitle = NULL,
+                caption = NULL,
+                pCutoff = 0.1,
+                FCcutoff = 0.0,
+                pointSize = 2.0,
+                labSize = 3.0,
+                xlim = c(-3,3),
+                colCustom = keyvals,
+                colAlpha = .25,
+                legendPosition = &#39;right&#39;,
+                legendLabSize = 10,
+                legendIconSize = 5.0) +
+  theme(plot.title = element_text(hjust = 0.5))
+dev.off()
+
+Radiation_batch2_Volcano_plot_data &lt;- as.data.frame(DNA_repair)
+Radiation_batch2_Volcano_plot_data &lt;- merge.data.frame(Radiation_batch2_Volcano_plot_data, gene.symbol, 
+                                                   by.x = &quot;row.names&quot;, by.y = &quot;gene&quot;)
+Radiation_batch2_Volcano_plot_data &lt;- Radiation_batch2_Volcano_plot_data[,c(&quot;symbol&quot;, &quot;log2FoldChange&quot;, &quot;padj&quot;)]
+write.table(Radiation_batch2_Volcano_plot_data, file = &quot;Radiation_batch2_Volcano_DNA_repair_hallmark_plot_data_recount.tsv&quot;, row.names=FALSE, sep=&quot;\t&quot;, quote = FALSE)
+
+#MA plot
+repressed = as.data.frame(res.deseq.radiation[!is.na(res.deseq.radiation$padj) &amp; res.deseq.radiation$padj &lt; .1 &amp; res.deseq.radiation$log2FoldChange &lt; 0,])
+activated = as.data.frame(res.deseq.radiation[!is.na(res.deseq.radiation$padj) &amp; res.deseq.radiation$padj &lt; .1 &amp; res.deseq.radiation$log2FoldChange &gt; 0,])
+unchanged = as.data.frame(res.deseq.radiation[rownames(res.deseq.radiation) %notin% c(rownames(repressed), rownames(activated)),])
+repressed$status = &quot;Down&quot;
+activated$status = &quot;Up&quot;
+unchanged$status = &quot;Not Significant&quot;
+MA.df = rbind.data.frame(unchanged, activated, repressed)
+MA.df$status = factor(MA.df$status, levels = c(&quot;Not Significant&quot;, &quot;Up&quot;, &quot;Down&quot;))
+pdf(&quot;Radiation_MA_plot_batch2_recount.pdf&quot;, width = 7, height = 3.5)
+ggplot(MA.df, aes(x = log(baseMean, 10), y = log2FoldChange, color = status)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype=&quot;dashed&quot;) +
+  scale_color_manual(values = c(&quot;grey60&quot;, &quot;red&quot;, &quot;blue&quot;)) +
+  ylim(-4, 4) +
+  xlim(-1, 5) +
+  ylab(expression(&quot;log&quot;[2]~&quot;(fold change in PRO signal)&quot;)) +
+  xlab(expression(&quot;log&quot;[10]~&quot;(mean of normalized intensity)&quot;)) +
+  ggtitle(&quot;Radiation versus Control&quot;) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5), legend.title = NULL) +
+  labs(color=NULL)
+dev.off()
+
+#Radiation volcano plot just with DNA repair hallmark gene set
+DNA_repair = read.table(&quot;DNA_repair_hallmark.txt&quot;)$V1
+DNA_repair = gene.symbol$gene[gene.symbol$symbol %in% DNA_repair]
+DNA_repair = res.deseq.radiation[rownames(res.deseq.radiation) %in% DNA_repair,]
+
+DNA_repair_gene_symbol = gene.symbol[gene.symbol$gene %in% rownames(DNA_repair),]
+
+keyvals &lt;- ifelse(
+  DNA_repair$padj &lt; .1 &amp; DNA_repair$log2FoldChange &lt; 0, &#39;blue&#39;,
+  ifelse(DNA_repair$padj &lt; .1 &amp; DNA_repair$log2FoldChange &gt; 0, &#39;red&#39;,
+         &#39;black&#39;))
+keyvals[is.na(keyvals)] &lt;- &#39;black&#39;
+names(keyvals)[keyvals == &#39;red&#39;] &lt;- &#39;Up&#39;
+names(keyvals)[keyvals == &#39;black&#39;] &lt;- &#39;Not Significant&#39;
+names(keyvals)[keyvals == &#39;blue&#39;] &lt;- &#39;Down&#39;
+
+pdf(&quot;Radiation_Volcano_DNA_repair_hallmark_recount.pdf&quot;)
+EnhancedVolcano(DNA_repair,
+                lab = DNA_repair_gene_symbol$symbol[DNA_repair_gene_symbol$gene == rownames(DNA_repair)],
+                x = &#39;log2FoldChange&#39;,
+                y = &#39;padj&#39;,
+                xlab = bquote(~log[2]~ &#39;(fold change)&#39;),
+                ylab = bquote(&#39;-&#39; ~log[10]~ &#39;(q-value)&#39;),
+                title = &#39;Radiation versus Control&#39;,
+                subtitle = NULL,
+                caption = NULL,
+                pCutoff = 0.1,
+                FCcutoff = 0.0,
+                pointSize = 2.0,
+                labSize = 3.0,
+                xlim = c(-1,1),
+                ylim = c(0, 40),
+                colCustom = keyvals,
+                colAlpha = .25,
+                legendPosition = &#39;right&#39;,
+                legendLabSize = 10,
+                legendIconSize = 5.0) +
+  theme(plot.title = element_text(hjust = 0.5))
+dev.off()
+
+Radiation_batch2_Volcano_plot_data &lt;- as.data.frame(DNA_repair)
+Radiation_batch2_Volcano_plot_data &lt;- merge.data.frame(Radiation_batch2_Volcano_plot_data, gene.symbol, 
+                                                       by.x = &quot;row.names&quot;, by.y = &quot;gene&quot;)
+Radiation_batch2_Volcano_plot_data &lt;- Radiation_batch2_Volcano_plot_data[,c(&quot;symbol&quot;, &quot;log2FoldChange&quot;, &quot;padj&quot;)]
+write.table(Radiation_batch2_Volcano_plot_data, file = &quot;Radiation_batch2_Volcano_DNA_repair_hallmark_plot_data_recount.tsv&quot;, row.names=FALSE, sep=&quot;\t&quot;, quote = FALSE)
+
+#MA plot
+repressed = as.data.frame(DNA_repair[!is.na(DNA_repair$padj) &amp; DNA_repair$padj &lt; .1 &amp; DNA_repair$log2FoldChange &lt; 0,])
+activated = as.data.frame(DNA_repair[!is.na(DNA_repair$padj) &amp; DNA_repair$padj &lt; .1 &amp; DNA_repair$log2FoldChange &gt; 0,])
+unchanged = as.data.frame(DNA_repair[rownames(DNA_repair) %notin% c(rownames(repressed), rownames(activated)),])
+repressed$status = &quot;Down&quot;
+activated$status = &quot;Up&quot;
+unchanged$status = &quot;Not Significant&quot;
+MA.df = rbind.data.frame(unchanged, activated, repressed)
+MA.df$status = factor(MA.df$status, levels = c(&quot;Not Significant&quot;, &quot;Up&quot;, &quot;Down&quot;))
+pdf(&quot;Radiation_MA_plot_DNA_repair_hallmark_recount.pdf&quot;, width = 7, height = 3.5)
+ggplot(MA.df, aes(x = log(baseMean, 10), y = log2FoldChange, color = status)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype=&quot;dashed&quot;) +
+  scale_color_manual(values = c(&quot;grey60&quot;, &quot;red&quot;, &quot;blue&quot;)) +
+  ylim(-4, 4) +
+  xlim(-1, 5) +
+  ylab(expression(&quot;log&quot;[2]~&quot;(fold change in PRO signal)&quot;)) +
+  xlab(expression(&quot;log&quot;[10]~&quot;(mean of normalized intensity)&quot;)) +
+  ggtitle(&quot;Radiation versus Control&quot;) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5), legend.title = NULL) +
+  labs(color=NULL)
+dev.off()
+
+#Radiation volcano plot just with Androgen response hallmark gene set
+Androgen_response = read.table(&quot;Androgen_response_hallmark.txt&quot;)$V1
+Androgen_response = gene.symbol$gene[gene.symbol$symbol %in% Androgen_response]
+Androgen_response = res.deseq.radiation[rownames(res.deseq.radiation) %in% Androgen_response,]
+
+Androgen_response_gene_symbol = gene.symbol[gene.symbol$gene %in% rownames(Androgen_response),]
+
+keyvals &lt;- ifelse(
+  Androgen_response$padj &lt; .1 &amp; Androgen_response$log2FoldChange &lt; 0, &#39;blue&#39;,
+  ifelse(Androgen_response$padj &lt; .1 &amp; Androgen_response$log2FoldChange &gt; 0, &#39;red&#39;,
+         &#39;black&#39;))
+keyvals[is.na(keyvals)] &lt;- &#39;black&#39;
+names(keyvals)[keyvals == &#39;red&#39;] &lt;- &#39;Up&#39;
+names(keyvals)[keyvals == &#39;black&#39;] &lt;- &#39;Not Significant&#39;
+names(keyvals)[keyvals == &#39;blue&#39;] &lt;- &#39;Down&#39;
+
+pdf(&quot;Radiation_Volcano_Androgen_response_hallmark_recount.pdf&quot;)
+EnhancedVolcano(Androgen_response,
+                lab = Androgen_response_gene_symbol$symbol[Androgen_response_gene_symbol$gene == rownames(Androgen_response)],
+                x = &#39;log2FoldChange&#39;,
+                y = &#39;padj&#39;,
+                xlab = bquote(~log[2]~ &#39;(fold change)&#39;),
+                ylab = bquote(&#39;-&#39; ~log[10]~ &#39;(q-value)&#39;),
+                title = &#39;Radiation versus Control&#39;,
+                subtitle = NULL,
+                caption = NULL,
+                pCutoff = 0.1,
+                FCcutoff = 0.0,
+                pointSize = 2.0,
+                labSize = 3.0,
+                xlim = c(-.75,.75),
+                ylim = c(0, 25),
+                colCustom = keyvals,
+                colAlpha = .25,
+                legendPosition = &#39;right&#39;,
+                legendLabSize = 10,
+                legendIconSize = 5.0) +
+  theme(plot.title = element_text(hjust = 0.5))
+dev.off()
+
+Radiation_batch2_Volcano_plot_data &lt;- as.data.frame(Androgen_response)
+Radiation_batch2_Volcano_plot_data &lt;- merge.data.frame(Radiation_batch2_Volcano_plot_data, gene.symbol, 
+                                                   by.x = &quot;row.names&quot;, by.y = &quot;gene&quot;)
+Radiation_batch2_Volcano_plot_data &lt;- Radiation_batch2_Volcano_plot_data[,c(&quot;symbol&quot;, &quot;log2FoldChange&quot;, &quot;padj&quot;)]
+write.table(Radiation_batch2_Volcano_plot_data, file = &quot;Radiation_batch2_Volcano_Androgen_response_hallmark_plot_data_recount.tsv&quot;, row.names=FALSE, sep=&quot;\t&quot;, quote = FALSE)
+
+#MA plot
+repressed = as.data.frame(Androgen_response[!is.na(Androgen_response$padj) &amp; Androgen_response$padj &lt; .1 &amp; Androgen_response$log2FoldChange &lt; 0,])
+activated = as.data.frame(Androgen_response[!is.na(Androgen_response$padj) &amp; Androgen_response$padj &lt; .1 &amp; Androgen_response$log2FoldChange &gt; 0,])
+unchanged = as.data.frame(Androgen_response[rownames(Androgen_response) %notin% c(rownames(repressed), rownames(activated)),])
+repressed$status = &quot;Down&quot;
+activated$status = &quot;Up&quot;
+unchanged$status = &quot;Not Significant&quot;
+MA.df = rbind.data.frame(unchanged, activated, repressed)
+MA.df$status = factor(MA.df$status, levels = c(&quot;Not Significant&quot;, &quot;Up&quot;, &quot;Down&quot;))
+pdf(&quot;Radiation_MA_plot_Androgen_response_hallmark_recount.pdf&quot;, width = 7, height = 3.5)
+ggplot(MA.df, aes(x = log(baseMean, 10), y = log2FoldChange, color = status)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype=&quot;dashed&quot;) +
+  scale_color_manual(values = c(&quot;grey60&quot;, &quot;red&quot;, &quot;blue&quot;)) +
+  ylim(-4, 4) +
+  xlim(-1, 5) +
+  ylab(expression(&quot;log&quot;[2]~&quot;(fold change in PRO signal)&quot;)) +
+  xlab(expression(&quot;log&quot;[10]~&quot;(mean of normalized intensity)&quot;)) +
+  ggtitle(&quot;Radiation versus Control&quot;) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5), legend.title = NULL) +
+  labs(color=NULL)
+dev.off()
+
+#Radiation volcano plot just with user-defined AR-activated genes
+Androgen_response = rownames(res.deseq.enza)[res.deseq.enza$padj &lt; .1 &amp; !is.na(res.deseq.enza$padj) &amp; res.deseq.enza$log2FoldChange &lt; 0]
+Androgen_response = res.deseq.radiation[rownames(res.deseq.radiation) %in% Androgen_response,]
+Androgen_response_gene_symbol = gene.symbol[gene.symbol$gene %in% rownames(Androgen_response),]
+
+keyvals &lt;- ifelse(
+  Androgen_response$padj &lt; .1 &amp; Androgen_response$log2FoldChange &lt; 0, &#39;blue&#39;,
+  ifelse(Androgen_response$padj &lt; .1 &amp; Androgen_response$log2FoldChange &gt; 0, &#39;red&#39;,
+         &#39;black&#39;))
+keyvals[is.na(keyvals)] &lt;- &#39;black&#39;
+names(keyvals)[keyvals == &#39;red&#39;] &lt;- &#39;Up&#39;
+names(keyvals)[keyvals == &#39;black&#39;] &lt;- &#39;Not Significant&#39;
+names(keyvals)[keyvals == &#39;blue&#39;] &lt;- &#39;Down&#39;
+
+pdf(&quot;Radiation_Volcano_enza_repressed_genes_recount.pdf&quot;)
+EnhancedVolcano(Androgen_response,
+                lab = Androgen_response_gene_symbol$symbol[Androgen_response_gene_symbol$gene == rownames(Androgen_response)],
+                x = &#39;log2FoldChange&#39;,
+                y = &#39;padj&#39;,
+                xlab = bquote(~log[2]~ &#39;(fold change)&#39;),
+                ylab = bquote(&#39;-&#39; ~log[10]~ &#39;(q-value)&#39;),
+                title = &#39;Radiation versus Control&#39;,
+                subtitle = NULL,
+                caption = NULL,
+                pCutoff = 0.1,
+                FCcutoff = 0.0,
+                pointSize = 2.0,
+                labSize = 3.0,
+                xlim = c(-1,1),
+                ylim = c(0,70),
+                colCustom = keyvals,
+                colAlpha = .25,
+                legendPosition = &#39;right&#39;,
+                legendLabSize = 10,
+                legendIconSize = 5.0) +
+  theme(plot.title = element_text(hjust = 0.5))
+dev.off()
+
+#MA plot
+repressed = as.data.frame(Androgen_response[!is.na(Androgen_response$padj) &amp; Androgen_response$padj &lt; .1 &amp; Androgen_response$log2FoldChange &lt; 0,])
+activated = as.data.frame(Androgen_response[!is.na(Androgen_response$padj) &amp; Androgen_response$padj &lt; .1 &amp; Androgen_response$log2FoldChange &gt; 0,])
+unchanged = as.data.frame(Androgen_response[rownames(Androgen_response) %notin% c(rownames(repressed), rownames(activated)),])
+repressed$status = &quot;Down&quot;
+activated$status = &quot;Up&quot;
+unchanged$status = &quot;Not Significant&quot;
+MA.df = rbind.data.frame(unchanged, activated, repressed)
+MA.df$status = factor(MA.df$status, levels = c(&quot;Not Significant&quot;, &quot;Up&quot;, &quot;Down&quot;))
+pdf(&quot;Radiation_MA_plot_enza_repressed_genes_recount.pdf&quot;, width = 7, height = 3.5)
+ggplot(MA.df, aes(x = log(baseMean, 10), y = log2FoldChange, color = status)) +
+  geom_point() +
+  geom_hline(yintercept = 0, linetype=&quot;dashed&quot;) +
+  scale_color_manual(values = c(&quot;grey60&quot;, &quot;red&quot;, &quot;blue&quot;)) +
+  ylim(-4, 4) +
+  xlim(-1,5) +
+  ylab(expression(&quot;log&quot;[2]~&quot;(fold change in PRO signal)&quot;)) +
+  xlab(expression(&quot;log&quot;[10]~&quot;(mean of normalized intensity)&quot;)) +
+  ggtitle(&quot;Radiation versus Control&quot;) +
+  theme_bw() +
+  theme(plot.title = element_text(hjust = 0.5), legend.title = NULL) +
+  labs(color=NULL)
+dev.off()</code></pre>
+</div>
+<div id="proximity-analysis-figure-2j" class="section level2" number="5.5">
+<h2><span class="header-section-number">5.5</span> Proximity analysis (Figure 2J)</h2>
+<p>We don’t have P53 ChIP-seq data from LnCaP cells, but we used ENCODE data from two other cell lines and found similar results.</p>
+<pre class="bash"><code>#P53 ENCODE ChIP-seq peaks from A549
+wget https://www.encodeproject.org/files/ENCFF699UTZ/@@download/ENCFF699UTZ.bed.gz
+gunzip ENCFF699UTZ.bed.gz
+mv ENCFF699UTZ.bed A549_P53.bed
+
+#P53 ENCODE ChIP-seq peaks from HepG2
+wget https://www.encodeproject.org/files/ENCFF701DTE/@@download/ENCFF701DTE.bed.gz
+gunzip ENCFF701DTE.bed.gz
+mv ENCFF701DTE.bed HepG2_P53.bed</code></pre>
+<p>We also downloaded AR ChIP-seq peaks from CistromeDB</p>
+<pre class="bash"><code>#CDFs with ENCODE P53 ChIP-seq peaks from A549 cells
+df = res.deseq.radiation
+treat = &quot;Radiation&quot;
+class = paste0(treat, &quot; Activated Genes&quot;)
+df.activated = df[df$padj &lt; 0.1 &amp; !is.na(df$padj) &amp; df$log2FoldChange &gt; 0,]
+df.unchanged = df[rownames(df) %notin% rownames(df.activated) &amp; !is.na(df$padj) &amp; df$log2FoldChange &lt; 0,]
+df.unchanged$treatment = &quot;Similarly Expressed Genes&quot;
+df.activated$treatment = class
+df.deseq.effects.lattice = rbind(df.unchanged, df.activated)
+df.deseq.effects.lattice$treatment = factor(df.deseq.effects.lattice$treatment)
+df.deseq.effects.lattice$treatment = relevel(df.deseq.effects.lattice$treatment, ref = &#39;Similarly Expressed Genes&#39;)
+out = matchit(treatment ~ baseMean, data = df.deseq.effects.lattice, method = &quot;optimal&quot;, ratio = 1)
+df.deseq.effects.lattice = 
+  df.deseq.effects.lattice[df.deseq.effects.lattice$treatment == class | 
+                             rownames(df.deseq.effects.lattice) %in% out$match.matrix,]
+ggplot(as.data.frame(df.deseq.effects.lattice), aes(x = log(baseMean, base = 10), color = treatment)) +
+  stat_ecdf(geom = &quot;step&quot;, size = 1) +
+  ylab(&quot;Cumulative distribution function&quot;) +
+  xlab(expression(&quot;log&quot;[10]~&quot;(Mean of Normalized Counts)&quot;)) +
+  theme_bw() +
+  theme(text = element_text(size = 20))
+write.table(rownames(df.deseq.effects.lattice)[df.deseq.effects.lattice$treatment == &#39;Similarly Expressed Genes&#39;], file = &quot;Radiation_activated_similarly_expressed_genes_recount.txt&quot;)
+
+col.lines = c(&quot;#FF0000&quot;, &quot;grey60&quot;)
+df.all = cdf.deseq.df(df = df.deseq.effects.lattice, genes = gene.file, chip.peaks =&#39;A549_P53.bed&#39;, class = class, tf.name = &#39;P53&#39;)
+pdf(&quot;CDF_radiation_activated_P53_peaks_recount.pdf&quot;, height = 3.5, width = 4) 
+ecdfplot(~log(abs(dis), base = 10), groups = status, data = df.all,
+         auto.key = list(lines=TRUE, points=FALSE),
+         col = col.lines,
+         aspect = 1,
+         scales=list(relation=&quot;free&quot;,alternating=c(1,1,1,1)),
+         ylab = &#39;Cumulative\nDistribution Function&#39;,
+         xlab = expression(&#39;log&#39;[10]~&#39;P53 Distance from TSS&#39;),
+         between=list(y=1.0),
+         type = &#39;a&#39;,
+         xlim = c(0,7.5),
+         lwd=2,
+         par.settings = list(superpose.line = list(col = col.lines, lwd=3), 
+                             strip.background=list(col=&quot;grey85&quot;)),
+         panel = function(...) {
+           panel.abline(v= 200, lty =2)
+           panel.ecdfplot(...)
+         })
+dev.off()
+
+ks = ks.test(x = log(abs(df.all$dis)[df.all$status == class]),
+                     y = log(abs(df.all$dis)[df.all$status == &#39;Similarly Expressed Genes&#39;]))$p.value
+ks = formatC(ks, format = &quot;e&quot;, digits = 1)
+ks
+
+#CDFs with AR ChIP-seq peaks
+#Peaks are from GEO accession GSM2716919, downloaded as processed peaks from CistromeDB
+col.lines = c(&quot;#FF0000&quot;, &quot;grey60&quot;)
+df.all = cdf.deseq.df(df = df.deseq.effects.lattice, genes = gene.file, chip.peaks =&#39;LNCaP_AR_peaks.bed&#39;, class = class, tf.name = &#39;Androgen Receptor&#39;)
+pdf(&quot;CDF_radiation_activated_AR_peaks_recount.pdf&quot;, height = 3.5, width = 4) 
+ecdfplot(~log(abs(dis), base = 10), groups = status, data = df.all,
+         auto.key = list(lines=TRUE, points=FALSE),
+         col = col.lines,
+         aspect = 1,
+         scales=list(relation=&quot;free&quot;,alternating=c(1,1,1,1)),
+         ylab = &#39;Cumulative\nDistribution Function&#39;,
+         xlab = expression(&#39;log&#39;[10]~&#39;AR Distance from TSS&#39;),
+         between=list(y=1.0),
+         type = &#39;a&#39;,
+         xlim = c(0,7.5),
+         lwd=2,
+         par.settings = list(superpose.line = list(col = col.lines, lwd=3), 
+                             strip.background=list(col=&quot;grey85&quot;)),
+         panel = function(...) {
+           panel.abline(v= 200, lty =2)
+           panel.ecdfplot(...)
+         })
+dev.off()
+
+ks = ks.test(x = log(abs(df.all$dis)[df.all$status == class]),
+             y = log(abs(df.all$dis)[df.all$status == &#39;Similarly Expressed Genes&#39;]))$p.value
+ks = formatC(ks, format = &quot;e&quot;, digits = 1)
+ks
+
+df = res.deseq.radiation
+treat = &quot;Radiation&quot;
+class = paste0(treat, &quot; Repressed Genes&quot;)
+df.activated = df[df$padj &lt; 0.1 &amp; !is.na(df$padj) &amp; df$log2FoldChange &lt; 0,]
+df.unchanged = df[rownames(df) %notin% rownames(df.activated) &amp; !is.na(df$padj) &amp; df$log2FoldChange &lt; 0,]
+df.unchanged$treatment = &quot;Similarly Expressed Genes&quot;
+df.activated$treatment = class
+df.deseq.effects.lattice = rbind(df.unchanged, df.activated)
+df.deseq.effects.lattice$treatment = factor(df.deseq.effects.lattice$treatment)
+df.deseq.effects.lattice$treatment = relevel(df.deseq.effects.lattice$treatment, ref = &#39;Similarly Expressed Genes&#39;)
+out = matchit(treatment ~ baseMean, data = df.deseq.effects.lattice, method = &quot;optimal&quot;, ratio = 1)
+df.deseq.effects.lattice = 
+  df.deseq.effects.lattice[df.deseq.effects.lattice$treatment == class | 
+                             rownames(df.deseq.effects.lattice) %in% out$match.matrix,]
+ggplot(as.data.frame(df.deseq.effects.lattice), aes(x = log(baseMean, base = 10), color = treatment)) +
+  stat_ecdf(geom = &quot;step&quot;, size = 1) +
+  ylab(&quot;Cumulative distribution function&quot;) +
+  xlab(expression(&quot;log&quot;[10]~&quot;(Mean of Normalized Counts)&quot;)) +
+  theme_bw() +
+  theme(text = element_text(size = 20))
+write.table(rownames(df.deseq.effects.lattice)[df.deseq.effects.lattice$treatment == &#39;Similarly Expressed Genes&#39;], file = &quot;Radiation_repressed_similarly_expressed_genes_recount.txt&quot;)
+
+col.lines = c(&quot;#0000FF&quot;, &quot;grey60&quot;)
+df.all = cdf.deseq.df(df = df.deseq.effects.lattice, genes = gene.file, chip.peaks =&#39;LNCaP_AR_peaks.bed&#39;, class = class, tf.name = &#39;Androgen Receptor&#39;)
+pdf(&quot;CDF_radiation_repressed_AR_peaks_recount.pdf&quot;, height = 3.5, width = 4) 
+ecdfplot(~log(abs(dis), base = 10), groups = status, data = df.all,
+         auto.key = list(lines=TRUE, points=FALSE),
+         col = col.lines,
+         aspect = 1,
+         scales=list(relation=&quot;free&quot;,alternating=c(1,1,1,1)),
+         ylab = &#39;Cumulative\nDistribution Function&#39;,
+         xlab = expression(&#39;log&#39;[10]~&#39;AR Distance from TSS&#39;),
+         between=list(y=1.0),
+         type = &#39;a&#39;,
+         xlim = c(0,7.5),
+         lwd=2,
+         par.settings = list(superpose.line = list(col = col.lines, lwd=3), 
+                             strip.background=list(col=&quot;grey85&quot;)),
+         panel = function(...) {
+           panel.abline(v= 200, lty =2)
+           panel.ecdfplot(...)
+         })
+dev.off()
+
+ks = ks.test(x = log(abs(df.all$dis)[df.all$status == class]),
+             y = log(abs(df.all$dis)[df.all$status == &#39;Similarly Expressed Genes&#39;]))$p.value
+ks = formatC(ks, format = &quot;e&quot;, digits = 1)
+ks
+
+df = res.deseq.enza
+treat = &quot;Enzalutamide&quot;
+class = paste0(treat, &quot; Repressed Genes&quot;)
+df.activated = df[df$padj &lt; 0.1 &amp; !is.na(df$padj) &amp; df$log2FoldChange &lt; 0,]
+df.unchanged = df[rownames(df) %notin% rownames(df.activated) &amp; !is.na(df$padj) &amp; df$log2FoldChange &gt; 0,]
+df.unchanged$treatment = &quot;Similarly Expressed Genes&quot;
+df.activated$treatment = class
+df.deseq.effects.lattice = rbind(df.unchanged, df.activated)
+df.deseq.effects.lattice$treatment = factor(df.deseq.effects.lattice$treatment)
+df.deseq.effects.lattice$treatment = relevel(df.deseq.effects.lattice$treatment, ref = &#39;Similarly Expressed Genes&#39;)
+out = matchit(treatment ~ baseMean, data = df.deseq.effects.lattice, method = &quot;optimal&quot;, ratio = 1)
+df.deseq.effects.lattice = 
+  df.deseq.effects.lattice[df.deseq.effects.lattice$treatment == class | 
+                             rownames(df.deseq.effects.lattice) %in% out$match.matrix,]
+ggplot(as.data.frame(df.deseq.effects.lattice), aes(x = log(baseMean, base = 10), color = treatment)) +
+  stat_ecdf(geom = &quot;step&quot;, size = 1) +
+  ylab(&quot;Cumulative distribution function&quot;) +
+  xlab(expression(&quot;log&quot;[10]~&quot;(Mean of Normalized Counts)&quot;)) +
+  theme_bw() +
+  theme(text = element_text(size = 20))
+write.table(rownames(df.deseq.effects.lattice)[df.deseq.effects.lattice$treatment == &#39;Similarly Expressed Genes&#39;], file = &quot;Enzalutamide_repressed_similarly_expressed_genes_recount.txt&quot;)
+
+col.lines = c(&quot;#0000FF&quot;, &quot;grey60&quot;)
+df.all = cdf.deseq.df(df = df.deseq.effects.lattice, genes = gene.file, chip.peaks =&#39;LNCaP_AR_peaks.bed&#39;, class = class, tf.name = &#39;Androgen Receptor&#39;)
+pdf(&quot;CDF_enzalutamide_repressed_AR_peaks_recount.pdf&quot;, height = 3.5, width = 4) 
+ecdfplot(~log(abs(dis), base = 10), groups = status, data = df.all,
+         auto.key = list(lines=TRUE, points=FALSE),
+         col = col.lines,
+         aspect = 1,
+         scales=list(relation=&quot;free&quot;,alternating=c(1,1,1,1)),
+         ylab = &#39;Cumulative\nDistribution Function&#39;,
+         xlab = expression(&#39;log&#39;[10]~&#39;AR Distance from TSS&#39;),
+         between=list(y=1.0),
+         type = &#39;a&#39;,
+         xlim = c(0,7.5),
+         lwd=2,
+         par.settings = list(superpose.line = list(col = col.lines, lwd=3), 
+                             strip.background=list(col=&quot;grey85&quot;)),
+         panel = function(...) {
+           panel.abline(v= 200, lty =2)
+           panel.ecdfplot(...)
+         })
+dev.off()
+
+ks = ks.test(x = log(abs(df.all$dis)[df.all$status == class]),
+             y = log(abs(df.all$dis)[df.all$status == &#39;Similarly Expressed Genes&#39;]))$p.value
+ks = formatC(ks, format = &quot;e&quot;, digits = 1)
+ks</code></pre>
+</div>
+</div>
+<div id="supplemental-figure-2" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Supplemental Figure 2</h1>
+<div id="classifying-genes-supplemental-figure-2a-c-and-figure-3e" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Classifying genes (Supplemental Figure 2A-C and Figure 3E)</h2>
+<pre class="r"><code>#Overlapping genes
+effects.lattice.enza = categorize.deseq.df.mods(res.deseq.enza, fdr = .1, log2fold = 0, treat = &#39;Enzalutamide&#39;)
+effects.lattice.radiation = categorize.deseq.df.mods(res.deseq.radiation, fdr = .1, log2fold = 0, treat = &#39;Radiation&#39;)
+enza.repressed = rownames(effects.lattice.enza)[effects.lattice.enza$treatment == &quot;Enzalutamide Repressed&quot;]
+enza.activated = rownames(effects.lattice.enza)[effects.lattice.enza$treatment == &quot;Enzalutamide Activated&quot;]
+radiation.repressed = rownames(effects.lattice.radiation)[effects.lattice.radiation$treatment == &quot;Radiation Repressed&quot;]
+radiation.activated = rownames(effects.lattice.radiation)[effects.lattice.radiation$treatment == &quot;Radiation Activated&quot;]
+
+enza.repressed.radiation.activated = enza.repressed[enza.repressed %in% radiation.activated]
+enza.repressed.radiation.repressed = enza.repressed[enza.repressed %in% radiation.repressed]
+enza.activated.radiation.activated = enza.activated[enza.activated %in% radiation.activated]
+enza.activated.radiation.repressed = enza.activated[enza.activated %in% radiation.repressed]
+
+#16, 67, 42, 8
+
+enza.repressed.radiation.activated = gene.symbol$symbol[gene.symbol$gene %in% enza.repressed.radiation.activated]
+enza.repressed.radiation.repressed = gene.symbol$symbol[gene.symbol$gene %in% enza.repressed.radiation.repressed]
+enza.activated.radiation.activated = gene.symbol$symbol[gene.symbol$gene %in% enza.activated.radiation.activated]
+enza.activated.radiation.repressed = gene.symbol$symbol[gene.symbol$gene %in% enza.activated.radiation.repressed]
+
+write.table(enza.repressed.radiation.activated, &quot;enza.repressed.radiation.activated_recount.txt&quot;,quote=F, row.names=F, col.names=F)
+write.table(enza.repressed.radiation.repressed, &quot;enza.repressed.radiation.repressed_recount.txt&quot;,quote=F, row.names=F, col.names=F)
+write.table(enza.activated.radiation.activated, &quot;enza.activated.radiation.activated_recount.txt&quot;,quote=F, row.names=F, col.names=F)
+write.table(enza.activated.radiation.repressed, &quot;enza.activated.radiation.repressed_recount.txt&quot;,quote=F, row.names=F, col.names=F)
+
+#Normalized counts for enza repressed radiation activated
+normalized_counts &lt;- counts(deseq.df, normalized=TRUE)
+normalized_counts &lt;- normalized_counts %&gt;% 
+  data.frame() %&gt;%
+  rownames_to_column(var=&quot;gene&quot;) %&gt;% 
+  as_tibble()
+
+counts &lt;- normalized_counts %&gt;%
+  filter(gene %in% gene.symbol$gene[gene.symbol$symbol %in% enza.repressed.radiation.activated])
+
+for(i in seq(2, ncol(counts), 2)) counts[,i] &lt;- (counts[,i] + counts[,i+1])/2
+counts = counts[,c(1, seq(2, ncol(counts), 2))]
+
+gathered_counts &lt;- counts %&gt;%
+  gather(colnames(counts)[-1], key = &quot;samplename&quot;, value = &quot;normalized_counts&quot;)
+
+Condition = gathered_counts$samplename
+Condition = gsub(&quot;LNCaP_rep&quot;, &quot;LNCaP_Control/Vehicle_rep&quot;, Condition)
+Condition = gsub(&quot;10uMEnza_6GyIR&quot;, &quot;Radiation/Enzalutamide&quot;, Condition)
+Condition = gsub(&quot;10uMEnza&quot;, &quot;Control/Enzalutamide&quot;, Condition)
+Condition = gsub(&quot;6GyIR&quot;, &quot;Radiation/Vehicle&quot;, Condition)
+Condition = factor(sapply(strsplit(sapply(strsplit(Condition, &#39;LNCaP_&#39;), &#39;[&#39;, 2), &#39;_rep&#39;), &#39;[&#39;, 1))
+Condition = factor(Condition, levels = c(&quot;Radiation/Enzalutamide&quot;, &quot;Radiation/Vehicle&quot;, &quot;Control/Enzalutamide&quot;, &quot;Control/Vehicle&quot;))
+gathered_counts = cbind(gathered_counts, Condition)
+
+gathered_counts &lt;- merge.data.frame(gathered_counts, gene.symbol, all.y = FALSE)
+
+pdf(&quot;normalized_counts_enza_repressed_radiation_activated_recount.pdf&quot;, width = 8)
+ggplot(gathered_counts) +
+  geom_jitter(height = 0, width = 0.1, aes(x = symbol, y = normalized_counts, color = Condition)) +
+  scale_color_manual(values = col[1:4]) +
+  scale_y_log10() +
+  #ordering by counts in the Control/Vehicle condition
+  scale_x_discrete(limits = gathered_counts[gathered_counts$Condition == &quot;Control/Vehicle&quot;, &quot;symbol&quot;][order(gathered_counts[gathered_counts$Condition == &quot;Control/Vehicle&quot;, &quot;normalized_counts&quot;], decreasing = TRUE)]) +
+  xlab(&quot;Gene&quot;) +
+  ylab(&quot;Normalized Counts&quot;) +
+  ggtitle(&quot;16 genes repressed by enzalutamide\nand activated by radiation&quot;) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size = 20)) 
+dev.off()
+
+counts &lt;- spread(gathered_counts[,c(&quot;symbol&quot;, &quot;Condition&quot;, &quot;normalized_counts&quot;)], Condition, normalized_counts)
+write.table(counts, file = &quot;normalized_counts_enza_repressed_radiation_activated_recount.tsv&quot;, row.names=FALSE, sep=&quot;\t&quot;, quote = FALSE)
+
+#Normalized counts for both activated
+normalized_counts &lt;- counts(deseq.df, normalized=TRUE)
+normalized_counts &lt;- normalized_counts %&gt;% 
+  data.frame() %&gt;%
+  rownames_to_column(var=&quot;gene&quot;) %&gt;% 
+  as_tibble()
+
+counts &lt;- normalized_counts %&gt;%
+  filter(gene %in% enza.activated[enza.activated %in% radiation.activated])
+
+for(i in seq(2, ncol(counts), 2)) counts[,i] &lt;- (counts[,i] + counts[,i+1])/2
+counts = counts[,c(1, seq(2, ncol(counts), 2))]
+
+gathered_counts &lt;- counts %&gt;%
+  gather(colnames(counts)[-1], key = &quot;samplename&quot;, value = &quot;normalized_counts&quot;)
+
+Condition = gathered_counts$samplename
+Condition = gsub(&quot;LNCaP_rep&quot;, &quot;LNCaP_Control/Vehicle_rep&quot;, Condition)
+Condition = gsub(&quot;10uMEnza_6GyIR&quot;, &quot;Radiation/Enzalutamide&quot;, Condition)
+Condition = gsub(&quot;10uMEnza&quot;, &quot;Control/Enzalutamide&quot;, Condition)
+Condition = gsub(&quot;6GyIR&quot;, &quot;Radiation/Vehicle&quot;, Condition)
+Condition = factor(sapply(strsplit(sapply(strsplit(Condition, &#39;LNCaP_&#39;), &#39;[&#39;, 2), &#39;_rep&#39;), &#39;[&#39;, 1))
+Condition = factor(Condition, levels = c(&quot;Radiation/Enzalutamide&quot;, &quot;Radiation/Vehicle&quot;, &quot;Control/Enzalutamide&quot;, &quot;Control/Vehicle&quot;))
+gathered_counts = cbind(gathered_counts, Condition)
+
+gathered_counts &lt;- merge.data.frame(gathered_counts, gene.symbol, all.y = FALSE)
+
+#ENSG00000272655 was more lowly expressed than ENSG00000214783, and both mapped to POLR2J4, so I&#39;m just plotting the latter
+pdf(&quot;normalized_counts_enza_activated_radiation_activated_recount.pdf&quot;, width = 14)
+ggplot(gathered_counts[gathered_counts$gene != &quot;ENSG00000272655&quot;,]) +
+  geom_jitter(height = 0, width = 0.1, aes(x = symbol, y = normalized_counts, color = Condition)) +
+  scale_color_manual(values = col[1:4]) +
+  scale_y_log10() +
+  #ordering by counts in the Control/Vehicle condition
+  scale_x_discrete(limits = gathered_counts[gathered_counts$Condition == &quot;Control/Vehicle&quot; &amp; gathered_counts$gene != &quot;ENSG00000272655&quot;, &quot;symbol&quot;][order(gathered_counts[gathered_counts$Condition == &quot;Control/Vehicle&quot; &amp; gathered_counts$gene != &quot;ENSG00000272655&quot;, &quot;normalized_counts&quot;], decreasing = TRUE)]) +
+  xlab(&quot;Gene&quot;) +
+  ylab(&quot;Normalized Counts&quot;) +
+  ggtitle(&quot;41 genes activated by enzalutamide\nand activated by radiation&quot;) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size = 20))
+dev.off()
+
+counts &lt;- spread(gathered_counts[,c(&quot;symbol&quot;, &quot;Condition&quot;, &quot;normalized_counts&quot;)], Condition, normalized_counts)
+write.table(counts, file = &quot;normalized_counts_enza_activated_radiation_activated_recount.tsv&quot;, row.names=FALSE, sep=&quot;\t&quot;, quote = FALSE)
+
+#Normalized counts for both repressed
+normalized_counts &lt;- counts(deseq.df, normalized=TRUE)
+normalized_counts &lt;- normalized_counts %&gt;% 
+  data.frame() %&gt;%
+  rownames_to_column(var=&quot;gene&quot;) %&gt;% 
+  as_tibble()
+
+counts &lt;- normalized_counts %&gt;%
+  filter(gene %in% gene.symbol$gene[gene.symbol$symbol %in% enza.repressed.radiation.repressed])
+
+for(i in seq(2, ncol(counts), 2)) counts[,i] &lt;- (counts[,i] + counts[,i+1])/2
+counts = counts[,c(1, seq(2, ncol(counts), 2))]
+
+gathered_counts &lt;- counts %&gt;%
+  gather(colnames(counts)[-1], key = &quot;samplename&quot;, value = &quot;normalized_counts&quot;)
+
+Condition = gathered_counts$samplename
+Condition = gsub(&quot;LNCaP_rep&quot;, &quot;LNCaP_Control/Vehicle_rep&quot;, Condition)
+Condition = gsub(&quot;10uMEnza_6GyIR&quot;, &quot;Radiation/Enzalutamide&quot;, Condition)
+Condition = gsub(&quot;10uMEnza&quot;, &quot;Control/Enzalutamide&quot;, Condition)
+Condition = gsub(&quot;6GyIR&quot;, &quot;Radiation/Vehicle&quot;, Condition)
+Condition = factor(sapply(strsplit(sapply(strsplit(Condition, &#39;LNCaP_&#39;), &#39;[&#39;, 2), &#39;_rep&#39;), &#39;[&#39;, 1))
+Condition = factor(Condition, levels = c(&quot;Radiation/Enzalutamide&quot;, &quot;Radiation/Vehicle&quot;, &quot;Control/Enzalutamide&quot;, &quot;Control/Vehicle&quot;))
+gathered_counts = cbind(gathered_counts, Condition)
+
+gathered_counts &lt;- merge.data.frame(gathered_counts, gene.symbol, all.y = FALSE)
+
+pdf(&quot;normalized_counts_enza_repressed_radiation_repressed_recount.pdf&quot;, width = 20)
+ggplot(gathered_counts) +
+  geom_jitter(height = 0, width = 0.1, aes(x = symbol, y = normalized_counts, color = Condition)) +
+  scale_color_manual(values = col[1:4]) +
+  scale_y_log10() +
+  #ordering by counts in the Control/Vehicle condition
+  scale_x_discrete(limits = gathered_counts[gathered_counts$Condition == &quot;Control/Vehicle&quot;, &quot;symbol&quot;][order(gathered_counts[gathered_counts$Condition == &quot;Control/Vehicle&quot;, &quot;normalized_counts&quot;], decreasing = TRUE)]) +
+  xlab(&quot;Gene&quot;) +
+  ylab(&quot;Normalized Counts&quot;) +
+  ggtitle(&quot;67 genes repressed by enzalutamide and repressed by radiation&quot;) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size = 20)) 
+dev.off()
+
+counts &lt;- spread(gathered_counts[,c(&quot;symbol&quot;, &quot;Condition&quot;, &quot;normalized_counts&quot;)], Condition, normalized_counts)
+write.table(counts, file = &quot;normalized_counts_enza_repressed_radiation_repressed_recount.tsv&quot;, row.names=FALSE, sep=&quot;\t&quot;, quote = FALSE)
+
+#Normalized counts for enza activated radiation repressed
+normalized_counts &lt;- counts(deseq.df, normalized=TRUE)
+normalized_counts &lt;- normalized_counts %&gt;% 
+  data.frame() %&gt;%
+  rownames_to_column(var=&quot;gene&quot;) %&gt;% 
+  as_tibble()
+
+counts &lt;- normalized_counts %&gt;%
+  filter(gene %in% enza.activated[enza.activated %in% radiation.repressed])
+
+for(i in seq(2, ncol(counts), 2)) counts[,i] &lt;- (counts[,i] + counts[,i+1])/2
+counts = counts[,c(1, seq(2, ncol(counts), 2))]
+
+gathered_counts &lt;- counts %&gt;%
+  gather(colnames(counts)[-1], key = &quot;samplename&quot;, value = &quot;normalized_counts&quot;)
+
+Condition = gathered_counts$samplename
+Condition = gsub(&quot;LNCaP_rep&quot;, &quot;LNCaP_Control/Vehicle_rep&quot;, Condition)
+Condition = gsub(&quot;10uMEnza_6GyIR&quot;, &quot;Radiation/Enzalutamide&quot;, Condition)
+Condition = gsub(&quot;10uMEnza&quot;, &quot;Control/Enzalutamide&quot;, Condition)
+Condition = gsub(&quot;6GyIR&quot;, &quot;Radiation/Vehicle&quot;, Condition)
+Condition = factor(sapply(strsplit(sapply(strsplit(Condition, &#39;LNCaP_&#39;), &#39;[&#39;, 2), &#39;_rep&#39;), &#39;[&#39;, 1))
+Condition = factor(Condition, levels = c(&quot;Radiation/Enzalutamide&quot;, &quot;Radiation/Vehicle&quot;, &quot;Control/Enzalutamide&quot;, &quot;Control/Vehicle&quot;))
+gathered_counts = cbind(gathered_counts, Condition)
+
+gathered_counts &lt;- merge.data.frame(gathered_counts, gene.symbol, all.y = FALSE)
+
+#ENSG00000274452 was the more lowly expressed U2
+pdf(&quot;normalized_counts_enza_activated_radiation_repressed_recount.pdf&quot;, width = 8)
+ggplot(gathered_counts[gathered_counts$gene != &quot;ENSG00000274452&quot;,]) +
+  geom_jitter(height = 0, width = 0.1, aes(x = symbol, y = normalized_counts, color = Condition)) +
+  scale_color_manual(values = col[1:4]) +
+  scale_y_log10() +
+  #ordering by counts in the Control/Vehicle condition
+  scale_x_discrete(limits = gathered_counts[gathered_counts$Condition == &quot;Control/Vehicle&quot; &amp; gathered_counts$gene != &quot;ENSG00000274452&quot;, &quot;symbol&quot;][order(gathered_counts[gathered_counts$Condition == &quot;Control/Vehicle&quot; &amp; gathered_counts$gene != &quot;ENSG00000274452&quot;, &quot;normalized_counts&quot;], decreasing = TRUE)]) +
+  xlab(&quot;Gene&quot;) +
+  ylab(&quot;Normalized Counts&quot;) +
+  ggtitle(&quot;7 genes activated by enzalutamide\nand repressed by radiation&quot;) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(text = element_text(size = 20)) 
+dev.off()
+
+counts &lt;- spread(gathered_counts[gathered_counts$gene != &quot;ENSG00000274452&quot;,c(&quot;symbol&quot;, &quot;Condition&quot;, &quot;normalized_counts&quot;)], Condition, normalized_counts)
+write.table(counts, file = &quot;normalized_counts_enza_activated_radiation_repressed_recount.tsv&quot;, row.names=FALSE, sep=&quot;\t&quot;, quote = FALSE)</code></pre>
+</div>
+<div id="over-representation-analysis-of-gene-classes-supplemental-figure-2d" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Over-representation analysis of gene classes (Supplemental Figure 2D)</h2>
+<pre class="r"><code>m_t2g &lt;- msigdbr(species = &quot;Homo sapiens&quot;, category = &quot;H&quot;) %&gt;% 
+  dplyr::select(gs_name, human_gene_symbol)
+set.seed(0)
+em &lt;- enricher(enza.repressed.radiation.activated, TERM2GENE=m_t2g, pvalueCutoff = 0.1)
+em$ID
+fgseaResTidy &lt;- em %&gt;%
+  as_tibble() %&gt;%
+  arrange(desc(p.adjust))
+gse_top = fgseaResTidy
+gse_top$Ratio_ratio = 
+  (as.numeric(sapply(strsplit(gse_top$GeneRatio, &quot;/&quot;), &quot;[&quot;, 1)) / 
+     as.numeric(sapply(strsplit(gse_top$GeneRatio, &quot;/&quot;), &quot;[&quot;, 2))) / 
+  (as.numeric(sapply(strsplit(gse_top$BgRatio, &quot;/&quot;), &quot;[&quot;, 1)) / 
+     as.numeric(sapply(strsplit(gse_top$BgRatio, &quot;/&quot;), &quot;[&quot;, 2)))
+gse_top$ID = paste0(gse_top$ID, &quot; (&quot;, gse_top$geneID, &quot;)&quot;)
+svg(&quot;Hallmark_ORA_enza_repressed_radiation_activated_recount.svg&quot;)
+ggplot(gse_top, aes(reorder(ID, Ratio_ratio), Ratio_ratio, fill = log(p.adjust, base = 10))) +
+  geom_col(width = .8/2) +
+  coord_flip() +
+  scale_fill_gradient(limits = c(-10,0)) +
+  ylim(0,22) +
+  labs(y=&quot;Observed / Expected&quot;, x = NULL) + 
+  scale_x_discrete(labels=c(&#39;A&#39;)) +
+  theme_minimal() + 
+  labs(fill = &quot;log(padj)&quot;) +
+  theme(text = element_text(size = 20)) 
+dev.off()
+
+em &lt;- enricher(enza.repressed.radiation.repressed, TERM2GENE=m_t2g, pvalueCutoff = 0.1)
+em$ID
+fgseaResTidy &lt;- em %&gt;%
+  as_tibble() %&gt;%
+  arrange(desc(p.adjust))
+gse_top = fgseaResTidy
+gse_top$Ratio_ratio = 
+  (as.numeric(sapply(strsplit(gse_top$GeneRatio, &quot;/&quot;), &quot;[&quot;, 1)) / 
+     as.numeric(sapply(strsplit(gse_top$GeneRatio, &quot;/&quot;), &quot;[&quot;, 2))) / 
+  (as.numeric(sapply(strsplit(gse_top$BgRatio, &quot;/&quot;), &quot;[&quot;, 1)) / 
+     as.numeric(sapply(strsplit(gse_top$BgRatio, &quot;/&quot;), &quot;[&quot;, 2)))
+gse_top$ID = paste0(gse_top$ID, &quot; (&quot;, gse_top$geneID, &quot;)&quot;)
+svg(&quot;Hallmark_ORA_enza_repressed_radiation_repressed_recount.svg&quot;)
+ggplot(gse_top, aes(reorder(ID, Ratio_ratio), Ratio_ratio, fill = log(p.adjust, base = 10))) +
+  geom_col() +
+  coord_flip() +
+  scale_fill_gradient(limits = c(-10,0)) +
+  ylim(0,22) +
+  labs(y=&quot;Observed / Expected&quot;, x = NULL) + 
+  scale_x_discrete(labels=c(&#39;C&#39;, &#39;B&#39;)) +
+  theme_minimal() + 
+  labs(fill = &quot;log(padj)&quot;) +
+  theme(text = element_text(size = 20)) 
+dev.off()
+
+em &lt;- enricher(enza.activated.radiation.activated, TERM2GENE=m_t2g, pvalueCutoff = 0.1)
+em$ID
+fgseaResTidy &lt;- em %&gt;%
+  as_tibble() %&gt;%
+  arrange(desc(p.adjust))
+gse_top = fgseaResTidy
+gse_top$Ratio_ratio = 
+  (as.numeric(sapply(strsplit(gse_top$GeneRatio, &quot;/&quot;), &quot;[&quot;, 1)) / 
+     as.numeric(sapply(strsplit(gse_top$GeneRatio, &quot;/&quot;), &quot;[&quot;, 2))) / 
+  (as.numeric(sapply(strsplit(gse_top$BgRatio, &quot;/&quot;), &quot;[&quot;, 1)) / 
+     as.numeric(sapply(strsplit(gse_top$BgRatio, &quot;/&quot;), &quot;[&quot;, 2)))
+gse_top$ID = paste0(gse_top$ID, &quot; (&quot;, gse_top$geneID, &quot;)&quot;)
+svg(&quot;Hallmark_ORA_enza_activated_radiation_activated_recount.svg&quot;)
+ggplot(gse_top, aes(reorder(ID, Ratio_ratio), Ratio_ratio, fill = log(p.adjust, base = 10))) +
+  geom_col(width = .8/2) +
+  coord_flip() +
+  scale_fill_gradient(limits = c(-10,0)) +
+  ylim(0,22) +
+  labs(y=&quot;Observed / Expected&quot;, x = NULL) + 
+  scale_x_discrete(labels=c(&#39;D&#39;)) +
+  theme_minimal() + 
+  labs(fill = &quot;log(padj)&quot;) +
+  theme(text = element_text(size = 20)) 
+dev.off()
+
+#No enriched terms for this set
+em &lt;- enricher(enza.activated.radiation.repressed, TERM2GENE=m_t2g, pvalueCutoff = 0.1)</code></pre>
+</div>
+</div>
+<div id="figure-3" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Figure 3</h1>
+<div id="merge-bigwigs-for-composite-plots" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Merge bigWigs for composite plots</h2>
+<pre class="bash"><code>main=/Volumes/External/Users/TScott/Radiation_enzalutamide_PRO/
+factor1=norm.bedGraph.sizeFactor_batch1.txt
+factor2=norm.bedGraph.sizeFactor_batch2.txt
+sizes=~/Library/CloudStorage/Box-Box/GuertinLab/hg38/hg38.chrom.sizes
+destination=~/Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R/
+
+cd $main
+#cp ${destination}/${factor1} .
+#cp ${destination}/${factor2} .
+#cp $sizes .
+sizes=hg38.chrom.sizes
+
+wget https://raw.githubusercontent.com/guertinlab/Nascent_RNA_Methods/main/normalize_bedGraph.py
+chmod +x normalize_bedGraph.py
+#Change python location in the file
+tail -n +2 normalize_bedGraph.py &gt; tmp.txt
+echo &quot;#! /usr/local/anaconda3/bin/python&quot; | cat - tmp.txt &gt; normalize_bedGraph.py
+rm tmp.txt
+head normalize_bedGraph.py
+mv normalize_bedGraph.py /usr/local/bin/
+
+for i in LNCaP_*_batch1_*_PE1.bigWig
+do
+  name=$(echo $i | awk -F&quot;_PE1.bigWig&quot; &#39;{print $1}&#39;)
+  strand=$(echo $name | awk -F&quot;_&quot; &#39;{print $NF}&#39;)
+  name=$(echo $name | awk -F&quot;_[p,m]&quot; &#39;{print $1}&#39;)
+  invscale1=$(grep ${name} $factor1 | awk -F&quot; &quot; &#39;{print $2}&#39;)
+  invscale=$(echo $invscale1 | bc)
+  scaletrue=$(bc &lt;&lt;&lt; &quot;scale=4 ; 1.0 / $invscale&quot;)
+  name=${name}_${strand}_PE1
+  echo $name
+  echo $strand
+  echo $scaletrue
+  echo file_to_scale
+  echo ${name}.bigWig
+  bigWigToBedGraph ${name}.bigWig ${name}.bg
+  echo normalizing
+  normalize_bedGraph.py -i ${name}.bg -s $scaletrue -o ${name}_scaled.bg
+  bedGraphToBigWig ${name}_scaled.bg $sizes ${name}_scaled.bigWig
+  rm ${name}_scaled.bg
+  rm ${name}.bg
+done
+
+for i in LNCaP_*_batch2_*_PE1.bigWig
+do
+  name=$(echo $i | awk -F&quot;_PE1.bigWig&quot; &#39;{print $1}&#39;)
+  strand=$(echo $name | awk -F&quot;_&quot; &#39;{print $NF}&#39;)
+  name=$(echo $name | awk -F&quot;_[p,m]&quot; &#39;{print $1}&#39;)
+  invscale1=$(grep ${name} $factor2 | awk -F&quot; &quot; &#39;{print $2}&#39;)
+  invscale=$(echo $invscale1 | bc)
+  scaletrue=$(bc &lt;&lt;&lt; &quot;scale=4 ; 1.0 / $invscale&quot;)
+  name=${name}_${strand}_PE1
+  echo $name
+  echo $strand
+  echo $scaletrue
+  echo file_to_scale
+  echo ${name}.bigWig
+  bigWigToBedGraph ${name}.bigWig ${name}.bg
+  echo normalizing
+  normalize_bedGraph.py -i ${name}.bg -s $scaletrue -o ${name}_scaled.bg
+  bedGraphToBigWig ${name}_scaled.bg $sizes ${name}_scaled.bigWig
+  rm ${name}_scaled.bg
+  rm ${name}.bg
+done
+
+for i in LNCaP_*rep1t1_batch1_*_PE1_scaled.bigWig
+do
+  name=$(echo $i | awk -F&quot;_rep1&quot; &#39;{print $1}&#39;)
+  strand=$(echo $i | awk -F&quot;batch1_&quot; &#39;{print $2}&#39; | awk -F&quot;_PE1_scaled.bigWig&quot; &#39;{print $1}&#39;)
+  echo $name
+  echo $strand
+  files=$(ls ${name}_rep*_batch1_${strand}_PE1_scaled.bigWig)
+  echo $files
+  &gt; temp.txt
+  if [ &quot;$strand&quot; == &quot;plus&quot; ]
+  then
+  echo &quot;track type=bedGraph name=${name}_batch1_PE1_plus color=255,0,0 alwaysZero=on visibility=full&quot; &gt;&gt; temp.txt
+  fi
+  if [ &quot;$strand&quot; == &quot;minus&quot; ]
+  then
+  echo &quot;track type=bedGraph name=${name}_batch1_PE1_minus color=0,0,255 alwaysZero=on visibility=full&quot; &gt;&gt; temp.txt
+  fi
+  count=$(ls ${name}_rep*_batch1_${strand}_PE1_scaled.bigWig | wc -l | bc)
+  scaleall=$(bc &lt;&lt;&lt; &quot;scale=4 ; 1.0 / $count&quot;)
+  echo $count
+  echo $scaleall
+  name=${name}_batch1
+  bigWigMerge $files tmp.bg
+  normalize_bedGraph.py -i tmp.bg -s $scaleall -o ${name}_${strand}_PE1_scaled.bg
+  LC_COLLATE=C sort -k1,1 -k2,2n ${name}_${strand}_PE1_scaled.bg &gt; ${name}_${strand}_PE1_scaled_sorted.bg
+  cat temp.txt ${name}_${strand}_PE1_scaled_sorted.bg &gt; ${name}_${strand}_PE1_scaled.bedGraph
+  rm tmp.bg
+  rm temp.txt
+  rm ${name}_${strand}_PE1_scaled.bg
+  rm ${name}_${strand}_PE1_scaled_sorted.bg
+  head ${name}_${strand}_PE1_scaled.bedGraph
+  bedGraphToBigWig ${name}_${strand}_PE1_scaled.bedGraph $sizes ${name}_${strand}_PE1_combined_normalized.bigWig
+  gzip ${name}_${strand}_PE1_scaled.bedGraph
+done
+
+for i in LNCaP_*rep3_batch2_*_PE1_scaled.bigWig
+do
+  name=$(echo $i | awk -F&quot;_rep3&quot; &#39;{print $1}&#39;)
+  strand=$(echo $i | awk -F&quot;batch2_&quot; &#39;{print $2}&#39; | awk -F&quot;_PE1_scaled.bigWig&quot; &#39;{print $1}&#39;)
+  echo $name
+  echo $strand
+  files=$(ls ${name}_rep*_batch2_${strand}_PE1_scaled.bigWig)
+  echo $files
+  &gt; temp.txt
+  if [ &quot;$strand&quot; == &quot;plus&quot; ]
+  then
+  echo &quot;track type=bedGraph name=${name}_batch2_PE1_plus color=255,0,0 alwaysZero=on visibility=full&quot; &gt;&gt; temp.txt
+  fi
+  if [ &quot;$strand&quot; == &quot;minus&quot; ]
+  then
+  echo &quot;track type=bedGraph name=${name}_batch2_PE1_minus color=0,0,255 alwaysZero=on visibility=full&quot; &gt;&gt; temp.txt
+  fi
+  count=$(ls ${name}_rep*_batch2_${strand}_PE1_scaled.bigWig | wc -l | bc)
+  scaleall=$(bc &lt;&lt;&lt; &quot;scale=4 ; 1.0 / $count&quot;)
+  echo $count
+  echo $scaleall
+  name=${name}_batch2
+  bigWigMerge $files tmp.bg
+  normalize_bedGraph.py -i tmp.bg -s $scaleall -o ${name}_${strand}_PE1_scaled.bg
+  LC_COLLATE=C sort -k1,1 -k2,2n ${name}_${strand}_PE1_scaled.bg &gt; ${name}_${strand}_PE1_scaled_sorted.bg
+  cat temp.txt ${name}_${strand}_PE1_scaled_sorted.bg &gt; ${name}_${strand}_PE1_scaled.bedGraph
+  rm tmp.bg
+  rm temp.txt
+  rm ${name}_${strand}_PE1_scaled.bg
+  rm ${name}_${strand}_PE1_scaled_sorted.bg
+  head ${name}_${strand}_PE1_scaled.bedGraph
+  bedGraphToBigWig ${name}_${strand}_PE1_scaled.bedGraph $sizes ${name}_${strand}_PE1_combined_normalized.bigWig
+  gzip ${name}_${strand}_PE1_scaled.bedGraph
+done
+
+#Merge files for finding pause peaks
+plusfiles=$(ls *_batch2_plus_PE1_scaled.bigWig)
+bigWigMerge ${plusfiles} pro_batch2_plus_merged.bedGraph
+LC_COLLATE=C sort -k1,1 -k2,2n pro_batch2_plus_merged.bedGraph &gt; pro_batch2_plus_merged_sorted.bedGraph
+bedGraphToBigWig pro_batch2_plus_merged_sorted.bedGraph $sizes pro_batch2_plus_merged.bigWig
+
+minusfiles=$(ls *_batch2_minus_PE1_scaled.bigWig)
+bigWigMerge ${minusfiles} pro_batch2_minus_merged.bedGraph
+LC_COLLATE=C sort -k1,1 -k2,2n pro_batch2_minus_merged.bedGraph &gt; pro_batch2_minus_merged_sorted.bedGraph
+bedGraphToBigWig pro_batch2_minus_merged_sorted.bedGraph $sizes pro_batch2_minus_merged.bigWig
+
+plusfiles=$(ls *_batch1_plus_PE1_scaled.bigWig)
+bigWigMerge ${plusfiles} pro_batch1_plus_merged.bedGraph
+LC_COLLATE=C sort -k1,1 -k2,2n pro_batch1_plus_merged.bedGraph &gt; pro_batch1_plus_merged_sorted.bedGraph
+bedGraphToBigWig pro_batch1_plus_merged_sorted.bedGraph $sizes pro_batch1_plus_merged.bigWig
+
+minusfiles=$(ls *_batch1_minus_PE1_scaled.bigWig)
+bigWigMerge ${minusfiles} pro_batch1_minus_merged.bedGraph
+LC_COLLATE=C sort -k1,1 -k2,2n pro_batch1_minus_merged.bedGraph &gt; pro_batch1_minus_merged_sorted.bedGraph
+bedGraphToBigWig pro_batch1_minus_merged_sorted.bedGraph $sizes pro_batch1_minus_merged.bigWig
+
+#Merge each treatment condition for plotting densities
+plusfiles=$(ls LNCaP*6GyIR*batch2_plus_PE1_scaled.bigWig)
+bigWigMerge ${plusfiles} pro_radiation_batch2_plus_merged.bedGraph
+LC_COLLATE=C sort -k1,1 -k2,2n pro_radiation_batch2_plus_merged.bedGraph &gt; pro_radiation_batch2_plus_merged_sorted.bedGraph
+bedGraphToBigWig pro_radiation_batch2_plus_merged_sorted.bedGraph $sizes pro_radiation_batch2_plus_merged.bigWig
+
+minusfiles=$(ls LNCaP*6GyIR*batch2_minus_PE1_scaled.bigWig)
+bigWigMerge ${minusfiles} pro_radiation_batch2_minus_merged.bedGraph
+LC_COLLATE=C sort -k1,1 -k2,2n pro_radiation_batch2_minus_merged.bedGraph &gt; pro_radiation_batch2_minus_merged_sorted.bedGraph
+bedGraphToBigWig pro_radiation_batch2_minus_merged_sorted.bedGraph $sizes pro_radiation_batch2_minus_merged.bigWig
+
+plusfiles=$(ls LNCaP*batch2_plus_PE1_scaled.bigWig | grep -v 6GyIR)
+bigWigMerge ${plusfiles} pro_control_batch2_plus_merged.bedGraph
+LC_COLLATE=C sort -k1,1 -k2,2n pro_control_batch2_plus_merged.bedGraph &gt; pro_control_batch2_plus_merged_sorted.bedGraph
+bedGraphToBigWig pro_control_batch2_plus_merged_sorted.bedGraph $sizes pro_control_batch2_plus_merged.bigWig
+
+minusfiles=$(ls LNCaP*batch2_minus_PE1_scaled.bigWig | grep -v 6GyIR)
+bigWigMerge ${minusfiles} pro_control_batch2_minus_merged.bedGraph
+LC_COLLATE=C sort -k1,1 -k2,2n pro_control_batch2_minus_merged.bedGraph &gt; pro_control_batch2_minus_merged_sorted.bedGraph
+bedGraphToBigWig pro_control_batch2_minus_merged_sorted.bedGraph $sizes pro_control_batch2_minus_merged.bigWig
+
+plusfiles=$(ls LNCaP*10uMEnza*batch2_plus_PE1_scaled.bigWig)
+bigWigMerge ${plusfiles} pro_enzalutamide_batch2_plus_merged.bedGraph
+LC_COLLATE=C sort -k1,1 -k2,2n pro_enzalutamide_batch2_plus_merged.bedGraph &gt; pro_enzalutamide_batch2_plus_merged_sorted.bedGraph
+bedGraphToBigWig pro_enzalutamide_batch2_plus_merged_sorted.bedGraph $sizes pro_enzalutamide_batch2_plus_merged.bigWig
+
+minusfiles=$(ls LNCaP*10uMEnza*batch2_minus_PE1_scaled.bigWig)
+bigWigMerge ${minusfiles} pro_enzalutamide_batch2_minus_merged.bedGraph
+LC_COLLATE=C sort -k1,1 -k2,2n pro_enzalutamide_batch2_minus_merged.bedGraph &gt; pro_enzalutamide_batch2_minus_merged_sorted.bedGraph
+bedGraphToBigWig pro_enzalutamide_batch2_minus_merged_sorted.bedGraph $sizes pro_enzalutamide_batch2_minus_merged.bigWig
+
+plusfiles=$(ls LNCaP*batch2_plus_PE1_scaled.bigWig | grep -v 10uMEnza)
+bigWigMerge ${plusfiles} pro_vehicle_batch2_plus_merged.bedGraph
+LC_COLLATE=C sort -k1,1 -k2,2n pro_vehicle_batch2_plus_merged.bedGraph &gt; pro_vehicle_batch2_plus_merged_sorted.bedGraph
+bedGraphToBigWig pro_vehicle_batch2_plus_merged_sorted.bedGraph $sizes pro_vehicle_batch2_plus_merged.bigWig
+
+minusfiles=$(ls LNCaP*batch2_minus_PE1_scaled.bigWig | grep -v 10uMEnza)
+bigWigMerge ${minusfiles} pro_vehicle_batch2_minus_merged.bedGraph
+LC_COLLATE=C sort -k1,1 -k2,2n pro_vehicle_batch2_minus_merged.bedGraph &gt; pro_vehicle_batch2_minus_merged_sorted.bedGraph
+bedGraphToBigWig pro_vehicle_batch2_minus_merged_sorted.bedGraph $sizes pro_vehicle_batch2_minus_merged.bigWig
+
+rm *_merged.bedGraph
+gzip *_merged_sorted.bedGraph
+
+cp *combined*.bigWig $destination
+cp *.bedGraph.gz $destination
+cp *_merged.bigWig $destination</code></pre>
+</div>
+<div id="convert-to-transcripts-per-million-to-match-with-similarly-expressed-genes" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Convert to transcripts per million to match with similarly-expressed genes</h2>
+<pre class="r"><code>counts.mat = counts(deseq.df, normalized = F)
+counts.mat = merge(counts.mat, gene.file, by.x = 0, by.y = &quot;gene&quot;)
+rownames(counts.mat) = counts.mat$Row.names
+gene.length = counts.mat$end - counts.mat$start
+x &lt;- counts.mat[,grep(&quot;LNCaP&quot;, colnames(counts.mat))] / gene.length
+tpm.mat &lt;- as.data.frame(t( t(x) * 1e6 / colSums(x) ))
+tpm.mat$Vehicle_TPM = rowMeans(tpm.mat[,-grep(&quot;Enza&quot;, colnames(tpm.mat))])
+tpm.mat$Control_TPM = rowMeans(tpm.mat[,-grep(&quot;IR&quot;, colnames(tpm.mat))])
+tpm.mat$gene_length = gene.length</code></pre>
+</div>
+<div id="radiation-activated-genes-composite-plot-figure-3a" class="section level2" number="7.3">
+<h2><span class="header-section-number">7.3</span> Radiation-activated genes composite plot (Figure 3A)</h2>
+<pre class="r"><code>isolated.genes = rownames(df.deseq.effects.lattice.radiation)[!is.na(df.deseq.effects.lattice.radiation$padj)]
+bed.input = gene.file[gene.file$gene %in% isolated.genes,]
+bed.input[,8] = bed.input[,7] + 1
+colnames(bed.input) = c(&#39;chr&#39;, &#39;start&#39;, &#39;end&#39;, &#39;gene&#39;, &#39;symbol&#39;, &#39;strand&#39;, &#39;TSS&#39;,&#39;TSS+1&#39;)
+tss.df = bed.input[,c(1,7:8,4:6)]
+tss.df[,3] = tss.df[,2] + 500
+tss.df[,2] = tss.df[,2] - 500
+#sum polymerase density for each position in window
+combined.plus.bw = load.bigWig(&#39;pro_batch2_plus_merged.bigWig&#39;)
+combined.minus.bw = load.bigWig(&#39;pro_batch2_minus_merged.bigWig&#39;)
+dat.x = bed6.step.probeQuery.bigWig(combined.plus.bw,combined.minus.bw, tss.df,
+                                    step = 1, as.matrix = TRUE, op = &quot;sum&quot;, follow.strand = FALSE)
+dat.x[is.na(dat.x)] &lt;- 0
+dat.x.win = t(apply(dat.x, 1, function(x){rollapply(x, width = 50, FUN = mean,
+                                                    by = 1, by.column = FALSE,align = &quot;left&quot;)}))
+index.max = apply(dat.x.win, 1, which.max)
+the.max = apply(dat.x.win, 1, max)
+#find highest value in window to use as pause summit
+pause.df = tss.df
+pause.df[2][pause.df$strand == &#39;-&#39;,] = pause.df[2][pause.df$strand == &#39;-&#39;,] + index.max[pause.df$strand == &#39;-&#39;]
+pause.df[2][pause.df$strand == &#39;+&#39;,] = pause.df[2][pause.df$strand == &#39;+&#39;,] + index.max[pause.df$strand == &#39;+&#39;]
+pause.df[3] = pause.df[2] + 50
+pause.df[,2] = rowMeans(pause.df[,2:3])
+pause.df[,3] = pause.df[,2] + 1
+bedTSSwindow = fiveprime.bed(pause.df, upstreamWindow = upstream,
+                             downstreamWindow = downstream)
+treatment = &quot;control&quot;
+bwPlus = load.bigWig(paste0(&#39;pro_&#39;, treatment, &#39;_batch2_plus_merged.bigWig&#39;))
+bwMinus = load.bigWig(paste0(&#39;pro_&#39;, treatment, &#39;_batch2_minus_merged.bigWig&#39;))
+#Match based on density within this region
+bedTSSwindow$sum = bed6.region.probeQuery.bigWig(bwPlus, bwMinus , bedTSSwindow, op = &quot;sum&quot;)
+bedTSSwindow$sum[is.na(bedTSSwindow$sum)] = 0
+bedTSSwindow$treatment = &quot;Similarly Expressed Genes&quot;
+bedTSSwindow$treatment[bedTSSwindow$gene %in% rownames(df.deseq.effects.lattice.radiation)[df.deseq.effects.lattice.radiation$treatment == &quot;Radiation Activated&quot;]] = &quot;Radiation Activated Genes&quot;
+bedTSSwindow$treatment = factor(bedTSSwindow$treatment, levels = c(&quot;Similarly Expressed Genes&quot;, &quot;Radiation Activated Genes&quot;))
+#Actually match based on TPM
+bedTSSwindow = merge(bedTSSwindow, tpm.mat[, c(&quot;Vehicle_TPM&quot;, &quot;Control_TPM&quot;, &quot;gene_length&quot;)], by.x = &quot;gene&quot;, by.y = 0)
+bedTSSwindow = bedTSSwindow[,c(2:4,1,5:ncol(bedTSSwindow))]
+# out = matchit(treatment ~ Control_TPM, data = bedTSSwindow, method = &quot;optimal&quot;, ratio = 1)
+# bedTSSwindow = bedTSSwindow[bedTSSwindow$treatment == &quot;Radiation Activated Genes&quot; | rownames(bedTSSwindow) %in% out$match.matrix,]
+# ggplot(as.data.frame(bedTSSwindow), aes(x = log(Control_TPM, base = 10), color = treatment)) +
+#   stat_ecdf(geom = &quot;step&quot;, size = 1) +
+#   ylab(&quot;Cumulative distribution function&quot;) +
+#   xlab(expression(&quot;log&quot;[10]~&quot;(TPM)&quot;)) +
+#   theme_bw() +
+#   theme(text = element_text(size = 20))
+# write.table(bedTSSwindow$gene[bedTSSwindow$treatment == &quot;Similarly Expressed Genes&quot;], file = &quot;~/Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R/Radiation_activated_similar_promoter_proximal_density_stringent.txt&quot;)
+comparators = read.table(&quot;~/Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R/Radiation_activated_similar_promoter_proximal_density_stringent.txt&quot;)$x
+bedTSSwindow = bedTSSwindow[bedTSSwindow$treatment == &quot;Radiation Activated Genes&quot; | bedTSSwindow$gene %in% comparators,]
+
+composite.df &lt;- data.frame()
+for(genes in levels(factor(bedTSSwindow$treatment))) {
+  bwPlus = load.bigWig(paste0(&#39;pro_&#39;, treatment, &#39;_batch2_plus_merged.bigWig&#39;))
+  bwMinus = load.bigWig(paste0(&#39;pro_&#39;, treatment, &#39;_batch2_minus_merged.bigWig&#39;))
+  tss.matrix = bed6.step.bpQuery.bigWig(bwPlus, bwMinus, bedTSSwindow[bedTSSwindow$treatment == genes,],
+                                        step = step, as.matrix=TRUE, follow.strand=TRUE)
+  coordin.start = (-upstream - 1) + (step * roll.avg)/2
+  coordin.end = downstream - (step * roll.avg)/2
+  composite.lattice = data.frame(seq(coordin.start, coordin.end, by = step),
+                                 rollmean(colMeans(tss.matrix), roll.avg),
+                                 treatment = genes,
+                                 stringsAsFactors = FALSE)
+  colnames(composite.lattice) = c(&#39;x&#39;, &#39;est&#39;, &#39;treatment&#39;)
+  composite.lattice$x = as.numeric(composite.lattice$x)
+  composite.lattice$est = 1000* composite.lattice$est / nrow(tss.matrix)
+  composite.df &lt;- rbind(composite.df,composite.lattice)
+}
+
+head(composite.df)
+max(composite.df$est)
+save(composite.df,file=&#39;~/Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R/radiation.activated.vs.similar.density.stringent.Rdata&#39;)
+load(&#39;~/Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R/radiation.activated.vs.similar.density.stringent.Rdata&#39;)
+plot.composites(composite.df, treatment = &quot;Radiation_activated_vs_similar_density_stringent&quot;, summit=&#39;Midpoint of Pause Peak&#39;, col.lines = c(&quot;red&quot;, &quot;grey60&quot;))</code></pre>
+</div>
+<div id="enzalutamide-repressed-genes-composite-plot-figure-3c" class="section level2" number="7.4">
+<h2><span class="header-section-number">7.4</span> Enzalutamide-repressed genes composite plot (Figure 3C)</h2>
+<pre class="r"><code>isolated.genes = rownames(df.deseq.effects.lattice.enza)[!is.na(df.deseq.effects.lattice.enza$padj)]
+bed.input = gene.file[gene.file$gene %in% isolated.genes,]
+bed.input[,8] = bed.input[,7] + 1
+colnames(bed.input) = c(&#39;chr&#39;, &#39;start&#39;, &#39;end&#39;, &#39;gene&#39;, &#39;symbol&#39;, &#39;strand&#39;, &#39;TSS&#39;,&#39;TSS+1&#39;)
+tss.df = bed.input[,c(1,7:8,4:6)]
+tss.df[,3] = tss.df[,2] + 500
+tss.df[,2] = tss.df[,2] - 500
+#sum polymerase density for each position in window
+combined.plus.bw = load.bigWig(&#39;pro_batch2_plus_merged.bigWig&#39;)
+combined.minus.bw = load.bigWig(&#39;pro_batch2_minus_merged.bigWig&#39;)
+dat.x = bed6.step.probeQuery.bigWig(combined.plus.bw,combined.minus.bw, tss.df,
+                                    step = 1, as.matrix = TRUE, op = &quot;sum&quot;, follow.strand = FALSE)
+dat.x[is.na(dat.x)] &lt;- 0
+dat.x.win = t(apply(dat.x, 1, function(x){rollapply(x, width = 50, FUN = mean,
+                                                    by = 1, by.column = FALSE,align = &quot;left&quot;)}))
+index.max = apply(dat.x.win, 1, which.max)
+the.max = apply(dat.x.win, 1, max)
+#find highest value in window to use as pause summit
+pause.df = tss.df
+pause.df[2][pause.df$strand == &#39;-&#39;,] = pause.df[2][pause.df$strand == &#39;-&#39;,] + index.max[pause.df$strand == &#39;-&#39;]
+pause.df[2][pause.df$strand == &#39;+&#39;,] = pause.df[2][pause.df$strand == &#39;+&#39;,] + index.max[pause.df$strand == &#39;+&#39;]
+pause.df[3] = pause.df[2] + 50
+pause.df[,2] = rowMeans(pause.df[,2:3])
+pause.df[,3] = pause.df[,2] + 1
+bedTSSwindow = fiveprime.bed(pause.df, upstreamWindow = upstream,
+                             downstreamWindow = downstream)
+treatment = &quot;vehicle&quot;
+bwPlus = load.bigWig(paste0(&#39;pro_&#39;, treatment, &#39;_batch2_plus_merged.bigWig&#39;))
+bwMinus = load.bigWig(paste0(&#39;pro_&#39;, treatment, &#39;_batch2_minus_merged.bigWig&#39;))
+bedTSSwindow$sum = bed6.region.probeQuery.bigWig(bwPlus, bwMinus , bedTSSwindow, op = &quot;sum&quot;)
+bedTSSwindow$sum[is.na(bedTSSwindow$sum)] = 0
+bedTSSwindow$treatment = &quot;Similarly Expressed Genes&quot;
+bedTSSwindow$treatment[bedTSSwindow$gene %in% rownames(df.deseq.effects.lattice.enza)[df.deseq.effects.lattice.enza$treatment == &quot;Enzalutamide Repressed&quot;]] = &quot;Enzalutamide Repressed Genes&quot;
+bedTSSwindow$treatment = factor(bedTSSwindow$treatment, levels = c(&quot;Similarly Expressed Genes&quot;, &quot;Enzalutamide Repressed Genes&quot;))
+bedTSSwindow = merge(bedTSSwindow, tpm.mat[, c(&quot;Vehicle_TPM&quot;, &quot;Control_TPM&quot;, &quot;gene_length&quot;)], by.x = &quot;gene&quot;, by.y = 0)
+bedTSSwindow = bedTSSwindow[,c(2:4,1,5:ncol(bedTSSwindow))]
+# out = matchit(treatment ~ Vehicle_TPM, data = bedTSSwindow, method = &quot;optimal&quot;, ratio = 1)
+# bedTSSwindow = bedTSSwindow[bedTSSwindow$treatment == &quot;Enzalutamide Repressed Genes&quot; | rownames(bedTSSwindow) %in% out$match.matrix,]
+# ggplot(as.data.frame(bedTSSwindow), aes(x = log(sum, base = 10), color = treatment)) +
+#   stat_ecdf(geom = &quot;step&quot;, size = 1) +
+#   ylab(&quot;Cumulative distribution function&quot;) +
+#   xlab(expression(&quot;log&quot;[10]~&quot;(TPM)&quot;)) +
+#   theme_bw() +
+#   theme(text = element_text(size = 20))
+# write.table(bedTSSwindow$gene[bedTSSwindow$treatment == &quot;Similarly Expressed Genes&quot;], file = &quot;~/Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R/Enzalutamide_repressed_similar_promoter_proximal_density_stringent.txt&quot;)
+# comparators = read.table(&quot;~/Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R/Enzalutamide_repressed_similar_promoter_proximal_density_stringent.txt&quot;)$x
+bedTSSwindow = bedTSSwindow[bedTSSwindow$treatment == &quot;Enzalutamide Repressed Genes&quot; | bedTSSwindow$gene %in% comparators,]
+
+composite.df &lt;- data.frame()
+for(genes in levels(factor(bedTSSwindow$treatment))) {
+  bwPlus = load.bigWig(paste0(&#39;pro_&#39;, treatment, &#39;_batch2_plus_merged.bigWig&#39;))
+  bwMinus = load.bigWig(paste0(&#39;pro_&#39;, treatment, &#39;_batch2_minus_merged.bigWig&#39;))
+  tss.matrix = bed6.step.bpQuery.bigWig(bwPlus, bwMinus, bedTSSwindow[bedTSSwindow$treatment == genes,],
+                                        step = step, as.matrix=TRUE, follow.strand=TRUE)
+  coordin.start = (-upstream - 1) + (step * roll.avg)/2
+  coordin.end = downstream - (step * roll.avg)/2
+  composite.lattice = data.frame(seq(coordin.start, coordin.end, by = step),
+                                 rollmean(colMeans(tss.matrix), roll.avg),
+                                 treatment = genes,
+                                 stringsAsFactors = FALSE)
+  colnames(composite.lattice) = c(&#39;x&#39;, &#39;est&#39;, &#39;treatment&#39;)
+  composite.lattice$x = as.numeric(composite.lattice$x)
+  composite.lattice$est = 1000* composite.lattice$est / nrow(tss.matrix)
+  composite.df &lt;- rbind(composite.df,composite.lattice)
+}
+
+head(composite.df)
+max(composite.df$est)
+save(composite.df,file=&#39;~/Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R/enzalutamide.repressed.vs.similar.density.stringent.Rdata&#39;)
+load(&#39;~/Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R/enzalutamide.repressed.vs.similar.density.stringent.Rdata&#39;)
+plot.composites(composite.df, treatment = &quot;enzalutamide_repressed_vs_similar_density_stringent&quot;, summit=&#39;Midpoint of Pause Peak&#39;, col.lines = c(&quot;blue&quot;, &quot;grey60&quot;))</code></pre>
+</div>
+<div id="pause-ratio-analysis-for-above-gene-classes-figure-3bd" class="section level2" number="7.5">
+<h2><span class="header-section-number">7.5</span> Pause ratio analysis for above gene classes (Figure 3B,D)</h2>
+<pre class="r"><code>isolated.genes = rownames(df.deseq.effects.lattice.enza)[df.deseq.effects.lattice.enza$treatment == &quot;Enzalutamide Repressed&quot;]
+bed.input = gene.file[gene.file$gene %in% isolated.genes,]
+bed.input[,8] = bed.input[,7] + 1
+colnames(bed.input) = c(&#39;chr&#39;, &#39;start&#39;, &#39;end&#39;, &#39;gene&#39;, &#39;symbol&#39;, &#39;strand&#39;, &#39;TSS&#39;,&#39;TSS+1&#39;)
+
+pause.region.summation = data.frame()
+for(treatment in c(&quot;enzalutamide&quot;,&quot;vehicle&quot;)) {
+  df = bwplot.input.pause(bed.input,treatment)
+  pause.region.summation = rbind(pause.region.summation,df)
+}
+
+isolated.genes = rownames(df.deseq.effects.lattice.radiation)[df.deseq.effects.lattice.radiation$treatment == &quot;Radiation Activated&quot;]
+bed.input = gene.file[gene.file$gene %in% isolated.genes,]
+bed.input[,8] = bed.input[,7] + 1
+colnames(bed.input) = c(&#39;chr&#39;, &#39;start&#39;, &#39;end&#39;, &#39;gene&#39;, &#39;symbol&#39;, &#39;strand&#39;, &#39;TSS&#39;,&#39;TSS+1&#39;)
+
+for(treatment in c(&quot;radiation&quot;,&quot;control&quot;)) {
+  df = bwplot.input.pause(bed.input,treatment)
+  pause.region.summation = rbind(pause.region.summation,df)
+}
+
+pause.region.summation$pause_index = pause.region.summation[,&#39;pause_sum&#39;] / pause.region.summation[,&#39;body_avg&#39;]
+save(pause.region.summation,file=&#39;pause.region.summation.stringent.Rdata&#39;)
+load(&#39;pause.region.summation.stringent.Rdata&#39;)
+t.test(log(pause.region.summation$pause_index[pause.region.summation$treatment == &quot;enzalutamide&quot;] /
+             pause.region.summation$pause_index[pause.region.summation$treatment == &quot;vehicle&quot;], base = 2)[
+               is.finite(log(pause.region.summation$pause_index[pause.region.summation$treatment == &quot;enzalutamide&quot;] /
+                               pause.region.summation$pause_index[pause.region.summation$treatment == &quot;vehicle&quot;], base = 2))
+             ], na.action = na.rm) #0.0133
+
+t.test(log(pause.region.summation$pause_index[pause.region.summation$treatment == &quot;radiation&quot;] /
+             pause.region.summation$pause_index[pause.region.summation$treatment == &quot;control&quot;], base = 2)[
+               is.finite(log(pause.region.summation$pause_index[pause.region.summation$treatment == &quot;radiation&quot;] /
+                               pause.region.summation$pause_index[pause.region.summation$treatment == &quot;control&quot;], base = 2))
+             ], na.action = na.rm) #&lt; 2.2e-16
+
+df = pause.region.summation
+late = &quot;enzalutamide&quot;
+early = &quot;vehicle&quot;
+plot.df = data.frame(gene = df[df$treatment == late,&#39;gene&#39;],
+                     ratio = df[df$treatment == late,&#39;pause_index&#39;] / df[df$treatment == early,&#39;pause_index&#39;],
+                     x = 1)
+pdf(paste0(&#39;pause_index_ratio_&#39;,late,&#39;.v.&#39;,early,&#39;_stringent_bwplot.pdf&#39;), width=2.5, height=3.4)
+trellis.par.set(box.umbrella = list(lty = 1, col=&#39;black&#39;, lwd=2),
+                box.rectangle = list(col = &#39;black&#39;, lwd=1.6),
+                plot.symbol = list(col=&#39;black&#39;, lwd=1.6, pch =&#39;.&#39;))
+print(bwplot(log(ratio, base = 2) ~ x, data = plot.df,
+             between=list(y=1.0, x = 1.0),
+             scales=list(x=list(draw=FALSE),relation=&quot;free&quot;,rot = 45, alternating=c(1,1,1,1),cex=1,font=1),
+             xlab = &#39;&#39;,
+             main = &quot;Pause Index (PI) Ratio&quot;,
+             ylab= substitute(paste(&#39;log&#39;[2]*&#39;&#39;,nn), list(nn=paste0(&#39;(&#39;,late,&#39; PI / &#39;,early,&#39; PI)&#39;))),
+             horizontal =FALSE, col= &#39;black&#39;,
+             aspect = 2,
+             par.settings=list(par.xlab.text=list(cex=1.2,font=1),
+                               par.ylab.text=list(cex=1.2,font=1),
+                               par.main.text=list(cex=1.2, font=1),
+                               plot.symbol = list(col=&#39;black&#39;, lwd=1.6, pch =19, cex = 0.25)),
+             strip = function(..., which.panel, bg) {
+               #bg.col = c(&quot;#ce228e&quot; ,&quot;grey60&quot;, &quot;#2290cf&quot;,&quot;grey90&quot;)
+               strip.default(..., which.panel = which.panel,
+                             bg = rep(bg.col, length = which.panel)[which.panel])
+             },
+             panel = function(..., box.ratio, col) {
+               panel.abline(h = 0, col = &#39;black&#39;, lty = 2)
+               panel.violin(..., col = &quot;blue&quot;,
+                            varwidth = FALSE, box.ratio = box.ratio, outer = FALSE)
+               panel.stripplot(..., col=&#39;black&#39;, do.out=FALSE, jitter.data=TRUE, amount = 0.2, pch = 16)
+               panel.bwplot(..., pch = &#39;|&#39;, do.out = FALSE)
+             }))
+dev.off()
+
+late = &quot;radiation&quot;
+early = &quot;control&quot;
+plot.df = data.frame(gene = df[df$treatment == late,&#39;gene&#39;],
+                     ratio = df[df$treatment == late,&#39;pause_index&#39;] / df[df$treatment == early,&#39;pause_index&#39;],
+                     x = 1)
+pdf(paste0(&#39;pause_index_ratio_&#39;,late,&#39;.v.&#39;,early,&#39;_stringent_bwplot.pdf&#39;), width=2.5, height=3.4)
+trellis.par.set(box.umbrella = list(lty = 1, col=&#39;black&#39;, lwd=2),
+                box.rectangle = list(col = &#39;black&#39;, lwd=1.6),
+                plot.symbol = list(col=&#39;black&#39;, lwd=1.6, pch =&#39;.&#39;))
+print(bwplot(log(ratio, base = 2) ~ x, data = plot.df,
+             between=list(y=1.0, x = 1.0),
+             scales=list(x=list(draw=FALSE),relation=&quot;free&quot;,rot = 45, alternating=c(1,1,1,1),cex=1,font=1),
+             xlab = &#39;&#39;,
+             main = &quot;Pause Index (PI) Ratio&quot;,
+             ylab= substitute(paste(&#39;log&#39;[2]*&#39;&#39;,nn), list(nn=paste0(&#39;(&#39;,late,&#39; PI / &#39;,early,&#39; PI)&#39;))),
+             horizontal =FALSE, col= &#39;black&#39;,
+             aspect = 2,
+             par.settings=list(par.xlab.text=list(cex=1.2,font=1),
+                               par.ylab.text=list(cex=1.2,font=1),
+                               par.main.text=list(cex=1.2, font=1),
+                               plot.symbol = list(col=&#39;black&#39;, lwd=1.6, pch =19, cex = 0.25)),
+             strip = function(..., which.panel, bg) {
+               #bg.col = c(&quot;#ce228e&quot; ,&quot;grey60&quot;, &quot;#2290cf&quot;,&quot;grey90&quot;)
+               strip.default(..., which.panel = which.panel,
+                             bg = rep(bg.col, length = which.panel)[which.panel])
+             },
+             panel = function(..., box.ratio, col) {
+               panel.abline(h = 0, col = &#39;black&#39;, lty = 2)
+               panel.violin(..., col = &quot;red&quot;,
+                            varwidth = FALSE, box.ratio = box.ratio, outer = FALSE)
+               panel.stripplot(..., col=&#39;black&#39;, do.out=FALSE, jitter.data=TRUE, amount = 0.2, pch = 16)
+               panel.bwplot(..., pch = &#39;|&#39;, do.out = FALSE)
+             }))
+dev.off()</code></pre>
+</div>
+<div id="pause-ratio-analysis-for-the-16-genes-repressed-by-enzalutamide-and-activated-by-ir-figure-3f" class="section level2" number="7.6">
+<h2><span class="header-section-number">7.6</span> Pause ratio analysis for the 16 genes repressed by enzalutamide and activated by IR (Figure 3F)</h2>
+<pre class="r"><code>df.deseq.effects.lattice.radiation = 
+  categorize.deseq.df.mods(res.deseq.radiation, fdr = 0.1, log2fold = 0.0, treat = &#39;Radiation&#39;)
+df.deseq.effects.lattice.enza = 
+  categorize.deseq.df.mods(res.deseq.enza, fdr = 0.1, log2fold = 0.0, treat = &#39;Enzalutamide&#39;)
+
+isolated.genes = rownames(df.deseq.effects.lattice.enza)[df.deseq.effects.lattice.enza$treatment == &quot;Enzalutamide Repressed&quot;]
+isolated.genes = isolated.genes[isolated.genes %in% rownames(df.deseq.effects.lattice.radiation)[df.deseq.effects.lattice.radiation$treatment == &quot;Radiation Activated&quot;]]
+bed.input = gene.file[gene.file$gene %in% isolated.genes,]
+bed.input[,8] = bed.input[,7] + 1
+colnames(bed.input) = c(&#39;chr&#39;, &#39;start&#39;, &#39;end&#39;, &#39;gene&#39;, &#39;symbol&#39;, &#39;strand&#39;, &#39;TSS&#39;,&#39;TSS+1&#39;)
+tss.df = bed.input[,c(1,7:8,4:6)]
+tss.df[,3] = tss.df[,2] + 500
+tss.df[,2] = tss.df[,2] - 500
+#sum polymerase density for each position in window
+combined.plus.bw = load.bigWig(&#39;/Volumes/External/Users/TScott/Radiation_enzalutamide_PRO/pro_batch2_plus_merged.bigWig&#39;)
+combined.minus.bw = load.bigWig(&#39;/Volumes/External/Users/TScott/Radiation_enzalutamide_PRO/pro_batch2_minus_merged.bigWig&#39;)
+dat.x = bed6.step.probeQuery.bigWig(combined.plus.bw,combined.minus.bw, tss.df,
+                                    step = 1, as.matrix = TRUE, op = &quot;sum&quot;, follow.strand = FALSE)
+dat.x[is.na(dat.x)] &lt;- 0
+dat.x.win = t(apply(dat.x, 1, function(x){rollapply(x, width = 50, FUN = mean,
+                                                    by = 1, by.column = FALSE,align = &quot;left&quot;)}))
+index.max = apply(dat.x.win, 1, which.max)
+the.max = apply(dat.x.win, 1, max)
+#find highest value in window to use as pause summit
+pause.df = tss.df
+pause.df[2][pause.df$strand == &#39;-&#39;,] = pause.df[2][pause.df$strand == &#39;-&#39;,] + index.max[pause.df$strand == &#39;-&#39;]
+pause.df[2][pause.df$strand == &#39;+&#39;,] = pause.df[2][pause.df$strand == &#39;+&#39;,] + index.max[pause.df$strand == &#39;+&#39;]
+pause.df[3] = pause.df[2] + 50
+pause.df[,2] = rowMeans(pause.df[,2:3])
+pause.df[,3] = pause.df[,2] + 1
+bedTSSwindow = fiveprime.bed(pause.df, upstreamWindow = upstream,
+                             downstreamWindow = downstream)
+composite.df &lt;- data.frame()
+for(treatment in c(&quot;&quot;,&quot;_6GyIR&quot;, &quot;_10uMEnza&quot;, &quot;_10uMEnza_6GyIR&quot;)) {
+  bwPlus = load.bigWig(paste0(&#39;/Volumes/External/Users/TScott/Radiation_enzalutamide_PRO/LNCaP&#39;, treatment, &#39;_batch2_plus_PE1_combined_normalized.bigWig&#39;))
+  bwMinus = load.bigWig(paste0(&#39;/Volumes/External/Users/TScott/Radiation_enzalutamide_PRO/LNCaP&#39;, treatment, &#39;_batch2_minus_PE1_combined_normalized.bigWig&#39;))
+  tss.matrix = bed6.step.bpQuery.bigWig(bwPlus, bwMinus , bedTSSwindow, 
+                                        step = step, as.matrix=TRUE, follow.strand=TRUE)
+  coordin.start = (-upstream - 1) + (step * roll.avg)/2
+  coordin.end = downstream - (step * roll.avg)/2
+  composite.lattice = data.frame(seq(coordin.start, coordin.end, by = step),
+                                 rollmean(colMeans(tss.matrix), roll.avg),
+                                 treatment = treatment,
+                                 stringsAsFactors = FALSE)
+  colnames(composite.lattice) = c(&#39;x&#39;, &#39;est&#39;, &#39;treatment&#39;)
+  composite.lattice$x = as.numeric(composite.lattice$x)
+  composite.lattice$est = 1000* composite.lattice$est / nrow(tss.matrix)
+  composite.df &lt;- rbind(composite.df,composite.lattice)
+}
+
+composite.df$treatment[composite.df$treatment == &quot;&quot;] = &quot;Control/Vehicle&quot;
+composite.df$treatment[composite.df$treatment == &quot;_6GyIR&quot;] = &quot;Radiation/Vehicle&quot;
+composite.df$treatment[composite.df$treatment == &quot;_10uMEnza&quot;] = &quot;Control/Enzalutamide&quot;
+composite.df$treatment[composite.df$treatment == &quot;_10uMEnza_6GyIR&quot;] = &quot;Radiation/Enzalutamide&quot;
+composite.df$treatment = factor(composite.df$treatment, levels = c(&quot;Radiation/Enzalutamide&quot;, &quot;Radiation/Vehicle&quot;, &quot;Control/Enzalutamide&quot;, &quot;Control/Vehicle&quot;))
+save(composite.df,file=&#39;curated.genes.composites.Rdata&#39;)
+load(&#39;curated.genes.composites.Rdata&#39;)
+col.lines = viridis(5)[1:4]
+plot.composites(composite.df, treatment = &quot;curated&quot;, summit=&#39;Midpoint of Pause Peak&#39;, col.lines = col.lines)
+
+#Pause ratio analysis
+pause.region.summation = data.frame()
+for(treatment in c(&quot;&quot;,&quot;_6GyIR&quot;, &quot;_10uMEnza&quot;, &quot;_10uMEnza_6GyIR&quot;)) {
+  #find highest value in window to use as pause summit and take a 50 bp window around it - this is the &#39;pause region&#39;
+  pause.df = tss.df
+  pause.df[2][pause.df$strand == &#39;-&#39;,] = pause.df[2][pause.df$strand == &#39;-&#39;,] + index.max[pause.df$strand == &#39;-&#39;]
+  pause.df[2][pause.df$strand == &#39;+&#39;,] = pause.df[2][pause.df$strand == &#39;+&#39;,] + index.max[pause.df$strand == &#39;+&#39;]
+  pause.df[3] = pause.df[2] + 50
+  #define &#39;body region&#39; as end of pause region to the end of the plotting window (strand specific)
+  body.df = fiveprime.bed(pause.df, upstreamWindow = upstream, downstreamWindow = downstream)
+  body.df[body.df$strand == &#39;+&#39;,2] = pause.df[pause.df$strand == &#39;+&#39;,3]+1
+  body.df[body.df$strand == &#39;-&#39;,3] = pause.df[pause.df$strand == &#39;-&#39;,2]-1
+  #measure polymerase density within pause and body regions (sum for pause, average for body)
+  output.df=cbind.data.frame(bed.input[,c(1:6)], rep(treatment, nrow(bed.input)))
+  colnames(output.df)[7] = &quot;treatment&quot;
+  wiggle.plus = load.bigWig(paste0(&#39;/Volumes/External/Users/TScott/Radiation_enzalutamide_PRO/LNCaP&#39;, treatment, &#39;_batch2_plus_PE1_combined_normalized.bigWig&#39;))
+  wiggle.minus = load.bigWig(paste0(&#39;/Volumes/External/Users/TScott/Radiation_enzalutamide_PRO/LNCaP&#39;, treatment, &#39;_batch2_minus_PE1_combined_normalized.bigWig&#39;))
+  output.df[,8] = bed6.region.bpQuery.bigWig(wiggle.plus, wiggle.minus, pause.df, op = &quot;sum&quot;)
+  output.df[,9] = bed6.region.bpQuery.bigWig(wiggle.plus, wiggle.minus, body.df, op = &quot;avg&quot;)
+  colnames(output.df)[c(8,9)] = c(&#39;pause_sum&#39;,&#39;body_avg&#39;)
+  df = output.df
+  pause.region.summation = rbind(pause.region.summation,df)
+}
+
+pause.region.summation$pause_index = pause.region.summation[,&#39;pause_sum&#39;] / pause.region.summation[,&#39;body_avg&#39;]
+pause.region.summation$treatment[pause.region.summation$treatment == &quot;&quot;] = &quot;Control/Vehicle&quot;
+pause.region.summation$treatment[pause.region.summation$treatment == &quot;_6GyIR&quot;] = &quot;Radiation/Vehicle&quot;
+pause.region.summation$treatment[pause.region.summation$treatment == &quot;_10uMEnza&quot;] = &quot;Control/Enzalutamide&quot;
+pause.region.summation$treatment[pause.region.summation$treatment == &quot;_10uMEnza_6GyIR&quot;] = &quot;Radiation/Enzalutamide&quot;
+pause.region.summation$treatment = factor(pause.region.summation$treatment, levels = c(&quot;Radiation/Enzalutamide&quot;, &quot;Radiation/Vehicle&quot;, &quot;Control/Enzalutamide&quot;, &quot;Control/Vehicle&quot;))
+save(pause.region.summation,file=&#39;pause.region.summation.curated.Rdata&#39;)
+load(&#39;pause.region.summation.curated.Rdata&#39;)
+
+df = pause.region.summation
+col.lines = viridis(5)[4:1]
+early = &quot;Control/Vehicle&quot;
+for (i in levels(factor(pause.region.summation$treatment))) {
+  df$ratio[df$treatment == i] = df$pause_index[df$treatment == i] / df$pause_index[df$treatment == early]
+}
+df$treatment = factor(df$treatment, levels = c(&quot;Radiation/Enzalutamide&quot;, &quot;Radiation/Vehicle&quot;, &quot;Control/Enzalutamide&quot;, &quot;Control/Vehicle&quot;)[4:1])
+pdf(&#39;pause_index_ratio_curated_bwplot.pdf&#39;, height = 3.5)
+ggplot(data = df, aes(x = treatment, y = log(ratio, base = 2), color = treatment)) +
+  theme(legend.position = &quot;none&quot;) +
+  geom_hline(yintercept = 0, linetype=&quot;dashed&quot;) +
+  geom_violin() +
+  geom_boxplot(width=.1) +
+  geom_jitter() +
+  scale_color_manual(values = col.lines) +
+  xlab(NULL) +
+  ylab(expression(&quot;log&quot;[2]~&quot;(Pause index ratio)&quot;)) +
+  ylim(-2, 1)
+dev.off()
+
+pdf(&#39;pause_index_ratio_curated_bwplot.pdf&#39;, width=5, height=3.4)
+trellis.par.set(box.umbrella = list(lty = 1, col=&#39;black&#39;, lwd=2),
+                box.rectangle = list(col = &#39;black&#39;, lwd=1.6),
+                plot.symbol = list(col=&#39;black&#39;, lwd=1.6, pch =&#39;.&#39;))
+print(bwplot(log(ratio, base = 2) ~ treatment, data = df, group = treatment,
+             between=list(y=1.0, x = 1.0),
+             scales=list(x=list(draw=FALSE),relation=&quot;free&quot;,rot = 45, alternating=c(1,1,1,1),cex=1,font=1),
+             xlab=levels(df$treatment),
+             main = &quot;Pause Index (PI) Ratio&quot;,
+             ylab= expression(&quot;log&quot;[2]~&quot;(pause index ratio)&quot;),
+             horizontal =FALSE, col= &#39;black&#39;,
+             aspect = 1,
+             par.settings=list(par.xlab.text=list(cex=.4,font=1),
+                               par.ylab.text=list(cex=1.2,font=1),
+                               par.main.text=list(cex=1.2, font=1),
+                               plot.symbol = list(col=&#39;black&#39;, lwd=1.6, pch =19, cex = 0.25)),
+             strip = function(..., which.panel, bg) {
+               strip.default(..., which.panel = which.panel,
+                             bg = rep(bg.col, length = which.panel)[which.panel])
+             },
+             panel = function(..., box.ratio, col) {
+               panel.abline(h = 0, col = &#39;black&#39;, lty = 2)
+               panel.violin.hack(..., col = col.lines,
+                                 varwidth = FALSE, box.ratio = box.ratio, outer = FALSE)
+               panel.stripplot(..., col=&#39;black&#39;, do.out=FALSE, jitter.data=TRUE, amount = 0.2, pch = 16)
+               panel.bwplot(..., pch = &#39;|&#39;, do.out = FALSE)
+             }))
+dev.off()</code></pre>
 </div>
 </div>
 
