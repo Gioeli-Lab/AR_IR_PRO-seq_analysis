@@ -700,6 +700,11 @@ pheatmap(wide_counts, scale = "row", show_rownames = F, angle_col = 0, fontsize 
 dev.off()
 ```
 
+```{r  out.height = "300px", out.width = "800px", fig.align = 'left', echo=F, fig.cap="Figure 1C"}
+#library(knitr)
+knitr::include_graphics("./Figures/Heatmap_batch1_recount.pdf") 
+```
+
 ## Volcano plot (Figure 1D)
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
 res.deseq.radiation.unshrunk <- results(deseq.df, contrast = c("radiation", "Radiation", "Control"))
@@ -738,6 +743,11 @@ EnhancedVolcano(res.deseq.radiation.unshrunk,
 dev.off()
 ```
 
+```{r  out.height = "600px", out.width = "800px", fig.align = 'left', echo=F, fig.cap="Figure 1D"}
+#library(knitr)
+knitr::include_graphics("./Figures/Radiation_Volcano_batch1_recount.pdf") 
+```
+
 ## Gene set enrichment analysis (Figure 1E)
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
 original_gene_list <- res.deseq.radiation$log2FoldChange
@@ -767,6 +777,11 @@ ggplot(gse_top, aes(reorder(pathway, NES), NES, fill = log(padj, base = 10))) +
   theme(text = element_text(size = 20)) +
   labs(fill = "log(padj)")
 dev.off()
+```
+
+```{r  out.height = "300px", out.width = "800px", fig.align = 'left', echo=F, fig.cap="Figure 1E"}
+#library(knitr)
+knitr::include_graphics("./Figures/Hallmark_GSEA_batch1_FDR_0.05_recount.pdf") 
 ```
 
 ## Putative regulatory element identification with dREG
@@ -849,43 +864,22 @@ do
 done
 ```
 
+```{r  out.height = "300px", out.width = "800px", fig.align = 'left', echo=F, fig.cap="Figure 1F"}
+#library(knitr)
+knitr::include_graphics("./Figures/P53.eps") 
+```
+
 ## Differential motif abundance in putative regulatory elements (Figure 1G)
 
 ```{r engine='bash', eval=F, echo=TRUE}
 #FIMO 
 motif_directory=~/Library/CloudStorage/Box-Box/GuertinLab/Motif_databases/individual_memes
-fimo --max-stored-scores 2000000 -oc ARE_fimo ${motif_directory}/AR-halfsite_meme.txt $genome
-fimo --max-stored-scores 2000000 -oc Full_ARE_fimo ${motif_directory}/ARE_meme.txt $genome
 fimo --max-stored-scores 2500000 -oc P53_fimo ${motif_directory}/p53_homer_uniprobe_jaspar_edited.txt_meme.txt $genome
 
 #Take the top 1000000 most stringent matches
 score=$(tail -n +2 P53_fimo/fimo.gff | sort -nrk6,6 | awk 'FNR == 1000000 {print $6}')
 tail -n +2 P53_fimo/fimo.gff | awk -v sco="$score" '{ if ($6 >= sco) { print } }' | \
     awk '{OFS="\t";} {print $1,$4,$5}' > P53_fimo/1000000_fimo.gff
-score=$(tail -n +2 ARE_fimo/fimo.gff | sort -nrk6,6 | awk 'FNR == 1000000 {print $6}')
-tail -n +2 ARE_fimo/fimo.gff | awk -v sco="$score" '{ if ($6 >= sco) { print } }' | \
-    awk '{OFS="\t";} {print $1,$4,$5}' > ARE_fimo/1000000_fimo.gff
-score=$(tail -n +2 Full_ARE_fimo/fimo.gff | sort -nrk6,6 | awk 'FNR == 1000000 {print $6}')
-tail -n +2 Full_ARE_fimo/fimo.gff | awk -v sco="$score" '{ if ($6 >= sco) { print } }' | \
-    awk '{OFS="\t";} {print $1,$4,$5}' > Full_ARE_fimo/1000000_fimo.gff
-
-#Intersect motifs with ENCODE DNAse hypersensitivity sites
-wget https://www.encodeproject.org/files/ENCFF422MXW/@@download/ENCFF422MXW.bed.gz
-gunzip ENCFF422MXW.bed.gz
-intersectBed -a ARE_fimo/fimo.gff -b ENCFF422MXW.bed > ARE_fimo_DHS.bed
-intersectBed -u -a Full_ARE_fimo/fimo.gff -b ENCFF422MXW.bed > Full_ARE_fimo_DHS.bed
-intersectBed -a P53_fimo/fimo.gff -b ENCFF422MXW.bed > P53_fimo_DHS.bed
-
-#Take the top 5000 scores
-score=$(tail -n +2 ARE_fimo_DHS.bed | sort -nrk6,6 | awk 'FNR == 5000 {print $6}')
-tail -n +2 ARE_fimo_DHS.bed | awk -v sco="$score" '{ if ($6 >= sco) { print } }' | \
-    awk '{OFS="\t";} {print $1,$4,$5}' > ARE_fimo_DHS_5000.bed
-score=$(tail -n +2 Full_ARE_fimo_DHS.bed | sort -nrk6,6 | awk 'FNR == 5000 {print $6}')
-tail -n +2 Full_ARE_fimo_DHS.bed | awk -v sco="$score" '{ if ($6 >= sco) { print } }' | \
-    awk '{OFS="\t";} {print $1,$4,$5}' > Full_ARE_fimo_DHS_5000.bed
-score=$(tail -n +2 P53_fimo_DHS.bed | sort -nrk6,6 | awk 'FNR == 5000 {print $6}')
-tail -n +2 P53_fimo_DHS.bed | awk -v sco="$score" '{ if ($6 >= sco) { print } }' | \
-    awk '{OFS="\t";} {print $1,$4,$5}' > P53_fimo_DHS_5000.bed
 ```
 
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
@@ -893,10 +887,11 @@ tail -n +2 P53_fimo_DHS.bed | awk -v sco="$score" '{ if ($6 >= sco) { print } }'
 pdf("P53_fimo_barchart_batch1_recount.pdf")
 P53 = PeaksWithMotif("P53_fimo/1000000_fimo.gff")
 dev.off()
+```
 
-pdf("ARE_fimo_barchart_batch1_recount.pdf")
-ARE = PeaksWithMotif("ARE_fimo/1000000_fimo.gff")
-dev.off()
+```{r  out.height = "300px", out.width = "800px", fig.align = 'left', echo=F, fig.cap="Figure 1G"}
+#library(knitr)
+knitr::include_graphics("./Figures/P53_fimo_barchart_batch1_recount.pdf") 
 ```
 
 # Figure 2 and Supplemental Figure 1
