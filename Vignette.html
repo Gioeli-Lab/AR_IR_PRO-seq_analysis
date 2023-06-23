@@ -1367,7 +1367,7 @@ colnames(gene.symbol) = c(&quot;gene&quot;, &quot;symbol&quot;)</code></pre>
 <h1><span class="header-section-number">4</span> Figure 1</h1>
 <div id="identify-differentially-expressed-genes" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> Identify differentially expressed genes</h2>
-<pre class="r"><code>x = read.table(&quot;Radiation_enzalutamide_batch1_gene_recounts.txt&quot;, sep = &#39;\t&#39;, header = TRUE)
+<pre class="r bg-info"><code>x = read.table(&quot;Radiation_enzalutamide_batch1_gene_recounts.txt&quot;, sep = &#39;\t&#39;, header = TRUE)
 rownames(x) = x[,1]
 x = x[,seq(2,to=ncol(x),by=2)]
 
@@ -1394,7 +1394,7 @@ sum(res.deseq.radiation$padj &lt; 0.1 &amp; !is.na(res.deseq.radiation$padj) &am
 </div>
 <div id="principle-component-analysis-figure-1b" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> Principle component analysis (Figure 1B)</h2>
-<pre class="r"><code>rld_LNCaP = rlogTransformation(deseq.df)
+<pre class="r bg-info"><code>rld_LNCaP = rlogTransformation(deseq.df)
 pdf(&quot;PCA_batch1_recount.pdf&quot;, height = 2, width = 4)
 plotPCA.any(rld_LNCaP, intgroup=&quot;radiation&quot;) + 
   scale_color_manual(values = col[c(2,4)]) +
@@ -1403,7 +1403,7 @@ dev.off()</code></pre>
 </div>
 <div id="heatmap-figure-1c" class="section level2" number="4.3">
 <h2><span class="header-section-number">4.3</span> Heatmap (Figure 1C)</h2>
-<pre class="r"><code>wide_counts = counts(deseq.df[rownames(deseq.df) %in% rownames(res.deseq.radiation)[res.deseq.radiation$padj &lt; .1 &amp; !is.na(res.deseq.radiation$padj)],], normalized = TRUE)
+<pre class="r bg-info"><code>wide_counts = counts(deseq.df[rownames(deseq.df) %in% rownames(res.deseq.radiation)[res.deseq.radiation$padj &lt; .1 &amp; !is.na(res.deseq.radiation$padj)],], normalized = TRUE)
 radiation &lt;- vector(mode=&quot;character&quot;, length=ncol(wide_counts))
 radiation[grep(&quot;6GyIR&quot;, colnames(wide_counts))] = &quot;Radiation&quot;
 radiation[c(1:length(colnames(wide_counts)))[!(c(1:length(colnames(wide_counts))) %in% grep(&quot;6GyIR&quot;, colnames(wide_counts)))]] = &quot;Control&quot;
@@ -1419,7 +1419,7 @@ dev.off()</code></pre>
 </div>
 <div id="volcano-plot-figure-1d" class="section level2" number="4.4">
 <h2><span class="header-section-number">4.4</span> Volcano plot (Figure 1D)</h2>
-<pre class="r"><code>res.deseq.radiation.unshrunk &lt;- results(deseq.df, contrast = c(&quot;radiation&quot;, &quot;Radiation&quot;, &quot;Control&quot;))
+<pre class="r bg-info"><code>res.deseq.radiation.unshrunk &lt;- results(deseq.df, contrast = c(&quot;radiation&quot;, &quot;Radiation&quot;, &quot;Control&quot;))
 res.deseq.radiation.unshrunk = res.deseq.radiation.unshrunk[rownames(res.deseq.radiation.unshrunk) %in% gene.symbol$gene,]
 
 keyvals &lt;- ifelse(
@@ -1456,7 +1456,7 @@ dev.off()</code></pre>
 </div>
 <div id="gene-set-enrichment-analysis-figure-1e" class="section level2" number="4.5">
 <h2><span class="header-section-number">4.5</span> Gene set enrichment analysis (Figure 1E)</h2>
-<pre class="r"><code>original_gene_list &lt;- res.deseq.radiation$log2FoldChange
+<pre class="r bg-info"><code>original_gene_list &lt;- res.deseq.radiation$log2FoldChange
 names(original_gene_list) &lt;- rownames(res.deseq.radiation)
 gene_list&lt;-na.omit(original_gene_list)
 gene_list = sort(gene_list, decreasing = TRUE)
@@ -1491,7 +1491,7 @@ dev.off()</code></pre>
 seqOutBias $genome $bams --no-scale --stranded --bw=LNCaP_batch1_combined_no_scale.bigWig \
     --skip-bed --only-paired --out-split-pairends --tail-edge --read-size=$read_size</code></pre>
 <p>Now count PRO-seq reads in these peaks and identify differential PRO signal</p>
-<pre class="r"><code>counts.dreg = get.raw.counts.full.dREG(df = &#39;LNCaP_batch1.dREG.peak.full.bed&#39;,
+<pre class="r bg-info"><code>counts.dreg = get.raw.counts.full.dREG(df = &#39;LNCaP_batch1.dREG.peak.full.bed&#39;,
           path.to.bigWig = &quot;/Volumes/External/Users/TScott/Radiation_enzalutamide_PRO/&quot;, file.prefix = &#39;LNCaP_&#39;)
 counts.dreg = counts.dreg[,grep(&quot;batch1&quot;, colnames(counts.dreg))]
 save(counts.dreg, file = &#39;batch1.counts.dreg.Rdata&#39;)
@@ -1590,7 +1590,7 @@ tail -n +2 Full_ARE_fimo_DHS.bed | awk -v sco=&quot;$score&quot; &#39;{ if ($6 &
 score=$(tail -n +2 P53_fimo_DHS.bed | sort -nrk6,6 | awk &#39;FNR == 5000 {print $6}&#39;)
 tail -n +2 P53_fimo_DHS.bed | awk -v sco=&quot;$score&quot; &#39;{ if ($6 &gt;= sco) { print } }&#39; | \
     awk &#39;{OFS=&quot;\t&quot;;} {print $1,$4,$5}&#39; &gt; P53_fimo_DHS_5000.bed</code></pre>
-<pre class="r"><code>#FIMO on dREG elements
+<pre class="r bg-info"><code>#FIMO on dREG elements
 pdf(&quot;P53_fimo_barchart_batch1_recount.pdf&quot;)
 P53 = PeaksWithMotif(&quot;P53_fimo/1000000_fimo.gff&quot;)
 dev.off()
@@ -1604,7 +1604,7 @@ dev.off()</code></pre>
 <h1><span class="header-section-number">5</span> Figure 2 and Supplemental Figure 1</h1>
 <div id="identify-differentially-expressed-genes-1" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Identify differentially expressed genes</h2>
-<pre class="r"><code>x = read.table(&quot;Radiation_enzalutamide_gene_recounts.txt&quot;, sep = &#39;\t&#39;, header = TRUE)
+<pre class="r bg-info"><code>x = read.table(&quot;Radiation_enzalutamide_gene_recounts.txt&quot;, sep = &#39;\t&#39;, header = TRUE)
 rownames(x) = x[,1]
 x = x[,seq(2,to=ncol(x),by=2)]
 
@@ -1632,7 +1632,7 @@ res.deseq.radiation = res.deseq.radiation[rownames(res.deseq.radiation) %in% gen
 </div>
 <div id="principle-component-analysis-plot-figure-2d" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Principle component analysis plot (Figure 2D)</h2>
-<pre class="r"><code>rld_LNCaP = rlogTransformation(deseq.df)
+<pre class="r bg-info"><code>rld_LNCaP = rlogTransformation(deseq.df)
 pdf(&quot;PCA_PC1_PC3_recount.pdf&quot;)
 plotPCA.any(rld_LNCaP, intgroup=&quot;treatment&quot;, pcs = c(1,3)) +
   scale_color_manual(values = col[1:4]) +
@@ -1641,7 +1641,7 @@ dev.off()</code></pre>
 </div>
 <div id="heatmap-figure-2e" class="section level2" number="5.3">
 <h2><span class="header-section-number">5.3</span> Heatmap (Figure 2E)</h2>
-<pre class="r"><code>wide_counts = counts(deseq.df[rownames(deseq.df) %in% 
+<pre class="r bg-info"><code>wide_counts = counts(deseq.df[rownames(deseq.df) %in% 
                                 c(rownames(res.deseq.enza)[res.deseq.enza$padj &lt; .1 &amp; !is.na(res.deseq.enza$padj)],
                                   rownames(res.deseq.radiation)[res.deseq.radiation$padj &lt; .1 &amp; !is.na(res.deseq.radiation$padj)]),],
                      normalized = TRUE)
