@@ -7,6 +7,7 @@ header-includes:
 output:
   bookdown::html_document2:
     toc: true
+    code_folding: hide
 fontsize: 14pt
 geometry: margin=1in
 ---
@@ -677,7 +678,7 @@ plotPCA.any(rld_LNCaP, intgroup="radiation") +
 dev.off()
 ```
 
-```{r  out.height = "600px", fig.align = 'left', echo=F, fig.cap="Figure 1B"}
+```{r  out.height = "300px", fig.align = 'left', echo=F, fig.cap="Figure 1B"}
 #library(knitr)
 knitr::include_graphics("./Figures/PCA_batch1_recount.pdf") 
 ```
