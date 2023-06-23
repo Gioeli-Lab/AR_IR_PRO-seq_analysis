@@ -10,6 +10,7 @@ output:
     code_folding: hide
 fontsize: 14pt
 geometry: margin=1in
+date: "Last compiled on `r format(Sys.time(), '%d %B, %Y')`"
 ---
 
 ```{css, echo=FALSE}
@@ -37,7 +38,7 @@ fasterq-dump SRRTBD
 For the initial basic processing steps, we used a pipeline we have thoroughly described elsewhere (https://github.com/guertinlab/Nascent_RNA_Methods). 
 Please see the above GitHub repository for detailed explanations of the steps, as well as software dependencies and preprocessing steps (e.g., gene annotation file downloads).
 
-```{r engine='bash', eval=F, echo=TRUE}
+```{r engine='bash', eval=F, echo=TRUE, class.source = 'foldable'}
 #Initialize variables
 directory=/Volumes/External/Users/TScott/Radiation_enzalutamide_PRO
 annotation_prefix=/Volumes/External/Users/TScott/ER_Antagonists/210620_PRO/Homo_sapiens.GRCh38.104 
