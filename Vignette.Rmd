@@ -7,7 +7,6 @@ header-includes:
 output:
   bookdown::html_document2:
     toc: true
-    toc_float: true
 fontsize: 14pt
 geometry: margin=1in
 ---
