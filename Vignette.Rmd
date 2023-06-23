@@ -7,11 +7,19 @@ header-includes:
 output:
   bookdown::html_document2:
     toc: true
-    css: doc.css
 fontsize: 14pt
 geometry: margin=1in
 ---
 
+```{css, echo=FALSE}
+body .main-container {
+  max-width: 1600px !important;
+  width: 1600px !important;
+}
+body {
+  max-width: 1600px !important;
+}
+```
 # Download the raw sequencing data
 
 Note to self: once we upload these files to GEO, we can update the SRR numbers.
