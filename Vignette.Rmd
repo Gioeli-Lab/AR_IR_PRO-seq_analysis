@@ -9,7 +9,7 @@ output:
     toc: true
 fontsize: 14pt
 geometry: margin=1in
-date: "Last compiled on `r format(Sys.time(), '%d %B, %Y')`"
+date: "Last compiled on `r format(Sys.time(), '%d %B %Y')`"
 ---
 
 ```{css, echo=FALSE}
