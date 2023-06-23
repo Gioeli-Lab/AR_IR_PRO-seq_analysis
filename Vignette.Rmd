@@ -20,7 +20,17 @@ body .main-container {
 body {
   max-width: 1600px !important;
 }
+
+pre {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+pre[class] {
+  max-height: 600px;
+}
 ```
+
 # Download the raw sequencing data
 
 Note to self: once we upload these files to GEO, we can update the SRR numbers.
