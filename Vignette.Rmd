@@ -677,7 +677,7 @@ plotPCA.any(rld_LNCaP, intgroup="radiation") +
 dev.off()
 ```
 
-```{r  out.width = "120%", echo=F, fig.align = "center", fig.cap="Figure 1B"}
+```{r  out.height = "200px", echo=F, fig.cap="Figure 1B"}
 #library(knitr)
 knitr::include_graphics("./Figures/PCA_batch1_recount.pdf") 
 ```
