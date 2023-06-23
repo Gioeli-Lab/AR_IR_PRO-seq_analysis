@@ -190,7 +190,7 @@ cp /Volumes/External/Users/TScott/ER_Antagonists/210620_PRO/Homo_sapiens.GRCh38.
 
 R code chunks will be in light blue, to distinguish from bash code chunks in grey.
 
-```{r class.source="bg-success", engine='R', eval=F, echo=T}
+```{r class.source="bg-info", engine='R', eval=F, echo=T}
 setwd("~/Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R")
 
 library(viridis)
