@@ -31,24 +31,86 @@ pre[class] {
 }
 ```
 
-# Download the raw sequencing data
+# Introduction
 
-Note to self: once we upload these files to GEO, we can update the SRR numbers.
+This is the PRO-seq analysis vignette for the manuscript entitled "The androgen receptor does not directly regulate the transcription of DNA damage response genes", which can be found at doi: https://doi.org/10.1101/2023.05.13.540653. The reader should be able to follow these analysis steps to get the same results that we report.
+
+# Download and rename the raw sequencing data from GEO
+
+## Download
+
+Bash code chunks will be in grey. Change the directory name to your working directory.
 
 ```{r engine='bash', eval=F, echo=TRUE}
 directory=/Volumes/External/Users/TScott/Radiation_enzalutamide_PRO
 mkdir -p $directory
 cd $directory
-fasterq-dump SRRTBD
+fasterq-dump SRX20800653
+fasterq-dump SRX20800654
+fasterq-dump SRX20800655
+fasterq-dump SRX20800656
+fasterq-dump SRX20800657
+fasterq-dump SRX20800658
+fasterq-dump SRX20800659
+fasterq-dump SRX20800660
+fasterq-dump SRX20800661
+fasterq-dump SRX20800662
+fasterq-dump SRX20800663
+fasterq-dump SRX20800664
+fasterq-dump SRX20800665
+fasterq-dump SRX20800666
+fasterq-dump SRX20800667
+fasterq-dump SRX20800668
+```
+
+## Rename
+
+The later code expects these names.
+
+```{r engine='bash', eval=F, echo=TRUE}
+mv SRX20800653_1.fastq LNCaP_rep1t1_batch1_PE1.fastq
+mv SRX20800653_2.fastq LNCaP_rep1t1_batch1_PE2.fastq
+mv SRX20800654_1.fastq LNCaP_rep1t2_batch1_PE1.fastq
+mv SRX20800654_2.fastq LNCaP_rep1t2_batch1_PE2.fastq
+mv SRX20800655_1.fastq LNCaP_rep2t1_batch1_PE1.fastq
+mv SRX20800655_2.fastq LNCaP_rep2t1_batch1_PE2.fastq
+mv SRX20800656_1.fastq LNCaP_rep2t2_batch1_PE1.fastq
+mv SRX20800656_2.fastq LNCaP_rep2t2_batch1_PE2.fastq
+mv SRX20800657_1.fastq LNCaP_6GyIR_rep1t1_batch1_PE1.fastq
+mv SRX20800657_2.fastq LNCaP_6GyIR_rep1t1_batch1_PE2.fastq
+mv SRX20800658_1.fastq LNCaP_6GyIR_rep1t2_batch1_PE1.fastq
+mv SRX20800658_2.fastq LNCaP_6GyIR_rep1t2_batch1_PE2.fastq
+mv SRX20800659_1.fastq LNCaP_6GyIR_rep2t1_batch1_PE1.fastq
+mv SRX20800659_2.fastq LNCaP_6GyIR_rep2t1_batch1_PE2.fastq
+mv SRX20800660_1.fastq LNCaP_6GyIR_rep2t2_batch1_PE1.fastq
+mv SRX20800660_2.fastq LNCaP_6GyIR_rep2t2_batch1_PE2.fastq
+mv SRX20800661_1.fastq LNCaP_rep3_batch2_PE1.fastq
+mv SRX20800661_2.fastq LNCaP_rep3_batch2_PE2.fastq
+mv SRX20800662_1.fastq LNCaP_rep4_batch2_PE1.fastq
+mv SRX20800662_2.fastq LNCaP_rep4_batch2_PE2.fastq
+mv SRX20800663_1.fastq LNCaP_6GyIR_rep3_batch2_PE1.fastq
+mv SRX20800664_2.fastq LNCaP_6GyIR_rep3_batch2_PE2.fastq
+mv SRX20800664_1.fastq LNCaP_6GyIR_rep4_batch2_PE1.fastq
+mv SRX20800664_2.fastq LNCaP_6GyIR_rep4_batch2_PE2.fastq
+mv SRX20800665_1.fastq LNCaP_10uMEnza_rep3_batch2_PE1.fastq
+mv SRX20800665_2.fastq LNCaP_10uMEnza_rep3_batch2_PE2.fastq
+mv SRX20800666_1.fastq LNCaP_10uMEnza_rep4_batch2_PE1.fastq
+mv SRX20800666_2.fastq LNCaP_10uMEnza_rep4_batch2_PE2.fastq
+mv SRX20800667_1.fastq LNCaP_10uMEnza_6GyIR_rep3_batch2_PE1.fastq
+mv SRX20800667_2.fastq LNCaP_10uMEnza_6GyIR_rep3_batch2_PE2.fastq
+mv SRX20800668_1.fastq LNCaP_10uMEnza_6GyIR_rep4_batch2_PE1.fastq
+mv SRX20800668_2.fastq LNCaP_10uMEnza_6GyIR_rep4_batch2_PE2.fastq
 ```
 
 # Process the raw sequencing data to get to gene counts
 
-For the initial basic processing steps, we used a pipeline we have thoroughly described elsewhere (https://github.com/guertinlab/Nascent_RNA_Methods). 
-Please see the above GitHub repository for detailed explanations of the steps, as well as software dependencies and preprocessing steps (e.g., gene annotation file downloads).
+For the initial basic processing steps, we used a pipeline we have thoroughly described elsewhere (https://github.com/guertinlab/Nascent_RNA_Methods). Please see the above GitHub repository for detailed explanations of the steps, as well as software dependencies and preprocessing steps (e.g., gene annotation file downloads).
+
+## Initialize variables
+
+Change the file locations to where they are on your computer.
 
 ```{r engine='bash', eval=F, echo=TRUE}
-#Initialize variables
 directory=/Volumes/External/Users/TScott/Radiation_enzalutamide_PRO
 annotation_prefix=/Volumes/External/Users/TScott/ER_Antagonists/210620_PRO/Homo_sapiens.GRCh38.104 
 UMI_length=8
@@ -57,10 +119,15 @@ cores=6
 genome=~/Library/CloudStorage/Box-Box/GuertinLab/hg38/hg38.fa
 genome_index=~/Library/CloudStorage/Box-Box/GuertinLab/hg38/hg38
 prealign_rdna=/Volumes/External/Users/TScott/ER_Antagonists/210620_PRO/human_rDNA
+```
 
+## Loop through the files
+
+You could put everything in this loop into a script and submit it in parallel on a computing cluster to save time.
+
+```{r engine='bash', eval=F, echo=TRUE}
 cd $directory 
 
-#Loop through the files
 for filename in LNCaP*_PE1.fastq.gz
 do
     name=$(echo $filename | awk -F"_PE1.fastq.gz" '{print $1}')
@@ -181,16 +248,29 @@ do
     gzip ${name}_PE1.fastq
     gzip ${name}_PE2.fastq
 done
+```
 
-#Combine and plot the QC metrics
+## Combine and plot the QC metrics
+
+```{r engine='bash', eval=F, echo=TRUE}
 cat *_QC_metrics.txt | awk '!x[$0]++' > Radiation_enzalutamide_project_QC_metrics.txt 
 plot_all_metrics.R Radiation_enzalutamide_project_QC_metrics.txt Radiation_enzalutamide
+```
 
-#Combine the gene counts into one file for each batch for use in downstream analysis
+## Combine the gene counts into one file for each batch for use in downstream analysis
+
+The later code expects these names. "recounts" is a legacy name based on a previous incorrect counting method. 
+
+```{r engine='bash', eval=F, echo=TRUE}
 paste -d'\t' *_batch2_gene_recounts.txt > Radiation_enzalutamide_gene_recounts.txt
 paste -d'\t' *_batch1_gene_recounts.txt > Radiation_enzalutamide_batch1_gene_recounts.txt
+```
 
-#Copying to Box for use later when I don't have my external hard drive
+## Copy to where you will work in R
+
+This is not necessary if you are doing the downstream analysis in the same directory as your initial processing.
+
+```{r engine='bash', eval=F, echo=TRUE}
 cp Radiation_enzalutamide_gene*_recounts.txt /Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R/
 cp *.pdf /Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R/
 cp /Volumes/External/Users/TScott/ER_Antagonists/210620_PRO/Homo_sapiens.GRCh38.104.bed \
@@ -201,9 +281,17 @@ cp /Volumes/External/Users/TScott/ER_Antagonists/210620_PRO/Homo_sapiens.GRCh38.
 
 R code chunks will be in light blue, to distinguish from bash code chunks in grey.
 
+## Set the working directory
+
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
 setwd("~/Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R")
+```
 
+## Load required packages
+
+You will need to install these if you don't have them already.
+
+```{r class.source="bg-info", engine='R', eval=F, echo=T}
 library(viridis)
 library(lattice)
 library(latticeExtra)
@@ -229,19 +317,16 @@ library(bigWig)
 library(grid)
 library(zoo)
 library(grid)
+```
 
+## Make functions
+
+I don't think we need the initial "source" command, as the following function list should be complete. 
+
+```{r class.source="bg-info", engine='R', eval=F, echo=T}
 source('https://raw.githubusercontent.com/mjg54/znf143_pro_seq_analysis/master/docs/ZNF143_functions.R')
 
-plot.ma.lattice <- function(ma.df, filename = 'file.name', p = 0.01, title.main = "Differential PRO Expression",log2fold = 0.5)
-{
-  pdf(paste("MA_plot_", filename, "_recount.pdf", sep=''), width=3.83, height=3.83)
-  print(xyplot(ma.df$log2FoldChange ~ log(ma.df$baseMean, base=10),
-               groups=(ma.df$padj < p & abs(ma.df$log2FoldChange) > log2fold & !is.na(ma.df$padj)),
-               col=c("grey40","red"), main=title.main, scales="free", aspect=1, pch=20, cex=0.25,
-               ylab=expression("log"[2]~"PRO fold change"), xlab=expression("log"[10]~"Mean of Normalized Counts"),
-               par.settings=list(par.xlab.text=list(cex=1.1,font=2), par.ylab.text=list(cex=1.1,font=2))))
-  dev.off()
-}
+`%notin%` <- Negate(`%in%`)
 
 plotPCA.any <-  function(object, intgroup="condition", ntop=500, returnData=FALSE, pcs = c(1,2))
 {
@@ -635,13 +720,22 @@ panel.violin.hack <-
     }
     invisible()
   }
+```
 
-#Viridis color scheme
+## Define the color scheme. 
+
+Here we use viridis.
+
+```{r class.source="bg-info", engine='R', eval=F, echo=T}
 col = viridis(5)
+```
 
-#For converting gene names
+## Read in gene annotations
+
+This allows us to convert between Ensembl gene names and gene symbols.
+
+```{r class.source="bg-info", engine='R', eval=F, echo=T}
 gene.file = read.table("Homo_sapiens.GRCh38.104_sorted.bed", sep = '\t', header = FALSE)
-`%notin%` <- Negate(`%in%`)
 gene.file = gene.file[gene.file$V5 %notin% c("havana", "havana_tagene", "ensembl_havana", "ensembl"),]
 gene.symbol = gene.file[,c(4,5)]
 colnames(gene.symbol) = c("gene", "symbol")
@@ -649,36 +743,48 @@ colnames(gene.symbol) = c("gene", "symbol")
 
 # Figure 1
 
-## Identify differentially expressed genes 
+## Identify differentially expressed genes in experiment 1
+
+This first experiment (batch 1) had 4 replicates each of irradiated or mock-treated cells.
 
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
+#Read in the counts data
 x = read.table("Radiation_enzalutamide_batch1_gene_recounts.txt", sep = '\t', header = TRUE)
+#The first column is the genes
 rownames(x) = x[,1]
+#Remove the odd columns, because they're all the same (the gene names)
 x = x[,seq(2,to=ncol(x),by=2)]
 
-#Size factors for scaling composite plots
+#Generate size factors for scaling composite plots based on read depth
 size_factors <- estimateSizeFactorsForMatrix(x)
 write.table(estimateSizeFactorsForMatrix(x),
             file = 'norm.bedGraph.sizeFactor_batch1_recount.txt', quote =F, col.names=F)
 
+#Generate the variable names by parsing the column (sample) names
 radiation <- vector(mode="character", length=ncol(x))
 radiation[grep("6GyIR", colnames(x))] = "Radiation"
 radiation[c(1:length(colnames(x)))[!(c(1:length(colnames(x))) %in% grep("6GyIR", colnames(x)))]] = "Control"
 radiation = relevel(factor(radiation), ref = "Control")
 rep = factor(sapply(strsplit(sapply(strsplit(colnames(x), 'rep'), '[', 2), '_batch'), '[', 1))
+
+#Run DESeq2
 deseq.df = DESeqDataSetFromMatrix(x, cbind.data.frame(radiation, rep), ~ rep + radiation)
 deseq.df = DESeq(deseq.df)
-res.deseq.radiation <- lfcShrink(deseq.df, coef = "radiation_Radiation_vs_Control", type="apeglm")
-#Too harsh shrinkage
-plotMA(res.deseq.radiation, ylim = c(-5,5))
+
+#Get differentially expressed genes with shrunken fold changes for ranking gene set enrichment analysis
 res.deseq.radiation <- lfcShrink(deseq.df, coef = "radiation_Radiation_vs_Control", type="ashr")
-plotMA(res.deseq.radiation, ylim = c(-5,5))
+#Only keep genes with gene symbols in the annotation file
 res.deseq.radiation = res.deseq.radiation[rownames(res.deseq.radiation) %in% gene.symbol$gene,]
-sum(res.deseq.radiation$padj < 0.1 & !is.na(res.deseq.radiation$padj) & res.deseq.radiation$log2FoldChange > 0)
-sum(res.deseq.radiation$padj < 0.1 & !is.na(res.deseq.radiation$padj) & res.deseq.radiation$log2FoldChange < 0)
+
+#Also get the non-shrunken fold changes (the other values are the same)
+res.deseq.radiation.unshrunk <- results(deseq.df, contrast = c("radiation", "Radiation", "Control"))
+res.deseq.radiation.unshrunk = res.deseq.radiation.unshrunk[rownames(res.deseq.radiation.unshrunk) %in% gene.symbol$gene,]
 ```
 
 ## Principle component analysis (Figure 1B)
+
+This function uses the DESeq PCA plotting function but allows us to plot any principle components. 
+
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
 rld_LNCaP = rlogTransformation(deseq.df)
 pdf("PCA_batch1_recount.pdf", height = 2, width = 4)
@@ -688,20 +794,21 @@ plotPCA.any(rld_LNCaP, intgroup="radiation") +
 dev.off()
 ```
 
-```{r  out.height = "300px", out.width = "800px", fig.align = 'left', echo=F, fig.cap="Figure 1B"}
-#library(knitr)
-knitr::include_graphics("./Figures/PCA_batch1_recount.pdf") 
-```
-
 ## Heatmap (Figure 1C)
+
+Here we plot the normalized counts for each differentially expressed gene at an FDR of 0.1, scaled by z-score across samples. Hierarchical clustering is performed both on the samples and on the genes.
+
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
+#Get the normalized counts for each gene with an adjusted p-value < 0.1
 wide_counts = counts(deseq.df[rownames(deseq.df) %in% rownames(res.deseq.radiation)[res.deseq.radiation$padj < .1 & !is.na(res.deseq.radiation$padj)],], normalized = TRUE)
+#Generate the variable names by parsing the column (sample) names
 radiation <- vector(mode="character", length=ncol(wide_counts))
 radiation[grep("6GyIR", colnames(wide_counts))] = "Radiation"
 radiation[c(1:length(colnames(wide_counts)))[!(c(1:length(colnames(wide_counts))) %in% grep("6GyIR", colnames(wide_counts)))]] = "Control"
 rep = factor(sapply(strsplit(sapply(strsplit(colnames(wide_counts), 'rep'), '[', 2), '_batch'), '[', 1))
-#colnames(wide_counts) = paste(radiation, rep("rep", length(rep)), rep, sep = " ")
+#Name each sample based on the radiation variable (drops the replicate number)
 colnames(wide_counts) = radiation
+#Plot
 pdf("Heatmap_batch1_recount.pdf", width = 8, height = 5)
 pheatmap(wide_counts, scale = "row", show_rownames = F, angle_col = 0, fontsize = 24,
          color = rev(brewer.pal(11,"RdBu")),
@@ -710,16 +817,12 @@ pheatmap(wide_counts, scale = "row", show_rownames = F, angle_col = 0, fontsize 
 dev.off()
 ```
 
-```{r  out.height = "300px", out.width = "800px", fig.align = 'left', echo=F, fig.cap="Figure 1C"}
-#library(knitr)
-knitr::include_graphics("./Figures/Heatmap_batch1_recount.pdf") 
-```
-
 ## Volcano plot (Figure 1D)
-```{r class.source="bg-info", engine='R', eval=F, echo=T}
-res.deseq.radiation.unshrunk <- results(deseq.df, contrast = c("radiation", "Radiation", "Control"))
-res.deseq.radiation.unshrunk = res.deseq.radiation.unshrunk[rownames(res.deseq.radiation.unshrunk) %in% gene.symbol$gene,]
 
+Here we make a volcano plot of the fold changes and the adjusted p-values. The dashed line indicating significance is using an FDR of 0.1. 
+
+```{r class.source="bg-info", engine='R', eval=F, echo=T}
+#Color and name the points based on significance and direction
 keyvals <- ifelse(
   res.deseq.radiation.unshrunk$padj < .1 & res.deseq.radiation.unshrunk$log2FoldChange < 0, 'blue',
   ifelse(res.deseq.radiation.unshrunk$padj < .1 & res.deseq.radiation.unshrunk$log2FoldChange > 0, 'red',
@@ -729,6 +832,7 @@ names(keyvals)[keyvals == 'red'] <- 'Up'
 names(keyvals)[keyvals == 'black'] <- 'Not Significant'
 names(keyvals)[keyvals == 'blue'] <- 'Down'
 
+#Plot
 pdf("Radiation_Volcano_batch1_recount.pdf")
 EnhancedVolcano(res.deseq.radiation.unshrunk,
                 lab = gene.symbol$symbol[gene.symbol$gene == rownames(res.deseq.radiation.unshrunk)],
@@ -753,30 +857,36 @@ EnhancedVolcano(res.deseq.radiation.unshrunk,
 dev.off()
 ```
 
-```{r  out.height = "300px", out.width = "800px", fig.align = 'left', echo=F, fig.cap="Figure 1D"}
-#library(knitr)
-knitr::include_graphics("./Figures/Radiation_Volcano_batch1_recount.pdf") 
-```
-
 ## Gene set enrichment analysis (Figure 1E)
+
+Here we perform gene set enrichment analysis with the Hallmark gene sets. All genes (not just differentially expressed genes) go into this analysis, a distinguishing feature of GSEA compared to over-representation analysis. Genes are ranked by their shrunken fold changes, which is designed to make the fold changes comparable across a range of gene expression levels. Counts-based data show heteroskedasticity, where the genes with fewer counts have higher variability. Each gene set is assigned a p-value, which is then adjusted for multiple hypothesis testing using the Benjamini-Hochberg (false discovery rate (FDR)) procedure. We plotted the gene sets that were significant at an FDR of 0.05. The Androgen Response gene set had an adjusted p-value of BLANK.
+
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
+#Rank the genes based on shrunken fold change
 original_gene_list <- res.deseq.radiation$log2FoldChange
 names(original_gene_list) <- rownames(res.deseq.radiation)
 gene_list<-na.omit(original_gene_list)
 gene_list = sort(gene_list, decreasing = TRUE)
 
+#Get the Hallmark gene sets
 h_gene_sets = msigdbr(species = "Homo sapiens", category = "H")
 msigdbr_list = split(x = h_gene_sets$ensembl_gene, f = h_gene_sets$gs_name)
+
+#For reproducibility of random number generation for permutations, set the seed each time
 set.seed(0)
+
+#Run GSEA
 fgseaRes <- fgsea(msigdbr_list, gene_list, eps = 0)
 
+#Rank the results by the normalized enrichment score
 fgseaResTidy <- fgseaRes %>%
   as_tibble() %>%
   arrange(desc(NES))
 
-print(fgseaResTidy[fgseaResTidy$padj < 0.05,], n = 100)
+#Just take those with an adjusted p-value of < 0.05 for plotting
 gse_top = fgseaResTidy[fgseaResTidy$padj < 0.05,]
 
+#Plot
 pdf("Hallmark_GSEA_batch1_FDR_0.05_recount.pdf", width = 14)
 ggplot(gse_top, aes(reorder(pathway, NES), NES, fill = log(padj, base = 10))) +
   geom_col() +
@@ -789,83 +899,119 @@ ggplot(gse_top, aes(reorder(pathway, NES), NES, fill = log(padj, base = 10))) +
 dev.off()
 ```
 
-```{r  out.height = "300px", out.width = "800px", fig.align = 'left', echo=F, fig.cap="Figure 1E"}
-#library(knitr)
-knitr::include_graphics("./Figures/Hallmark_GSEA_batch1_FDR_0.05_recount.pdf") 
-```
-
 ## Putative regulatory element identification with dREG
 
-We used these output files in https://dreg.dnasequence.org/
+Here we use our PRO-seq data to identify putative regulatory elements. We use seqOutBias to generate bigWig files from all our samples, separated by paired end and strand, to upload to the dREG portal (https://dreg.dnasequence.org/). The output includes a LNCaP_batch1.dREG.peak.full.bed file that represents the genomic coordinates of each putative regulatory element. These are identified based on a signature of bidirectional transcription that occurs at both promoters and enhancers.
 
 ```{r engine='bash', eval=F, echo=TRUE}
+#Get all of the bam files in batch 1
 bams=$(ls *_batch1.bam)
+#Generate bigWigs
 seqOutBias $genome $bams --no-scale --stranded --bw=LNCaP_batch1_combined_no_scale.bigWig \
     --skip-bed --only-paired --out-split-pairends --tail-edge --read-size=$read_size
 ```
 
-Now count PRO-seq reads in these peaks and identify differential PRO signal
+Now count PRO-seq reads in these peaks, identify regions of differential bidirectional transcription, and write bed files for each class of region (increased, decreased, and unchanged).
 
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
+#Generate a counts table
 counts.dreg = get.raw.counts.full.dREG(df = 'LNCaP_batch1.dREG.peak.full.bed',
           path.to.bigWig = "/Volumes/External/Users/TScott/Radiation_enzalutamide_PRO/", file.prefix = 'LNCaP_')
+#Just focus on batch 1
 counts.dreg = counts.dreg[,grep("batch1", colnames(counts.dreg))]
+#Save for future use so you don't have to re-count
 save(counts.dreg, file = 'batch1.counts.dreg.Rdata')
+#Pick up here if you're coming back to this analysis
 load("batch1.counts.dreg.RData")
 
+#Generate the variable names by parsing the column (sample) names
 radiation <- vector(mode="character", length=ncol(counts.dreg))
 radiation[grep("6GyIR", colnames(counts.dreg))] = "Radiation"
 radiation[c(1:length(colnames(counts.dreg)))[!(c(1:length(colnames(counts.dreg))) %in% grep("6GyIR", colnames(counts.dreg)))]] = "Control"
 rep = factor(sapply(strsplit(sapply(strsplit(colnames(counts.dreg), 'rep'), '[', 2), '_batch'), '[', 1))
+
+#Run DESeq2
 deseq.df = DESeqDataSetFromMatrix(counts.dreg, cbind.data.frame(radiation, rep), ~ rep + radiation)
 deseq.df = DESeq(deseq.df)
 
+#Get differentially transcribed regions
 res.deseq.radiation = results(deseq.df, contrast = c("radiation", "Radiation", "Control"))
 
+#Classify the regions at an FDR of 0.1
 df.deseq.effects.dREG.radiation.lattice = categorize.deseq.df(res.deseq.radiation, fdr = 0.1, log2fold = 0.0, treat = 'Radiation')
 
+#Write bed files for increased, decreased, and unchanged regions
 process.deseq.df(df = df.deseq.effects.dREG.radiation.lattice,
                  filename = 'df.deseq.effects.dREG.radiation.lattice.batch1', fdr = 0.1, log2fold = 0)
-
 ```
 
-## de novo motif identification in differentially active putative regulatory elements (Figure 1F)
+## de novo motif identification in differentially transcribed putative regulatory elements (Figure 1F)
+
+For increased and decreased regions, convert the bed file to a fasta file (the nucleotide sequence).
 
 ```{r engine='bash', eval=F, echo=TRUE}
-#Making .fasta files for MEME
-cd ~/Library/CloudStorage/Box-Box/GioeliLab/Radiation_enzalutamide_R/
-
-sizes=~/Library/CloudStorage/Box-Box/GuertinLab/hg38/hg38.chrom.sizes
-
 for bed in *creased*0.1_FDR.bed
 do
     direction=$(echo $bed | awk -F"_df.deseq.effects.dREG" '{print $1}')
     batch=$(echo $bed | awk -F"_0.1_FDR.bed" '{print $1}' | awk -F"lattice" '{print $2}')
     batch=${batch/./_}
     fastaFromBed -fi $genome -bed $bed -fo ${direction}${batch}.fasta
-    intersectBed -sorted -u -a LNCaP${batch}.dREG.peak.full.bed -b $bed | \
-        awk '{OFS="\t";} {print $1,$2,$2+1}' | \
-        slopBed -b 50 -i stdin -g $sizes | \
-        fastaFromBed -fi $genome -bed stdin -fo ${direction}${batch}_summit_window.fasta
 done
+```
 
-#MEME on Rivanna
+The script used in the next code chunk (220118_meme_pro_clusters.sh) is below:
+
+```{r engine='bash', eval=F, echo=TRUE}
+#!/bin/bash 
+#SBATCH -p parallel
+#SBATCH -A gioeli_lab
+#SBATCH -t 72:00:00
+#SBATCH --nodes=5
+#SBATCH --ntasks-per-node=20
+#SBATCH --mem-per-cpu=9000
+
+module purge
+module load gcc/9.2.0 mvapich2/2.3.3 meme/5.1.0
+
+cd /scratch/ts2hx
+
+srun -n100 meme -p 100 -oc ${name}_meme_output -objfun classic -evt 0.01 -nmotifs 1000 -searchsize 0 -minw 8 -maxw 15 -revcomp -dna -markov_order 3 -maxsize 100000000 $i
+```
+
+You can run MEME in parallel on a computing cluster to save time.
+
+```{r engine='bash', eval=F, echo=TRUE}
+#Copy the script
 scp ~/Library/CloudStorage/Box-Box/GuertinLab/Code/220118_meme_pro_clusters.sh \
     ts2hx@rivanna.hpc.virginia.edu:/scratch/ts2hx
+#Copy the files
 scp *creased*.fasta ts2hx@rivanna.hpc.virginia.edu:/scratch/ts2hx
+#Log in
 ssh -Y ts2hx@rivanna.hpc.virginia.edu
+#Move to working directory
 cd /scratch/ts2hx
+#Make the script executable
 chmod +x 220118_meme_pro_clusters.sh
+#Run MEME on each file
 for i in *.fasta
 do
     name=$(echo $i |  awk -F".fasta" '{print $1}')
     sbatch --export=ALL,i=$i,name=$name --output=220118_meme_pro_clusters_${name}.out 220118_meme_pro_clusters.sh
 done
+#Leave the cluster
 exit
+#Copy the output to your local computer
 scp -r ts2hx@rivanna.hpc.virginia.edu:/scratch/ts2hx/*out* .
+```
 
-#TOMTOM
+Match the motifs to our curated database.
+
+```{r engine='bash', eval=F, echo=TRUE}
+#Download the database from our Github repository if you don't have it already
+wget https://github.com/Gioeli-Lab/AR_IR_PRO-seq_analysis/raw/main/Motif_databases/tomtom_db/homer_uniprobe_jaspar_edited.txt -P ~/Library/CloudStorage/Box-Box/GuertinLab/Motif_databases/
+#Make this a variable to save space
 motifs=~/Library/CloudStorage/Box-Box/GuertinLab/Motif_databases/tomtom_db/homer_uniprobe_jaspar_edited.txt
+#For each output, match the motifs to the database
 for i in *_meme_output/meme.txt
 do
     name=$(echo $i |  awk -F"_meme_output" '{print $1}')
@@ -874,39 +1020,34 @@ do
 done
 ```
 
-```{r  out.height = "300px", out.width = "800px", fig.align = 'left', echo=F, fig.cap="Figure 1F"}
-#library(knitr)
-knitr::include_graphics("./Figures/P53.png") 
-```
-
 ## Differential motif abundance in putative regulatory elements (Figure 1G)
 
-```{r engine='bash', eval=F, echo=TRUE}
-#FIMO 
-motif_directory=~/Library/CloudStorage/Box-Box/GuertinLab/Motif_databases/individual_memes
-fimo --max-stored-scores 2500000 -oc P53_fimo ${motif_directory}/p53_homer_uniprobe_jaspar_edited.txt_meme.txt $genome
+We identified the P53 motif in the regulatory elements with increased bidirectional transcription. This does not necessarily mean that the motif is not present in the other classes of regulatory elements. To explicitly compare the motif abundance, we first use FIMO to identify the top 1,000,000 motif instances in the genome
 
+```{r engine='bash', eval=F, echo=TRUE}
+#Download the P53 motif file if you don't have it already
+wget https://raw.githubusercontent.com/Gioeli-Lab/AR_IR_PRO-seq_analysis/main/Motif_databases/individual_memes_1/p53_homer_uniprobe_jaspar_edited.txt_meme.txt -P ~/Library/CloudStorage/Box-Box/GuertinLab/Motif_databases/individual_memes
+#Change this to the directory where your motif file is
+motif_directory=~/Library/CloudStorage/Box-Box/GuertinLab/Motif_databases/individual_memes
+#Find individual motif instances in the genome
+fimo --max-stored-scores 2500000 -oc P53_fimo ${motif_directory}/p53_homer_uniprobe_jaspar_edited.txt_meme.txt $genome
 #Take the top 1000000 most stringent matches
 score=$(tail -n +2 P53_fimo/fimo.gff | sort -nrk6,6 | awk 'FNR == 1000000 {print $6}')
 tail -n +2 P53_fimo/fimo.gff | awk -v sco="$score" '{ if ($6 >= sco) { print } }' | \
     awk '{OFS="\t";} {print $1,$4,$5}' > P53_fimo/1000000_fimo.gff
 ```
 
+Now we use this R function to find the proportion of each class of regulatory elements that contain one of these motif instances.
+
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
-#FIMO on dREG elements
 pdf("P53_fimo_barchart_batch1.pdf")
 P53 = PeaksWithMotif("P53_fimo/1000000_fimo.gff")
 dev.off()
 ```
 
-```{r  out.height = "300px", out.width = "800px", fig.align = 'left', echo=F, fig.cap="Figure 1G"}
-#library(knitr)
-knitr::include_graphics("./Figures/P53_fimo_barchart_batch1.pdf") 
-```
-
 # Figure 2 and Supplemental Figure 1
 
-## Identify differentially expressed genes
+## Identify differentially expressed genes for experiment 2 (combination treatments)
 
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
 x = read.table("Radiation_enzalutamide_gene_recounts.txt", sep = '\t', header = TRUE)
