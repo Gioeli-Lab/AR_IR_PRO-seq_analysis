@@ -1,0 +1,19 @@
+MEME version 4
+
+ALPHABET= ACGT
+
+strands: + -
+
+A 0.288 C 0.212 G 0.212 T 0.288
+
+MOTIF	Foxo3_homer(Forkhead)/U2OS-Foxo3-ChIP-Seq(E-MTAB-2701)/Homer
+letter-probability matrix: alength= 4
+0.278	0.134	0.240	0.349
+0.048	0.001	0.950	0.001
+0.001	0.001	0.001	0.997
+0.993	0.005	0.001	0.001
+0.997	0.001	0.001	0.001
+0.997	0.001	0.001	0.001
+0.001	0.997	0.001	0.001
+0.997	0.001	0.001	0.001
+

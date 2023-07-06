@@ -1,0 +1,19 @@
+MEME version 4
+
+ALPHABET= ACGT
+
+strands: + -
+
+A 0.288 C 0.212 G 0.212 T 0.288
+
+MOTIF	NF1-halfsite_homer(CTF)/LNCaP-NF1-ChIP-Seq(Unpublished)/Homer
+letter-probability matrix: alength= 4
+0.029	0.338	0.192	0.441
+0.001	0.001	0.001	0.997
+0.001	0.001	0.997	0.001
+0.001	0.635	0.363	0.001
+0.001	0.997	0.001	0.001
+0.997	0.001	0.001	0.001
+0.621	0.001	0.377	0.001
+0.215	0.298	0.472	0.016
+
