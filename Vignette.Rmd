@@ -321,11 +321,9 @@ library(grid)
 
 ## Make functions
 
-I don't think we need the initial "source" command, as the following function list should be complete. 
+We will use all of these functions in subsequent steps.
 
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
-source('https://raw.githubusercontent.com/mjg54/znf143_pro_seq_analysis/master/docs/ZNF143_functions.R')
-
 `%notin%` <- Negate(`%in%`)
 
 plotPCA.any <-  function(object, intgroup="condition", ntop=500, returnData=FALSE, pcs = c(1,2))
@@ -1047,18 +1045,24 @@ dev.off()
 
 # Figure 2 and Supplemental Figure 1
 
-## Identify differentially expressed genes for experiment 2 (combination treatments)
+## Identify differentially expressed genes for experiment 2
+
+This second experiment (batch 2) had 2 replicates each of: mock-treated + vehicle, irradiated + vehicle, mock-treated + enzalutamide, irradiated + enzalutamide.
 
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
+#Read in the counts data
 x = read.table("Radiation_enzalutamide_gene_recounts.txt", sep = '\t', header = TRUE)
+#The first column is the genes
 rownames(x) = x[,1]
+#Remove the odd columns, because they're all the same (the gene names)
 x = x[,seq(2,to=ncol(x),by=2)]
 
-#Size factors for scaling composite plots
+#Generate size factors for scaling composite plots based on read depth
 size_factors <- estimateSizeFactorsForMatrix(x)
 write.table(estimateSizeFactorsForMatrix(x),
             file = 'norm.bedGraph.sizeFactor_batch2_recount.txt', quote =F, col.names=F)
 
+#Generate the variable names by parsing the column (sample) names
 enza <- vector(mode="character", length=ncol(x))
 enza[grep("10uMEnza", colnames(x))] = "Enzalutamide"
 enza[c(1:length(colnames(x)))[!(c(1:length(colnames(x))) %in% grep("10uMEnza", colnames(x)))]] = "Vehicle"
@@ -1069,8 +1073,12 @@ radiation[c(1:length(colnames(x)))[!(c(1:length(colnames(x))) %in% grep("6GyIR",
 radiation = relevel(factor(radiation), ref = "Control")
 rep = factor(sapply(strsplit(sapply(strsplit(colnames(x), 'rep'), '[', 2), '_batch'), '[', 1))
 treatment = factor(paste(radiation, enza, sep = "/"), levels = c("Radiation/Enzalutamide", "Radiation/Vehicle", "Control/Enzalutamide", "Control/Vehicle"))
+
+#Run DESeq2
 deseq.df = DESeqDataSetFromMatrix(x, cbind.data.frame(enza, radiation, rep, treatment), ~ rep + radiation + enza)
 deseq.df = DESeq(deseq.df)
+
+#Get differentially expressed genes for each treatment
 res.deseq.enza = results(deseq.df, contrast = c("enza", "Enzalutamide", "Vehicle"))
 res.deseq.enza = res.deseq.enza[rownames(res.deseq.enza) %in% gene.symbol$gene,]
 res.deseq.radiation = results(deseq.df, contrast = c("radiation", "Radiation", "Control"))
@@ -1078,6 +1086,8 @@ res.deseq.radiation = res.deseq.radiation[rownames(res.deseq.radiation) %in% gen
 ```
 
 ## Principle component analysis plot (Figure 2D)
+
+This function uses the DESeq PCA plotting function but allows us to plot any principle components. Here we plot PC1 and PC3, which separate the samples by radiation treatment and enzalutamide treatment, respectively.
 
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
 rld_LNCaP = rlogTransformation(deseq.df)
@@ -1090,20 +1100,27 @@ dev.off()
 
 ## Heatmap (Figure 2E)
 
+Here we plot the normalized counts for each differentially expressed gene at an FDR of 0.1, scaled by z-score across samples. Hierarchical clustering is performed both on the samples and on the genes.
+
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
+#Get the normalized counts for each gene with an adjusted p-value < 0.1
 wide_counts = counts(deseq.df[rownames(deseq.df) %in% 
                                 c(rownames(res.deseq.enza)[res.deseq.enza$padj < .1 & !is.na(res.deseq.enza$padj)],
                                   rownames(res.deseq.radiation)[res.deseq.radiation$padj < .1 & !is.na(res.deseq.radiation$padj)]),],
                      normalized = TRUE)
+#Average the two replicates for each condition
 for(i in seq(1, ncol(wide_counts), by = 2)) wide_counts[,i] <- (wide_counts[,i] + wide_counts[,i+1])/2
 wide_counts = wide_counts[,seq(1, ncol(wide_counts), by = 2)]
+#Generate the variable names by parsing the column (sample) names
 enza <- vector(mode="character", length=ncol(wide_counts))
 enza[grep("10uMEnza", colnames(wide_counts))] = "Enzalutamide"
 enza[c(1:length(colnames(wide_counts)))[!(c(1:length(colnames(wide_counts))) %in% grep("10uMEnza", colnames(wide_counts)))]] = "Vehicle"
 radiation <- vector(mode="character", length=ncol(wide_counts))
 radiation[grep("6GyIR", colnames(wide_counts))] = "Radiation"
 radiation[c(1:length(colnames(wide_counts)))[!(c(1:length(colnames(wide_counts))) %in% grep("6GyIR", colnames(wide_counts)))]] = "Control"
+#Name each sample based on the treatment condition (drops the replicate number)
 colnames(wide_counts) = paste(radiation,enza, sep = "/")
+#Plot
 pdf("Heatmap_recount.pdf", width = 8, height = 5)
 pheatmap(wide_counts, scale = "row", show_rownames = F, angle_col = 0, fontsize = 24,
          color = rev(brewer.pal(11,"RdBu")),
@@ -1113,6 +1130,8 @@ dev.off()
 ```
 
 ## Volcano plots (Figure 2F-I) and MA plots (Supplementary Figure 1)
+
+Here we make volcano plots and MA plots. We do this for each treatment with all genes, as well as focusing on subsets of genes (DNA Repair Hallmark, Androgen Response Hallmark, and our definition of AR target genes as enzalutamide-repressed genes). We also write a table of the values for the volcano plots (can skip if this doesn't end up in the supplement).
 
 ```{r engine='bash', eval=F, echo=TRUE}
 #Enzalutamide volcano plot
@@ -1179,7 +1198,7 @@ ggplot(MA.df, aes(x = log(baseMean, 10), y = log2FoldChange, color = status)) +
   labs(color=NULL)
 dev.off()
 
-#Enzalutamide volcano plot just with DNA repair hallmark gene set
+#Enzalutamide volcano plot just with DNA Repair Hallmark gene set
 DNA_repair = read.table("DNA_repair_hallmark.txt")$V1
 DNA_repair = gene.symbol$gene[gene.symbol$symbol %in% DNA_repair]
 DNA_repair = res.deseq.enza[rownames(res.deseq.enza) %in% DNA_repair,]
@@ -1225,7 +1244,7 @@ Enzalutamide_Volcano_plot_data <- merge.data.frame(Enzalutamide_Volcano_plot_dat
 Enzalutamide_Volcano_plot_data <- Enzalutamide_Volcano_plot_data[,c("symbol", "log2FoldChange", "padj")]
 write.table(Enzalutamide_Volcano_plot_data, file = "Enzalutamide_Volcano_DNA_repair_hallmark_plot_data_recount.tsv", row.names=FALSE, sep="\t", quote = FALSE)
 
-#MA plot
+#MA plot (there are no repressed or activated genes, so we comment out these lines)
 # repressed = as.data.frame(DNA_repair[!is.na(DNA_repair$padj) & DNA_repair$padj < .1 & DNA_repair$log2FoldChange < 0,])
 # activated = as.data.frame(DNA_repair[!is.na(DNA_repair$padj) & DNA_repair$padj < .1 & DNA_repair$log2FoldChange > 0,])
 unchanged = as.data.frame(DNA_repair[rownames(DNA_repair) %notin% c(rownames(repressed), rownames(activated)),])
@@ -1249,7 +1268,7 @@ ggplot(MA.df, aes(x = log(baseMean, 10), y = log2FoldChange, color = status)) +
   labs(color=NULL)
 dev.off()
 
-#Enzalutamide volcano plot just with Androgen_response hallmark gene set
+#Enzalutamide volcano plot just with Androgen Response Hallmark gene set
 Androgen_response = read.table("Androgen_response_hallmark.txt")$V1
 Androgen_response = gene.symbol$gene[gene.symbol$symbol %in% Androgen_response]
 Androgen_response = res.deseq.enza[rownames(res.deseq.enza) %in% Androgen_response,]
@@ -1382,7 +1401,7 @@ ggplot(MA.df, aes(x = log(baseMean, 10), y = log2FoldChange, color = status)) +
   labs(color=NULL)
 dev.off()
 
-#Radiation volcano plot just with DNA repair hallmark gene set
+#Radiation volcano plot just with DNA Repair Hallmark gene set
 DNA_repair = read.table("DNA_repair_hallmark.txt")$V1
 DNA_repair = gene.symbol$gene[gene.symbol$symbol %in% DNA_repair]
 DNA_repair = res.deseq.radiation[rownames(res.deseq.radiation) %in% DNA_repair,]
@@ -1452,7 +1471,7 @@ ggplot(MA.df, aes(x = log(baseMean, 10), y = log2FoldChange, color = status)) +
   labs(color=NULL)
 dev.off()
 
-#Radiation volcano plot just with Androgen response hallmark gene set
+#Radiation volcano plot just with Androgen Response Hallmark gene set
 Androgen_response = read.table("Androgen_response_hallmark.txt")$V1
 Androgen_response = gene.symbol$gene[gene.symbol$symbol %in% Androgen_response]
 Androgen_response = res.deseq.radiation[rownames(res.deseq.radiation) %in% Androgen_response,]
@@ -1522,7 +1541,7 @@ ggplot(MA.df, aes(x = log(baseMean, 10), y = log2FoldChange, color = status)) +
   labs(color=NULL)
 dev.off()
 
-#Radiation volcano plot just with user-defined AR-activated genes
+#Radiation volcano plot just with AR target (enzalutamide-repressed) genes
 Androgen_response = rownames(res.deseq.enza)[res.deseq.enza$padj < .1 & !is.na(res.deseq.enza$padj) & res.deseq.enza$log2FoldChange < 0]
 Androgen_response = res.deseq.radiation[rownames(res.deseq.radiation) %in% Androgen_response,]
 Androgen_response_gene_symbol = gene.symbol[gene.symbol$gene %in% rownames(Androgen_response),]
@@ -1585,26 +1604,81 @@ ggplot(MA.df, aes(x = log(baseMean, 10), y = log2FoldChange, color = status)) +
 dev.off()
 ```
 
-## Proximity analysis (Figure 2J)
+## Proximity analysis between enzalutamide-repressed genes and AR ChIP-seq peaks(Figure 2J)
 
-We don't have P53 ChIP-seq data from LnCaP cells, but we used ENCODE data from two other cell lines and found similar results.
+We downloaded publicly available AR ChIP-seq peaks from LNCaP cells (from https://doi.org/10.7554/eLife.27159, GEO accession GSM2716919) as a bed file from CistromeDB (ID 87052).
 
 ```{r engine='bash', eval=F, echo=TRUE}
-#P53 ENCODE ChIP-seq peaks from A549
+#We will re-use some of the code below, so we use define the data frame and treatment here
+df = res.deseq.enza
+treat = "Enzalutamide"
+class = paste0(treat, " Repressed Genes")
+#Make a set of unchanged genes that are expression-matched to the enzalutamide-repressed genes
+df.activated = df[df$padj < 0.1 & !is.na(df$padj) & df$log2FoldChange < 0,]
+df.unchanged = df[rownames(df) %notin% rownames(df.activated) & !is.na(df$padj) & df$log2FoldChange > 0,]
+df.unchanged$treatment = "Similarly Expressed Genes"
+df.activated$treatment = class
+df.deseq.effects.lattice = rbind(df.unchanged, df.activated)
+df.deseq.effects.lattice$treatment = factor(df.deseq.effects.lattice$treatment)
+df.deseq.effects.lattice$treatment = relevel(df.deseq.effects.lattice$treatment, ref = 'Similarly Expressed Genes')
+out = matchit(treatment ~ baseMean, data = df.deseq.effects.lattice, method = "optimal", ratio = 1)
+#Just keep the two classes of genes we are interested in
+df.deseq.effects.lattice = 
+  df.deseq.effects.lattice[df.deseq.effects.lattice$treatment == class | 
+                             rownames(df.deseq.effects.lattice) %in% out$match.matrix,]
+#Plot expression to confirm the match
+ggplot(as.data.frame(df.deseq.effects.lattice), aes(x = log(baseMean, base = 10), color = treatment)) +
+  stat_ecdf(geom = "step", size = 1) +
+  ylab("Cumulative distribution function") +
+  xlab(expression("log"[10]~"(Mean of Normalized Counts)")) +
+  theme_bw() +
+  theme(text = element_text(size = 20))
+#Write these genes to a file for later use
+write.table(rownames(df.deseq.effects.lattice)[df.deseq.effects.lattice$treatment == 'Similarly Expressed Genes'], file = "Enzalutamide_repressed_similarly_expressed_genes_recount.txt")
+#Assign the colors
+col.lines = c("#0000FF", "grey60")
+#Generate the CDF
+df.all = cdf.deseq.df(df = df.deseq.effects.lattice, genes = gene.file, chip.peaks ='LNCaP_AR_peaks.bed', class = class, tf.name = 'Androgen Receptor')
+#Plot
+pdf("CDF_enzalutamide_repressed_AR_peaks_recount.pdf", height = 3.5, width = 4) 
+ecdfplot(~log(abs(dis), base = 10), groups = status, data = df.all,
+         auto.key = list(lines=TRUE, points=FALSE),
+         col = col.lines,
+         aspect = 1,
+         scales=list(relation="free",alternating=c(1,1,1,1)),
+         ylab = 'Cumulative\nDistribution Function',
+         xlab = expression('log'[10]~'AR Distance from TSS'),
+         between=list(y=1.0),
+         type = 'a',
+         xlim = c(0,7.5),
+         lwd=2,
+         par.settings = list(superpose.line = list(col = col.lines, lwd=3), 
+                             strip.background=list(col="grey85")),
+         panel = function(...) {
+           panel.abline(v= 200, lty =2)
+           panel.ecdfplot(...)
+         })
+dev.off()
+#Perform a Kolmogorov–Smirnov test for significance
+ks = ks.test(x = log(abs(df.all$dis)[df.all$status == class]),
+             y = log(abs(df.all$dis)[df.all$status == 'Similarly Expressed Genes']))$p.value
+ks = formatC(ks, format = "e", digits = 1)
+ks
+```
+
+## Proximity analysis between radiation-activated genes and P53 ChIP-seq peaks(Figure 2K)
+
+We don't have P53 ChIP-seq data from LNCaP cells, but we used ENCODE data from two other cell lines and found similar results. Here we download P53 ChIP-seq peaks from A549 cells as a bed file. 
+
+```{r engine='bash', eval=F, echo=TRUE}
 wget https://www.encodeproject.org/files/ENCFF699UTZ/@@download/ENCFF699UTZ.bed.gz
 gunzip ENCFF699UTZ.bed.gz
 mv ENCFF699UTZ.bed A549_P53.bed
-
-#P53 ENCODE ChIP-seq peaks from HepG2
-wget https://www.encodeproject.org/files/ENCFF701DTE/@@download/ENCFF701DTE.bed.gz
-gunzip ENCFF701DTE.bed.gz
-mv ENCFF701DTE.bed HepG2_P53.bed
 ```
 
-We also downloaded AR ChIP-seq peaks from CistromeDB
+Here we repeat the above steps, replacing the data frame with the radiation statistics, focusing on the radiation-activated genes, and using the P53 ChIP-seq peaks.
 
 ```{r engine='bash', eval=F, echo=TRUE}
-#CDFs with ENCODE P53 ChIP-seq peaks from A549 cells
 df = res.deseq.radiation
 treat = "Radiation"
 class = paste0(treat, " Activated Genes")
@@ -1653,9 +1727,13 @@ ks = ks.test(x = log(abs(df.all$dis)[df.all$status == class]),
                      y = log(abs(df.all$dis)[df.all$status == 'Similarly Expressed Genes']))$p.value
 ks = formatC(ks, format = "e", digits = 1)
 ks
+```
 
-#CDFs with AR ChIP-seq peaks
-#Peaks are from GEO accession GSM2716919, downloaded as processed peaks from CistromeDB
+## Proximity analysis between radiation-responsive genes and AR ChIP-seq peaks(Figure 2L)
+
+Here we repeat the above steps, focusing on both the radiation-activated and radiation-repressed genes, and using the AR ChIP-seq peaks.
+
+```{r engine='bash', eval=F, echo=TRUE}
 col.lines = c("#FF0000", "grey60")
 df.all = cdf.deseq.df(df = df.deseq.effects.lattice, genes = gene.file, chip.peaks ='LNCaP_AR_peaks.bed', class = class, tf.name = 'Androgen Receptor')
 pdf("CDF_radiation_activated_AR_peaks_recount.pdf", height = 3.5, width = 4) 
@@ -1731,63 +1809,15 @@ ks = ks.test(x = log(abs(df.all$dis)[df.all$status == class]),
              y = log(abs(df.all$dis)[df.all$status == 'Similarly Expressed Genes']))$p.value
 ks = formatC(ks, format = "e", digits = 1)
 ks
-
-df = res.deseq.enza
-treat = "Enzalutamide"
-class = paste0(treat, " Repressed Genes")
-df.activated = df[df$padj < 0.1 & !is.na(df$padj) & df$log2FoldChange < 0,]
-df.unchanged = df[rownames(df) %notin% rownames(df.activated) & !is.na(df$padj) & df$log2FoldChange > 0,]
-df.unchanged$treatment = "Similarly Expressed Genes"
-df.activated$treatment = class
-df.deseq.effects.lattice = rbind(df.unchanged, df.activated)
-df.deseq.effects.lattice$treatment = factor(df.deseq.effects.lattice$treatment)
-df.deseq.effects.lattice$treatment = relevel(df.deseq.effects.lattice$treatment, ref = 'Similarly Expressed Genes')
-out = matchit(treatment ~ baseMean, data = df.deseq.effects.lattice, method = "optimal", ratio = 1)
-df.deseq.effects.lattice = 
-  df.deseq.effects.lattice[df.deseq.effects.lattice$treatment == class | 
-                             rownames(df.deseq.effects.lattice) %in% out$match.matrix,]
-ggplot(as.data.frame(df.deseq.effects.lattice), aes(x = log(baseMean, base = 10), color = treatment)) +
-  stat_ecdf(geom = "step", size = 1) +
-  ylab("Cumulative distribution function") +
-  xlab(expression("log"[10]~"(Mean of Normalized Counts)")) +
-  theme_bw() +
-  theme(text = element_text(size = 20))
-write.table(rownames(df.deseq.effects.lattice)[df.deseq.effects.lattice$treatment == 'Similarly Expressed Genes'], file = "Enzalutamide_repressed_similarly_expressed_genes_recount.txt")
-
-col.lines = c("#0000FF", "grey60")
-df.all = cdf.deseq.df(df = df.deseq.effects.lattice, genes = gene.file, chip.peaks ='LNCaP_AR_peaks.bed', class = class, tf.name = 'Androgen Receptor')
-pdf("CDF_enzalutamide_repressed_AR_peaks_recount.pdf", height = 3.5, width = 4) 
-ecdfplot(~log(abs(dis), base = 10), groups = status, data = df.all,
-         auto.key = list(lines=TRUE, points=FALSE),
-         col = col.lines,
-         aspect = 1,
-         scales=list(relation="free",alternating=c(1,1,1,1)),
-         ylab = 'Cumulative\nDistribution Function',
-         xlab = expression('log'[10]~'AR Distance from TSS'),
-         between=list(y=1.0),
-         type = 'a',
-         xlim = c(0,7.5),
-         lwd=2,
-         par.settings = list(superpose.line = list(col = col.lines, lwd=3), 
-                             strip.background=list(col="grey85")),
-         panel = function(...) {
-           panel.abline(v= 200, lty =2)
-           panel.ecdfplot(...)
-         })
-dev.off()
-
-ks = ks.test(x = log(abs(df.all$dis)[df.all$status == class]),
-             y = log(abs(df.all$dis)[df.all$status == 'Similarly Expressed Genes']))$p.value
-ks = formatC(ks, format = "e", digits = 1)
-ks
 ```
+# Supplemental Figure 2 and Figure 3E
 
-# Supplemental Figure 2
+Here we classify sets of genes based on their response to either treatment, each at an FDR of 0.1. For example, enzalutamide-repressed radiation-activated genes are both significantly repressed by enzalutamide (at an FDR of 0.1) and significantly activated by radiation (at an FDR of 0.1). For each set of genes, we plot the average normalized read counts across the four conditions. We then perform over-representation analysis for each gene set.
 
-## Classifying genes (Supplemental Figure 2A-C and Figure 3E)
+## Classify the gene sets
 
 ```{r class.source="bg-info", engine='R', eval=F, echo=TRUE}
-#Overlapping genes
+#Classify genes based on each treatment independently
 effects.lattice.enza = categorize.deseq.df.mods(res.deseq.enza, fdr = .1, log2fold = 0, treat = 'Enzalutamide')
 effects.lattice.radiation = categorize.deseq.df.mods(res.deseq.radiation, fdr = .1, log2fold = 0, treat = 'Radiation')
 enza.repressed = rownames(effects.lattice.enza)[effects.lattice.enza$treatment == "Enzalutamide Repressed"]
@@ -1795,39 +1825,50 @@ enza.activated = rownames(effects.lattice.enza)[effects.lattice.enza$treatment =
 radiation.repressed = rownames(effects.lattice.radiation)[effects.lattice.radiation$treatment == "Radiation Repressed"]
 radiation.activated = rownames(effects.lattice.radiation)[effects.lattice.radiation$treatment == "Radiation Activated"]
 
+#Find the overlapping gene sets
 enza.repressed.radiation.activated = enza.repressed[enza.repressed %in% radiation.activated]
 enza.repressed.radiation.repressed = enza.repressed[enza.repressed %in% radiation.repressed]
 enza.activated.radiation.activated = enza.activated[enza.activated %in% radiation.activated]
 enza.activated.radiation.repressed = enza.activated[enza.activated %in% radiation.repressed]
 
-#16, 67, 42, 8
-
+#Just keep genes with gene symbols in our gene annotation file
 enza.repressed.radiation.activated = gene.symbol$symbol[gene.symbol$gene %in% enza.repressed.radiation.activated]
 enza.repressed.radiation.repressed = gene.symbol$symbol[gene.symbol$gene %in% enza.repressed.radiation.repressed]
 enza.activated.radiation.activated = gene.symbol$symbol[gene.symbol$gene %in% enza.activated.radiation.activated]
 enza.activated.radiation.repressed = gene.symbol$symbol[gene.symbol$gene %in% enza.activated.radiation.repressed]
 
+#Write text files with each gene set for future use
 write.table(enza.repressed.radiation.activated, "enza.repressed.radiation.activated_recount.txt",quote=F, row.names=F, col.names=F)
 write.table(enza.repressed.radiation.repressed, "enza.repressed.radiation.repressed_recount.txt",quote=F, row.names=F, col.names=F)
 write.table(enza.activated.radiation.activated, "enza.activated.radiation.activated_recount.txt",quote=F, row.names=F, col.names=F)
 write.table(enza.activated.radiation.repressed, "enza.activated.radiation.repressed_recount.txt",quote=F, row.names=F, col.names=F)
+```
 
-#Normalized counts for enza repressed radiation activated
+## Plot expression of enzalutamide-repressed radiation-activated genes (Figure 3E) 
+
+The steps we use in this step are the same for each set of genes
+
+```{r class.source="bg-info", engine='R', eval=F, echo=TRUE}
+#Get the read depth normalized counts
 normalized_counts <- counts(deseq.df, normalized=TRUE)
 normalized_counts <- normalized_counts %>% 
   data.frame() %>%
   rownames_to_column(var="gene") %>% 
   as_tibble()
 
+#Just keep the counts for enzalutamide-repressed radiation-activated genes
 counts <- normalized_counts %>%
   filter(gene %in% gene.symbol$gene[gene.symbol$symbol %in% enza.repressed.radiation.activated])
 
+#Average the two replicates
 for(i in seq(2, ncol(counts), 2)) counts[,i] <- (counts[,i] + counts[,i+1])/2
 counts = counts[,c(1, seq(2, ncol(counts), 2))]
 
+#Convert our data format from wide to long
 gathered_counts <- counts %>%
   gather(colnames(counts)[-1], key = "samplename", value = "normalized_counts")
 
+#Generate the variable names by parsing the sample names
 Condition = gathered_counts$samplename
 Condition = gsub("LNCaP_rep", "LNCaP_Control/Vehicle_rep", Condition)
 Condition = gsub("10uMEnza_6GyIR", "Radiation/Enzalutamide", Condition)
@@ -1835,10 +1876,12 @@ Condition = gsub("10uMEnza", "Control/Enzalutamide", Condition)
 Condition = gsub("6GyIR", "Radiation/Vehicle", Condition)
 Condition = factor(sapply(strsplit(sapply(strsplit(Condition, 'LNCaP_'), '[', 2), '_rep'), '[', 1))
 Condition = factor(Condition, levels = c("Radiation/Enzalutamide", "Radiation/Vehicle", "Control/Enzalutamide", "Control/Vehicle"))
-gathered_counts = cbind(gathered_counts, Condition)
 
+#Add the condition and the gene symbol information
+gathered_counts = cbind(gathered_counts, Condition)
 gathered_counts <- merge.data.frame(gathered_counts, gene.symbol, all.y = FALSE)
 
+#Plot
 pdf("normalized_counts_enza_repressed_radiation_activated_recount.pdf", width = 8)
 ggplot(gathered_counts) +
   geom_jitter(height = 0, width = 0.1, aes(x = symbol, y = normalized_counts, color = Condition)) +
@@ -1855,10 +1898,14 @@ ggplot(gathered_counts) +
   theme(text = element_text(size = 20)) 
 dev.off()
 
+#Convert back to wide format and write the data to a .tsv file
 counts <- spread(gathered_counts[,c("symbol", "Condition", "normalized_counts")], Condition, normalized_counts)
 write.table(counts, file = "normalized_counts_enza_repressed_radiation_activated_recount.tsv", row.names=FALSE, sep="\t", quote = FALSE)
+```
 
-#Normalized counts for both activated
+## Plot expression of enzalutamide-activated radiation-activated genes (Supplemental Figure 2A) 
+
+```{r class.source="bg-info", engine='R', eval=F, echo=TRUE}
 normalized_counts <- counts(deseq.df, normalized=TRUE)
 normalized_counts <- normalized_counts %>% 
   data.frame() %>%
@@ -1904,8 +1951,11 @@ dev.off()
 
 counts <- spread(gathered_counts[,c("symbol", "Condition", "normalized_counts")], Condition, normalized_counts)
 write.table(counts, file = "normalized_counts_enza_activated_radiation_activated_recount.tsv", row.names=FALSE, sep="\t", quote = FALSE)
+```
 
-#Normalized counts for both repressed
+## Plot expression of enzalutamide-represed radiation-repressed genes (Supplemental Figure 2B) 
+
+```{r class.source="bg-info", engine='R', eval=F, echo=TRUE}
 normalized_counts <- counts(deseq.df, normalized=TRUE)
 normalized_counts <- normalized_counts %>% 
   data.frame() %>%
@@ -1950,8 +2000,11 @@ dev.off()
 
 counts <- spread(gathered_counts[,c("symbol", "Condition", "normalized_counts")], Condition, normalized_counts)
 write.table(counts, file = "normalized_counts_enza_repressed_radiation_repressed_recount.tsv", row.names=FALSE, sep="\t", quote = FALSE)
+```
 
-#Normalized counts for enza activated radiation repressed
+## Plot expression of enzalutamide-activated radiation-repressed genes (Supplemental Figure 2C) 
+
+```{r class.source="bg-info", engine='R', eval=F, echo=TRUE}
 normalized_counts <- counts(deseq.df, normalized=TRUE)
 normalized_counts <- normalized_counts %>% 
   data.frame() %>%
@@ -1999,24 +2052,32 @@ counts <- spread(gathered_counts[gathered_counts$gene != "ENSG00000274452",c("sy
 write.table(counts, file = "normalized_counts_enza_activated_radiation_repressed_recount.tsv", row.names=FALSE, sep="\t", quote = FALSE)
 ```
 
-## Over-representation analysis of gene classes (Supplemental Figure 2D)
+## Over-representation analysis (ORA) of gene classes (Supplemental Figure 2D)
 
 ```{r class.source="bg-info", engine='R', eval=F, echo=TRUE}
+#Get the Hallmark gene sets
 m_t2g <- msigdbr(species = "Homo sapiens", category = "H") %>% 
   dplyr::select(gs_name, human_gene_symbol)
+#For reproducibility, set the seed here
 set.seed(0)
+
+#ORA for enzalutamide-repressed radiation-activated genes
 em <- enricher(enza.repressed.radiation.activated, TERM2GENE=m_t2g, pvalueCutoff = 0.1)
-em$ID
+#Rank by adjusted p-value
 fgseaResTidy <- em %>%
   as_tibble() %>%
   arrange(desc(p.adjust))
+#Rename (an unnecessary legacy line)
 gse_top = fgseaResTidy
+#Calculate the observed-expected ratio
 gse_top$Ratio_ratio = 
   (as.numeric(sapply(strsplit(gse_top$GeneRatio, "/"), "[", 1)) / 
      as.numeric(sapply(strsplit(gse_top$GeneRatio, "/"), "[", 2))) / 
   (as.numeric(sapply(strsplit(gse_top$BgRatio, "/"), "[", 1)) / 
      as.numeric(sapply(strsplit(gse_top$BgRatio, "/"), "[", 2)))
+#Add the gene symbols
 gse_top$ID = paste0(gse_top$ID, " (", gse_top$geneID, ")")
+#Plot
 svg("Hallmark_ORA_enza_repressed_radiation_activated_recount.svg")
 ggplot(gse_top, aes(reorder(ID, Ratio_ratio), Ratio_ratio, fill = log(p.adjust, base = 10))) +
   geom_col(width = .8/2) +
@@ -2030,8 +2091,8 @@ ggplot(gse_top, aes(reorder(ID, Ratio_ratio), Ratio_ratio, fill = log(p.adjust, 
   theme(text = element_text(size = 20)) 
 dev.off()
 
+#ORA for enzalutamide-repressed radiation-repressed genes
 em <- enricher(enza.repressed.radiation.repressed, TERM2GENE=m_t2g, pvalueCutoff = 0.1)
-em$ID
 fgseaResTidy <- em %>%
   as_tibble() %>%
   arrange(desc(p.adjust))
@@ -2055,8 +2116,8 @@ ggplot(gse_top, aes(reorder(ID, Ratio_ratio), Ratio_ratio, fill = log(p.adjust, 
   theme(text = element_text(size = 20)) 
 dev.off()
 
+#ORA for enzalutamide-activated radiation-activated genes
 em <- enricher(enza.activated.radiation.activated, TERM2GENE=m_t2g, pvalueCutoff = 0.1)
-em$ID
 fgseaResTidy <- em %>%
   as_tibble() %>%
   arrange(desc(p.adjust))
@@ -2080,7 +2141,7 @@ ggplot(gse_top, aes(reorder(ID, Ratio_ratio), Ratio_ratio, fill = log(p.adjust, 
   theme(text = element_text(size = 20)) 
 dev.off()
 
-#No enriched terms for this set
+#This produced no enriched terms for enzalutamide-activated radiation-repressed genes
 em <- enricher(enza.activated.radiation.repressed, TERM2GENE=m_t2g, pvalueCutoff = 0.1)
 ```
 
