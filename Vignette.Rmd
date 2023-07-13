@@ -365,7 +365,7 @@ plotPCA.any <-  function(object, intgroup="condition", ntop=500, returnData=FALS
   }
   
   col = viridis(length(unique(colData(object)[[intgroup]])))
-  ggplot(data = d, aes(x = PC1, y = PC2, color = group)) + 
+  ggplot(data = d, aes(x = PC1, y = PC2, color = group, shape = group)) + 
     geom_point(size = 3) + xlab(paste0("PC", pcs[1], ": ", round(percentVar[pcs[1]] * 100), "% variance")) + 
     ylab(paste0("PC", pcs[2], ": ", round(percentVar[pcs[2]] * 100), "% variance")) + 
     coord_equal() +
@@ -743,7 +743,7 @@ colnames(gene.symbol) = c("gene", "symbol")
 
 ## Identify differentially expressed genes in experiment 1
 
-This first experiment (batch 1) had 4 replicates each of irradiated or mock-treated cells.
+This first experiment (batch 1) had 4 replicates each of irradiated or mock-treated cells. We identify differentialy expressed genes at a false discovery rate (FDR) of 0.1. 
 
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
 #Read in the counts data
@@ -780,10 +780,13 @@ This function uses the DESeq PCA plotting function but allows us to plot any pri
 
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
 rld_LNCaP = rlogTransformation(deseq.df)
+#Reverse the order for the legend to match the next experiment
+colData(rld_LNCaP)$radiation <- factor(colData(rld_LNCaP)$radiation, levels = rev(levels(colData(rld_LNCaP)$radiation)))
+
 pdf("PCA_batch1_recount.pdf", height = 2, width = 4)
 plotPCA.any(rld_LNCaP, intgroup="radiation") + 
-  scale_color_manual(values = col[c(2,4)]) +
-  labs(color = "Condition")
+  scale_color_manual(name = "Condition", values = col[c(4,3)]) +
+  scale_shape_manual(name = "Condition", values = c(16,16)) 
 dev.off()
 ```
 
@@ -852,7 +855,7 @@ dev.off()
 
 ## Gene set enrichment analysis (Figure 1E)
 
-Here we perform gene set enrichment analysis with the Hallmark gene sets. All genes (not just differentially expressed genes) go into this analysis, a distinguishing feature of GSEA compared to over-representation analysis. Genes are ranked by their shrunken fold changes, which is designed to make the fold changes comparable across a range of gene expression levels. Counts-based data show heteroskedasticity, where the genes with fewer counts have higher variability. Each gene set is assigned a p-value, which is then adjusted for multiple hypothesis testing using the Benjamini-Hochberg (false discovery rate (FDR)) procedure. We plotted the gene sets that were significant at an FDR of 0.05. The Androgen Response gene set had an adjusted p-value of BLANK.
+Here we perform gene set enrichment analysis with the Hallmark gene sets. All genes (not just differentially expressed genes) go into this analysis, a distinguishing feature of GSEA compared to over-representation analysis. Genes are ranked by their shrunken fold changes, which is designed to make the fold changes comparable across a range of gene expression levels. Counts-based data show heteroskedasticity, where the genes with fewer counts have higher variability. Each gene set is assigned a p-value, which is then adjusted for multiple hypothesis testing using the Benjamini-Hochberg (false discovery rate (FDR)) procedure. We plotted the gene sets that were significant at an FDR of 0.05. The Androgen Response gene set had an adjusted p-value of 0.495.
 
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
 #Rank the genes based on shrunken fold change
@@ -1013,21 +1016,29 @@ do
 done
 ```
 
-## Differential motif abundance in putative regulatory elements (Figure 1G)
+## Differential motif abundance in putative regulatory elements (Figure 1G,H)
 
-We identified the P53 motif in the regulatory elements with increased bidirectional transcription. This does not necessarily mean that the motif is not present in the other classes of regulatory elements. To explicitly compare the motif abundance, we first use FIMO to identify the top 1,000,000 motif instances in the genome
+We identified the P53 motif in the regulatory elements with increased bidirectional transcription. This does not necessarily mean that the motif is not present in the other classes of regulatory elements. To explicitly compare the motif abundance, we first use FIMO to identify the top 1,000,000 motif instances in the genome. We also do this for the AR motif, as de novo motif analysis is not sensitive enough to detect all motifs. 
 
 ```{r engine='bash', eval=F, echo=TRUE}
-#Download the P53 motif file if you don't have it already
+#Download the motif files if you don't have them already
 wget https://raw.githubusercontent.com/Gioeli-Lab/AR_IR_PRO-seq_analysis/main/Motif_databases/individual_memes_1/p53_homer_uniprobe_jaspar_edited.txt_meme.txt -P ~/Library/CloudStorage/Box-Box/GuertinLab/Motif_databases/individual_memes
+wget https://raw.githubusercontent.com/Gioeli-Lab/AR_IR_PRO-seq_analysis/main/Motif_databases/individual_memes_1/ARE_meme.txt -P ~/Library/CloudStorage/Box-Box/GuertinLab/Motif_databases/individual_memes
+
 #Change this to the directory where your motif file is
 motif_directory=~/Library/CloudStorage/Box-Box/GuertinLab/Motif_databases/individual_memes
+
 #Find individual motif instances in the genome
 fimo --max-stored-scores 2500000 -oc P53_fimo ${motif_directory}/p53_homer_uniprobe_jaspar_edited.txt_meme.txt $genome
+fimo --max-stored-scores 2000000 -oc Full_ARE_fimo ${motif_directory}/ARE_meme.txt $genome
+
 #Take the top 1000000 most stringent matches
 score=$(tail -n +2 P53_fimo/fimo.gff | sort -nrk6,6 | awk 'FNR == 1000000 {print $6}')
 tail -n +2 P53_fimo/fimo.gff | awk -v sco="$score" '{ if ($6 >= sco) { print } }' | \
     awk '{OFS="\t";} {print $1,$4,$5}' > P53_fimo/1000000_fimo.gff
+score=$(tail -n +2 ARE_fimo/fimo.gff | sort -nrk6,6 | awk 'FNR == 1000000 {print $6}')
+tail -n +2 ARE_fimo/fimo.gff | awk -v sco="$score" '{ if ($6 >= sco) { print } }' | \
+    awk '{OFS="\t";} {print $1,$4,$5}' > ARE_fimo/1000000_fimo.gff
 ```
 
 Now we use this R function to find the proportion of each class of regulatory elements that contain one of these motif instances.
@@ -1035,6 +1046,10 @@ Now we use this R function to find the proportion of each class of regulatory el
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
 pdf("P53_fimo_barchart_batch1.pdf")
 P53 = PeaksWithMotif("P53_fimo/1000000_fimo.gff")
+dev.off()
+
+pdf("ARE_fimo_barchart_batch1_recount.pdf")
+ARE = PeaksWithMotif("ARE_fimo/1000000_fimo.gff")
 dev.off()
 ```
 
@@ -1088,8 +1103,8 @@ This function uses the DESeq PCA plotting function but allows us to plot any pri
 rld_LNCaP = rlogTransformation(deseq.df)
 pdf("PCA_PC1_PC3_recount.pdf")
 plotPCA.any(rld_LNCaP, intgroup="treatment", pcs = c(1,3)) +
-  scale_color_manual(values = col[1:4]) +
-  labs(color = "Condition")
+  scale_color_manual(name = "Condition", values = col[c(4,4,3,3)]) +
+  scale_shape_manual(name = "Condition", values = c(17,16,17,16)) 
 dev.off()
 ```
 
@@ -1663,7 +1678,7 @@ ks
 
 ## Proximity analysis between radiation-activated genes and P53 ChIP-seq peaks(Figure 2K)
 
-We don't have P53 ChIP-seq data from LNCaP cells, but we used ENCODE data from two other cell lines and found similar results. Here we download P53 ChIP-seq peaks from A549 cells as a bed file. 
+We don't have P53 ChIP-seq data from LNCaP cells, but we used ENCODE data from two other cell lines (A549 and HepG2 cells) and found similar results. Here we download P53 ChIP-seq peaks from A549 cells as a bed file. 
 
 ```{r engine='bash', eval=F, echo=TRUE}
 wget https://www.encodeproject.org/files/ENCFF699UTZ/@@download/ENCFF699UTZ.bed.gz
@@ -1807,7 +1822,7 @@ ks
 ```
 # Supplemental Figure 2 and Figure 3E
 
-Here we classify sets of genes based on their response to either treatment, each at an FDR of 0.1. For example, enzalutamide-repressed radiation-activated genes are both significantly repressed by enzalutamide (at an FDR of 0.1) and significantly activated by radiation (at an FDR of 0.1). For each set of genes, we plot the average normalized read counts across the four conditions. We then perform over-representation analysis for each gene set.
+Here we classify sets of genes based on their response to either treatment, each at an FDR of 0.1. For example, enzalutamide-repressed radiation-activated genes are both significantly repressed by enzalutamide (at an FDR of 0.1) and significantly activated by radiation (at an FDR of 0.1). For each set of genes, we plot the average read depth normalized read counts across the four conditions. We then perform over-representation analysis for each gene set.
 
 ## Classify the gene sets
 
@@ -1879,8 +1894,9 @@ gathered_counts <- merge.data.frame(gathered_counts, gene.symbol, all.y = FALSE)
 #Plot
 pdf("normalized_counts_enza_repressed_radiation_activated_recount.pdf", width = 8)
 ggplot(gathered_counts) +
-  geom_jitter(height = 0, width = 0.1, aes(x = symbol, y = normalized_counts, color = Condition)) +
-  scale_color_manual(values = col[1:4]) +
+  geom_jitter(height = 0, width = 0.1, aes(x = symbol, y = normalized_counts, color = Condition, shape = Condition)) +
+  scale_color_manual(name = "Condition", values = col[c(4,4,3,3)]) +
+  scale_shape_manual(name = "Condition", values = c(17,16,17,16)) +
   scale_y_log10() +
   #ordering by counts in the Control/Vehicle condition
   scale_x_discrete(limits = gathered_counts[gathered_counts$Condition == "Control/Vehicle", "symbol"][order(gathered_counts[gathered_counts$Condition == "Control/Vehicle", "normalized_counts"], decreasing = TRUE)]) +
@@ -1930,8 +1946,9 @@ gathered_counts <- merge.data.frame(gathered_counts, gene.symbol, all.y = FALSE)
 #ENSG00000272655 was more lowly expressed than ENSG00000214783, and both mapped to POLR2J4, so I'm just plotting the latter
 pdf("normalized_counts_enza_activated_radiation_activated_recount.pdf", width = 14)
 ggplot(gathered_counts[gathered_counts$gene != "ENSG00000272655",]) +
-  geom_jitter(height = 0, width = 0.1, aes(x = symbol, y = normalized_counts, color = Condition)) +
-  scale_color_manual(values = col[1:4]) +
+  geom_jitter(height = 0, width = 0.1, aes(x = symbol, y = normalized_counts, color = Condition, shape = Condition)) +
+  scale_color_manual(name = "Condition", values = col[c(4,4,3,3)]) +
+  scale_shape_manual(name = "Condition", values = c(17,16,17,16)) +
   scale_y_log10() +
   #ordering by counts in the Control/Vehicle condition
   scale_x_discrete(limits = gathered_counts[gathered_counts$Condition == "Control/Vehicle" & gathered_counts$gene != "ENSG00000272655", "symbol"][order(gathered_counts[gathered_counts$Condition == "Control/Vehicle" & gathered_counts$gene != "ENSG00000272655", "normalized_counts"], decreasing = TRUE)]) +
@@ -1979,8 +1996,9 @@ gathered_counts <- merge.data.frame(gathered_counts, gene.symbol, all.y = FALSE)
 
 pdf("normalized_counts_enza_repressed_radiation_repressed_recount.pdf", width = 20)
 ggplot(gathered_counts) +
-  geom_jitter(height = 0, width = 0.1, aes(x = symbol, y = normalized_counts, color = Condition)) +
-  scale_color_manual(values = col[1:4]) +
+  geom_jitter(height = 0, width = 0.1, aes(x = symbol, y = normalized_counts, color = Condition, shape = Condition)) +
+  scale_color_manual(name = "Condition", values = col[c(4,4,3,3)]) +
+  scale_shape_manual(name = "Condition", values = c(17,16,17,16)) +
   scale_y_log10() +
   #ordering by counts in the Control/Vehicle condition
   scale_x_discrete(limits = gathered_counts[gathered_counts$Condition == "Control/Vehicle", "symbol"][order(gathered_counts[gathered_counts$Condition == "Control/Vehicle", "normalized_counts"], decreasing = TRUE)]) +
@@ -2029,8 +2047,9 @@ gathered_counts <- merge.data.frame(gathered_counts, gene.symbol, all.y = FALSE)
 #ENSG00000274452 was the more lowly expressed U2
 pdf("normalized_counts_enza_activated_radiation_repressed_recount.pdf", width = 8)
 ggplot(gathered_counts[gathered_counts$gene != "ENSG00000274452",]) +
-  geom_jitter(height = 0, width = 0.1, aes(x = symbol, y = normalized_counts, color = Condition)) +
-  scale_color_manual(values = col[1:4]) +
+  geom_jitter(height = 0, width = 0.1, aes(x = symbol, y = normalized_counts, color = Condition, shape = Condition)) +
+  scale_color_manual(name = "Condition", values = col[c(4,4,3,3)]) +
+  scale_shape_manual(name = "Condition", values = c(17,16,17,16)) +
   scale_y_log10() +
   #ordering by counts in the Control/Vehicle condition
   scale_x_discrete(limits = gathered_counts[gathered_counts$Condition == "Control/Vehicle" & gathered_counts$gene != "ENSG00000274452", "symbol"][order(gathered_counts[gathered_counts$Condition == "Control/Vehicle" & gathered_counts$gene != "ENSG00000274452", "normalized_counts"], decreasing = TRUE)]) +
@@ -2613,7 +2632,7 @@ save(pause.region.summation,file='pause.region.summation.curated.Rdata')
 load('pause.region.summation.curated.Rdata')
 #Plot pause index ratios relative to the control/vehicle condition
 df = pause.region.summation
-col.lines = viridis(5)[4:1]
+col.lines = viridis(5)[c(4,4,3,3)]
 early = "Control/Vehicle"
 for (i in levels(factor(pause.region.summation$treatment))) {
   df$ratio[df$treatment == i] = df$pause_index[df$treatment == i] / df$pause_index[df$treatment == early]
@@ -2644,7 +2663,8 @@ print(bwplot(log(ratio, base = 2) ~ treatment, data = df, group = treatment,
                panel.abline(h = 0, col = 'black', lty = 2)
                panel.violin.hack(..., col = col.lines,
                                  varwidth = FALSE, box.ratio = box.ratio, outer = FALSE)
-               panel.stripplot(..., col='black', do.out=FALSE, jitter.data=TRUE, amount = 0.2, pch = 16)
+               panel.stripplot(..., col='black', do.out=FALSE, jitter.data=TRUE, amount = 0.2, 
+                               pch = c(16, 17, 16, 17))
                panel.bwplot(..., pch = '|', do.out = FALSE)
              }))
 dev.off()
