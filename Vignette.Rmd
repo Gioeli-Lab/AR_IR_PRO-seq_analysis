@@ -785,7 +785,7 @@ colData(rld_LNCaP)$radiation <- factor(colData(rld_LNCaP)$radiation, levels = re
 
 pdf("PCA_batch1_recount.pdf", height = 2, width = 4)
 plotPCA.any(rld_LNCaP, intgroup="radiation") + 
-  scale_color_manual(name = "Condition", values = col[c(4,3)]) +
+  scale_color_manual(name = "Condition", values = col[c(4,2)]) +
   scale_shape_manual(name = "Condition", values = c(16,16)) 
 dev.off()
 ```
@@ -1109,7 +1109,7 @@ This function uses the DESeq PCA plotting function but allows us to plot any pri
 rld_LNCaP = rlogTransformation(deseq.df)
 pdf("PCA_PC1_PC3_recount.pdf")
 plotPCA.any(rld_LNCaP, intgroup="treatment", pcs = c(1,3)) +
-  scale_color_manual(name = "Condition", values = col[c(4,4,3,3)]) +
+  scale_color_manual(name = "Condition", values = col[c(4,4,2,2)]) +
   scale_shape_manual(name = "Condition", values = c(17,16,17,16)) 
 dev.off()
 ```
@@ -1901,7 +1901,7 @@ gathered_counts <- merge.data.frame(gathered_counts, gene.symbol, all.y = FALSE)
 pdf("normalized_counts_enza_repressed_radiation_activated_recount.pdf", width = 8)
 ggplot(gathered_counts) +
   geom_jitter(height = 0, width = 0.1, aes(x = symbol, y = normalized_counts, color = Condition, shape = Condition)) +
-  scale_color_manual(name = "Condition", values = col[c(4,4,3,3)]) +
+  scale_color_manual(name = "Condition", values = col[c(4,4,2,2)]) +
   scale_shape_manual(name = "Condition", values = c(17,16,17,16)) +
   scale_y_log10() +
   #ordering by counts in the Control/Vehicle condition
@@ -1953,7 +1953,7 @@ gathered_counts <- merge.data.frame(gathered_counts, gene.symbol, all.y = FALSE)
 pdf("normalized_counts_enza_activated_radiation_activated_recount.pdf", width = 14)
 ggplot(gathered_counts[gathered_counts$gene != "ENSG00000272655",]) +
   geom_jitter(height = 0, width = 0.1, aes(x = symbol, y = normalized_counts, color = Condition, shape = Condition)) +
-  scale_color_manual(name = "Condition", values = col[c(4,4,3,3)]) +
+  scale_color_manual(name = "Condition", values = col[c(4,4,2,2)]) +
   scale_shape_manual(name = "Condition", values = c(17,16,17,16)) +
   scale_y_log10() +
   #ordering by counts in the Control/Vehicle condition
@@ -2003,7 +2003,7 @@ gathered_counts <- merge.data.frame(gathered_counts, gene.symbol, all.y = FALSE)
 pdf("normalized_counts_enza_repressed_radiation_repressed_recount.pdf", width = 20)
 ggplot(gathered_counts) +
   geom_jitter(height = 0, width = 0.1, aes(x = symbol, y = normalized_counts, color = Condition, shape = Condition)) +
-  scale_color_manual(name = "Condition", values = col[c(4,4,3,3)]) +
+  scale_color_manual(name = "Condition", values = col[c(4,4,2,2)]) +
   scale_shape_manual(name = "Condition", values = c(17,16,17,16)) +
   scale_y_log10() +
   #ordering by counts in the Control/Vehicle condition
@@ -2054,7 +2054,7 @@ gathered_counts <- merge.data.frame(gathered_counts, gene.symbol, all.y = FALSE)
 pdf("normalized_counts_enza_activated_radiation_repressed_recount.pdf", width = 8)
 ggplot(gathered_counts[gathered_counts$gene != "ENSG00000274452",]) +
   geom_jitter(height = 0, width = 0.1, aes(x = symbol, y = normalized_counts, color = Condition, shape = Condition)) +
-  scale_color_manual(name = "Condition", values = col[c(4,4,3,3)]) +
+  scale_color_manual(name = "Condition", values = col[c(4,4,2,2)]) +
   scale_shape_manual(name = "Condition", values = c(17,16,17,16)) +
   scale_y_log10() +
   #ordering by counts in the Control/Vehicle condition
@@ -2638,7 +2638,7 @@ save(pause.region.summation,file='pause.region.summation.curated.Rdata')
 load('pause.region.summation.curated.Rdata')
 #Plot pause index ratios relative to the control/vehicle condition
 df = pause.region.summation
-col.lines = viridis(5)[c(4,4,3,3)]
+col.lines = viridis(5)[c(4,4,2,2)]
 early = "Control/Vehicle"
 for (i in levels(factor(pause.region.summation$treatment))) {
   df$ratio[df$treatment == i] = df$pause_index[df$treatment == i] / df$pause_index[df$treatment == early]
