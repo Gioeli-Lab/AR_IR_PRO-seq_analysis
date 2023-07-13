@@ -734,7 +734,7 @@ function toggle_visibility(id1) {
 <li><a href="#identify-differentially-expressed-genes-in-experiment-1" id="toc-identify-differentially-expressed-genes-in-experiment-1"><span class="toc-section-number">5.1</span> Identify differentially expressed genes in experiment 1</a></li>
 <li><a href="#principle-component-analysis-figure-1b" id="toc-principle-component-analysis-figure-1b"><span class="toc-section-number">5.2</span> Principle component analysis (Figure 1B)</a></li>
 <li><a href="#heatmap-figure-1c" id="toc-heatmap-figure-1c"><span class="toc-section-number">5.3</span> Heatmap (Figure 1C)</a></li>
-<li><a href="#volcano-plot-figure-1d" id="toc-volcano-plot-figure-1d"><span class="toc-section-number">5.4</span> Volcano plot (Figure 1D)</a></li>
+<li><a href="#volcano-plot-figure-1d-and-supplemental-table-1" id="toc-volcano-plot-figure-1d-and-supplemental-table-1"><span class="toc-section-number">5.4</span> Volcano plot (Figure 1D and Supplemental Table 1)</a></li>
 <li><a href="#gene-set-enrichment-analysis-figure-1e" id="toc-gene-set-enrichment-analysis-figure-1e"><span class="toc-section-number">5.5</span> Gene set enrichment analysis (Figure 1E)</a></li>
 <li><a href="#putative-regulatory-element-identification-with-dreg" id="toc-putative-regulatory-element-identification-with-dreg"><span class="toc-section-number">5.6</span> Putative regulatory element identification with dREG</a></li>
 <li><a href="#de-novo-motif-identification-in-differentially-transcribed-putative-regulatory-elements-figure-1f" id="toc-de-novo-motif-identification-in-differentially-transcribed-putative-regulatory-elements-figure-1f"><span class="toc-section-number">5.7</span> de novo motif identification in differentially transcribed putative regulatory elements (Figure 1F)</a></li>
@@ -745,7 +745,7 @@ function toggle_visibility(id1) {
 <li><a href="#identify-differentially-expressed-genes-for-experiment-2" id="toc-identify-differentially-expressed-genes-for-experiment-2"><span class="toc-section-number">6.1</span> Identify differentially expressed genes for experiment 2</a></li>
 <li><a href="#principle-component-analysis-plot-figure-2d" id="toc-principle-component-analysis-plot-figure-2d"><span class="toc-section-number">6.2</span> Principle component analysis plot (Figure 2D)</a></li>
 <li><a href="#heatmap-figure-2e" id="toc-heatmap-figure-2e"><span class="toc-section-number">6.3</span> Heatmap (Figure 2E)</a></li>
-<li><a href="#volcano-plots-figure-2f-i-and-ma-plots-supplementary-figure-1" id="toc-volcano-plots-figure-2f-i-and-ma-plots-supplementary-figure-1"><span class="toc-section-number">6.4</span> Volcano plots (Figure 2F-I) and MA plots (Supplementary Figure 1)</a></li>
+<li><a href="#volcano-plots-figure-2f-i-and-supplemental-tables-2-and-3-and-ma-plots-supplementary-figure-1" id="toc-volcano-plots-figure-2f-i-and-supplemental-tables-2-and-3-and-ma-plots-supplementary-figure-1"><span class="toc-section-number">6.4</span> Volcano plots (Figure 2F-I and Supplemental Tables 2 and 3) and MA plots (Supplementary Figure 1)</a></li>
 <li><a href="#proximity-analysis-between-enzalutamide-repressed-genes-and-ar-chip-seq-peaksfigure-2j" id="toc-proximity-analysis-between-enzalutamide-repressed-genes-and-ar-chip-seq-peaksfigure-2j"><span class="toc-section-number">6.5</span> Proximity analysis between enzalutamide-repressed genes and AR ChIP-seq peaks(Figure 2J)</a></li>
 <li><a href="#proximity-analysis-between-radiation-activated-genes-and-p53-chip-seq-peaksfigure-2k" id="toc-proximity-analysis-between-radiation-activated-genes-and-p53-chip-seq-peaksfigure-2k"><span class="toc-section-number">6.6</span> Proximity analysis between radiation-activated genes and P53 ChIP-seq peaks(Figure 2K)</a></li>
 <li><a href="#proximity-analysis-between-radiation-responsive-genes-and-ar-chip-seq-peaksfigure-2l" id="toc-proximity-analysis-between-radiation-responsive-genes-and-ar-chip-seq-peaksfigure-2l"><span class="toc-section-number">6.7</span> Proximity analysis between radiation-responsive genes and AR ChIP-seq peaks(Figure 2L)</a></li>
@@ -1529,9 +1529,9 @@ pheatmap(wide_counts, scale = &quot;row&quot;, show_rownames = F, angle_col = 0,
                      cluster_rows = sort_hclust(hclust(dist(t(scale(t(wide_counts)))))))
 dev.off()</code></pre>
 </div>
-<div id="volcano-plot-figure-1d" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Volcano plot (Figure 1D)</h2>
-<p>Here we make a volcano plot of the fold changes and the adjusted p-values. The dashed line indicating significance is using an FDR of 0.1.</p>
+<div id="volcano-plot-figure-1d-and-supplemental-table-1" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Volcano plot (Figure 1D and Supplemental Table 1)</h2>
+<p>Here we make a volcano plot of the fold changes and the adjusted p-values. The dashed line indicating significance is using an FDR of 0.1. We also write a table of the values for the volcano plot.</p>
 <pre class="r bg-info"><code>#Color and name the points based on significance and direction
 keyvals &lt;- ifelse(
   res.deseq.radiation.unshrunk$padj &lt; .1 &amp; res.deseq.radiation.unshrunk$log2FoldChange &lt; 0, &#39;blue&#39;,
@@ -1564,7 +1564,13 @@ EnhancedVolcano(res.deseq.radiation.unshrunk,
                 legendLabSize = 10,
                 legendIconSize = 5.0) +
   theme(plot.title = element_text(hjust = 0.5))
-dev.off()</code></pre>
+dev.off()
+
+Radiation_batch1_Volcano_plot_data &lt;- as.data.frame(res.deseq.radiation.unshrunk)
+Radiation_batch1_Volcano_plot_data &lt;- merge.data.frame(Radiation_batch1_Volcano_plot_data, gene.symbol, 
+                                                   by.x = &quot;row.names&quot;, by.y = &quot;gene&quot;)
+Radiation_batch1_Volcano_plot_data &lt;- Radiation_batch1_Volcano_plot_data[,c(&quot;symbol&quot;, &quot;log2FoldChange&quot;, &quot;padj&quot;)]
+write.table(Radiation_batch1_Volcano_plot_data, file = &quot;Radiation_batch1_Volcano_plot_data_recount.tsv&quot;, row.names=FALSE, sep=&quot;\t&quot;, quote = FALSE)</code></pre>
 </div>
 <div id="gene-set-enrichment-analysis-figure-1e" class="section level2" number="5.5">
 <h2><span class="header-section-number">5.5</span> Gene set enrichment analysis (Figure 1E)</h2>
@@ -1812,9 +1818,9 @@ pheatmap(wide_counts, scale = &quot;row&quot;, show_rownames = F, angle_col = 0,
          cluster_rows = sort_hclust(hclust(dist(t(scale(t(wide_counts)))))))
 dev.off()</code></pre>
 </div>
-<div id="volcano-plots-figure-2f-i-and-ma-plots-supplementary-figure-1" class="section level2" number="6.4">
-<h2><span class="header-section-number">6.4</span> Volcano plots (Figure 2F-I) and MA plots (Supplementary Figure 1)</h2>
-<p>Here we make volcano plots and MA plots. We do this for each treatment with all genes, as well as focusing on subsets of genes (DNA Repair Hallmark, Androgen Response Hallmark, and our definition of AR target genes as enzalutamide-repressed genes). We also write a table of the values for the volcano plots (can skip if this doesn’t end up in the supplement).</p>
+<div id="volcano-plots-figure-2f-i-and-supplemental-tables-2-and-3-and-ma-plots-supplementary-figure-1" class="section level2" number="6.4">
+<h2><span class="header-section-number">6.4</span> Volcano plots (Figure 2F-I and Supplemental Tables 2 and 3) and MA plots (Supplementary Figure 1)</h2>
+<p>Here we make volcano plots and MA plots. We do this for each treatment with all genes, as well as focusing on subsets of genes (DNA Repair Hallmark, Androgen Response Hallmark, and our definition of AR target genes as enzalutamide-repressed genes). We also write a table of the values for the volcano plots.</p>
 <pre class="bash"><code>#Enzalutamide volcano plot
 keyvals &lt;- ifelse(
   res.deseq.enza$padj &lt; .1 &amp; res.deseq.enza$log2FoldChange &lt; 0, &#39;blue&#39;,
@@ -2052,11 +2058,11 @@ EnhancedVolcano(res.deseq.radiation,
   theme(plot.title = element_text(hjust = 0.5))
 dev.off()
 
-Radiation_batch2_Volcano_plot_data &lt;- as.data.frame(DNA_repair)
+Radiation_batch2_Volcano_plot_data &lt;- as.data.frame(res.deseq.radiation)
 Radiation_batch2_Volcano_plot_data &lt;- merge.data.frame(Radiation_batch2_Volcano_plot_data, gene.symbol, 
                                                    by.x = &quot;row.names&quot;, by.y = &quot;gene&quot;)
 Radiation_batch2_Volcano_plot_data &lt;- Radiation_batch2_Volcano_plot_data[,c(&quot;symbol&quot;, &quot;log2FoldChange&quot;, &quot;padj&quot;)]
-write.table(Radiation_batch2_Volcano_plot_data, file = &quot;Radiation_batch2_Volcano_DNA_repair_hallmark_plot_data_recount.tsv&quot;, row.names=FALSE, sep=&quot;\t&quot;, quote = FALSE)
+write.table(Radiation_batch2_Volcano_plot_data, file = &quot;Radiation_batch2_Volcano_plot_data_recount.tsv&quot;, row.names=FALSE, sep=&quot;\t&quot;, quote = FALSE)
 
 #MA plot
 repressed = as.data.frame(res.deseq.radiation[!is.na(res.deseq.radiation$padj) &amp; res.deseq.radiation$padj &lt; .1 &amp; res.deseq.radiation$log2FoldChange &lt; 0,])
