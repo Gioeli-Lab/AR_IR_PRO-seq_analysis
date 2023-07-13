@@ -813,9 +813,9 @@ pheatmap(wide_counts, scale = "row", show_rownames = F, angle_col = 0, fontsize 
 dev.off()
 ```
 
-## Volcano plot (Figure 1D)
+## Volcano plot (Figure 1D and Supplemental Table 1)
 
-Here we make a volcano plot of the fold changes and the adjusted p-values. The dashed line indicating significance is using an FDR of 0.1. 
+Here we make a volcano plot of the fold changes and the adjusted p-values. The dashed line indicating significance is using an FDR of 0.1. We also write a table of the values for the volcano plot.
 
 ```{r class.source="bg-info", engine='R', eval=F, echo=T}
 #Color and name the points based on significance and direction
@@ -851,6 +851,12 @@ EnhancedVolcano(res.deseq.radiation.unshrunk,
                 legendIconSize = 5.0) +
   theme(plot.title = element_text(hjust = 0.5))
 dev.off()
+
+Radiation_batch1_Volcano_plot_data <- as.data.frame(res.deseq.radiation.unshrunk)
+Radiation_batch1_Volcano_plot_data <- merge.data.frame(Radiation_batch1_Volcano_plot_data, gene.symbol, 
+                                                   by.x = "row.names", by.y = "gene")
+Radiation_batch1_Volcano_plot_data <- Radiation_batch1_Volcano_plot_data[,c("symbol", "log2FoldChange", "padj")]
+write.table(Radiation_batch1_Volcano_plot_data, file = "Radiation_batch1_Volcano_plot_data_recount.tsv", row.names=FALSE, sep="\t", quote = FALSE)
 ```
 
 ## Gene set enrichment analysis (Figure 1E)
@@ -1139,9 +1145,9 @@ pheatmap(wide_counts, scale = "row", show_rownames = F, angle_col = 0, fontsize 
 dev.off()
 ```
 
-## Volcano plots (Figure 2F-I) and MA plots (Supplementary Figure 1)
+## Volcano plots (Figure 2F-I and Supplemental Tables 2 and 3) and MA plots (Supplementary Figure 1)
 
-Here we make volcano plots and MA plots. We do this for each treatment with all genes, as well as focusing on subsets of genes (DNA Repair Hallmark, Androgen Response Hallmark, and our definition of AR target genes as enzalutamide-repressed genes). We also write a table of the values for the volcano plots (can skip if this doesn't end up in the supplement).
+Here we make volcano plots and MA plots. We do this for each treatment with all genes, as well as focusing on subsets of genes (DNA Repair Hallmark, Androgen Response Hallmark, and our definition of AR target genes as enzalutamide-repressed genes). We also write a table of the values for the volcano plots.
 
 ```{r engine='bash', eval=F, echo=TRUE}
 #Enzalutamide volcano plot
@@ -1381,11 +1387,11 @@ EnhancedVolcano(res.deseq.radiation,
   theme(plot.title = element_text(hjust = 0.5))
 dev.off()
 
-Radiation_batch2_Volcano_plot_data <- as.data.frame(DNA_repair)
+Radiation_batch2_Volcano_plot_data <- as.data.frame(res.deseq.radiation)
 Radiation_batch2_Volcano_plot_data <- merge.data.frame(Radiation_batch2_Volcano_plot_data, gene.symbol, 
                                                    by.x = "row.names", by.y = "gene")
 Radiation_batch2_Volcano_plot_data <- Radiation_batch2_Volcano_plot_data[,c("symbol", "log2FoldChange", "padj")]
-write.table(Radiation_batch2_Volcano_plot_data, file = "Radiation_batch2_Volcano_DNA_repair_hallmark_plot_data_recount.tsv", row.names=FALSE, sep="\t", quote = FALSE)
+write.table(Radiation_batch2_Volcano_plot_data, file = "Radiation_batch2_Volcano_plot_data_recount.tsv", row.names=FALSE, sep="\t", quote = FALSE)
 
 #MA plot
 repressed = as.data.frame(res.deseq.radiation[!is.na(res.deseq.radiation$padj) & res.deseq.radiation$padj < .1 & res.deseq.radiation$log2FoldChange < 0,])
