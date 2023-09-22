@@ -774,7 +774,6 @@ res.deseq.radiation.unshrunk <- results(deseq.df, contrast = c("radiation", "Rad
 res.deseq.radiation.unshrunk = res.deseq.radiation.unshrunk[rownames(res.deseq.radiation.unshrunk) %in% gene.symbol$gene,]
 ```
 
-## Principle component analysis (Figure 1B)
 
 This function uses the DESeq PCA plotting function but allows us to plot any principle components. 
 
@@ -813,7 +812,7 @@ pheatmap(wide_counts, scale = "row", show_rownames = F, angle_col = 0, fontsize 
 dev.off()
 ```
 
-## Volcano plot (Figure 1D and Supplemental Table 1)
+## Volcano plot (Figure 1D and Table S1)
 
 Here we make a volcano plot of the fold changes and the adjusted p-values. The dashed line indicating significance is using an FDR of 0.1. We also write a table of the values for the volcano plot.
 
@@ -1059,7 +1058,7 @@ ARE = PeaksWithMotif("ARE_fimo/1000000_fimo.gff")
 dev.off()
 ```
 
-# Figure 2 and Supplemental Figure 1
+# Figure 2 and S1
 
 ## Identify differentially expressed genes for experiment 2
 
@@ -1101,20 +1100,7 @@ res.deseq.radiation = results(deseq.df, contrast = c("radiation", "Radiation", "
 res.deseq.radiation = res.deseq.radiation[rownames(res.deseq.radiation) %in% gene.symbol$gene,]
 ```
 
-## Principle component analysis plot (Figure 2D)
-
-This function uses the DESeq PCA plotting function but allows us to plot any principle components. Here we plot PC1 and PC3, which separate the samples by radiation treatment and enzalutamide treatment, respectively.
-
-```{r class.source="bg-info", engine='R', eval=F, echo=T}
-rld_LNCaP = rlogTransformation(deseq.df)
-pdf("PCA_PC1_PC3_recount.pdf")
-plotPCA.any(rld_LNCaP, intgroup="treatment", pcs = c(1,3)) +
-  scale_color_manual(name = "Condition", values = col[c(4,4,2,2)]) +
-  scale_shape_manual(name = "Condition", values = c(17,16,17,16)) 
-dev.off()
-```
-
-## Heatmap (Figure 2E)
+## Heatmap (Figure 2D)
 
 Here we plot the normalized counts for each differentially expressed gene at an FDR of 0.1, scaled by z-score across samples. Hierarchical clustering is performed both on the samples and on the genes.
 
@@ -1145,7 +1131,7 @@ pheatmap(wide_counts, scale = "row", show_rownames = F, angle_col = 0, fontsize 
 dev.off()
 ```
 
-## Volcano plots (Figure 2F-I and Supplemental Tables 2 and 3) and MA plots (Supplementary Figure 1)
+## Volcano plots (Figure 2E-H and Tables S2,3) and MA plots (Figure S1)
 
 Here we make volcano plots and MA plots. We do this for each treatment with all genes, as well as focusing on subsets of genes (DNA Repair Hallmark, Androgen Response Hallmark, and our definition of AR target genes as enzalutamide-repressed genes). We also write a table of the values for the volcano plots.
 
@@ -1620,7 +1606,7 @@ ggplot(MA.df, aes(x = log(baseMean, 10), y = log2FoldChange, color = status)) +
 dev.off()
 ```
 
-## Proximity analysis between enzalutamide-repressed genes and AR ChIP-seq peaks(Figure 2J)
+## Proximity analysis between enzalutamide-repressed genes and AR ChIP-seq peaks(Figure 2I)
 
 We downloaded publicly available AR ChIP-seq peaks from LNCaP cells (from https://doi.org/10.7554/eLife.27159, GEO accession GSM2716919) as a bed file from CistromeDB (ID 87052).
 
@@ -1682,7 +1668,7 @@ ks = formatC(ks, format = "e", digits = 1)
 ks
 ```
 
-## Proximity analysis between radiation-activated genes and P53 ChIP-seq peaks(Figure 2K)
+## Proximity analysis between radiation-activated genes and P53 ChIP-seq peaks(Figure 2J)
 
 We don't have P53 ChIP-seq data from LNCaP cells, but we used ENCODE data from two other cell lines (A549 and HepG2 cells) and found similar results. Here we download P53 ChIP-seq peaks from A549 cells as a bed file. 
 
@@ -1745,7 +1731,7 @@ ks = formatC(ks, format = "e", digits = 1)
 ks
 ```
 
-## Proximity analysis between radiation-responsive genes and AR ChIP-seq peaks(Figure 2L)
+## Proximity analysis between radiation-responsive genes and AR ChIP-seq peaks(Figure 2K)
 
 Here we repeat the above steps, focusing on both the radiation-activated and radiation-repressed genes, and using the AR ChIP-seq peaks.
 
@@ -1826,7 +1812,7 @@ ks = ks.test(x = log(abs(df.all$dis)[df.all$status == class]),
 ks = formatC(ks, format = "e", digits = 1)
 ks
 ```
-# Supplemental Figure 2 and Figure 3E
+# Figure S2 and 3A
 
 Here we classify sets of genes based on their response to either treatment, each at an FDR of 0.1. For example, enzalutamide-repressed radiation-activated genes are both significantly repressed by enzalutamide (at an FDR of 0.1) and significantly activated by radiation (at an FDR of 0.1). For each set of genes, we plot the average read depth normalized read counts across the four conditions. We then perform over-representation analysis for each gene set.
 
@@ -1860,7 +1846,7 @@ write.table(enza.activated.radiation.activated, "enza.activated.radiation.activa
 write.table(enza.activated.radiation.repressed, "enza.activated.radiation.repressed_recount.txt",quote=F, row.names=F, col.names=F)
 ```
 
-## Plot expression of enzalutamide-repressed radiation-activated genes (Figure 3E) 
+## Plot expression of enzalutamide-repressed radiation-activated genes (Figure 3A) 
 
 The steps we use in this step are the same for each set of genes
 
@@ -1920,7 +1906,7 @@ counts <- spread(gathered_counts[,c("symbol", "Condition", "normalized_counts")]
 write.table(counts, file = "normalized_counts_enza_repressed_radiation_activated_recount.tsv", row.names=FALSE, sep="\t", quote = FALSE)
 ```
 
-## Plot expression of enzalutamide-activated radiation-activated genes (Supplemental Figure 2A) 
+## Plot expression of enzalutamide-activated radiation-activated genes (Figure S2A) 
 
 ```{r class.source="bg-info", engine='R', eval=F, echo=TRUE}
 normalized_counts <- counts(deseq.df, normalized=TRUE)
@@ -1971,7 +1957,7 @@ counts <- spread(gathered_counts[,c("symbol", "Condition", "normalized_counts")]
 write.table(counts, file = "normalized_counts_enza_activated_radiation_activated_recount.tsv", row.names=FALSE, sep="\t", quote = FALSE)
 ```
 
-## Plot expression of enzalutamide-represed radiation-repressed genes (Supplemental Figure 2B) 
+## Plot expression of enzalutamide-represed radiation-repressed genes (Figure S2B) 
 
 ```{r class.source="bg-info", engine='R', eval=F, echo=TRUE}
 normalized_counts <- counts(deseq.df, normalized=TRUE)
@@ -2021,7 +2007,7 @@ counts <- spread(gathered_counts[,c("symbol", "Condition", "normalized_counts")]
 write.table(counts, file = "normalized_counts_enza_repressed_radiation_repressed_recount.tsv", row.names=FALSE, sep="\t", quote = FALSE)
 ```
 
-## Plot expression of enzalutamide-activated radiation-repressed genes (Supplemental Figure 2C) 
+## Plot expression of enzalutamide-activated radiation-repressed genes (Figure S2C) 
 
 ```{r class.source="bg-info", engine='R', eval=F, echo=TRUE}
 normalized_counts <- counts(deseq.df, normalized=TRUE)
@@ -2072,7 +2058,7 @@ counts <- spread(gathered_counts[gathered_counts$gene != "ENSG00000274452",c("sy
 write.table(counts, file = "normalized_counts_enza_activated_radiation_repressed_recount.tsv", row.names=FALSE, sep="\t", quote = FALSE)
 ```
 
-## Over-representation analysis (ORA) of gene classes (Supplemental Figure 2D)
+## Over-representation analysis (ORA) of gene classes (Figure S2D)
 
 ```{r class.source="bg-info", engine='R', eval=F, echo=TRUE}
 #Get the Hallmark gene sets
@@ -2165,7 +2151,7 @@ dev.off()
 em <- enricher(enza.activated.radiation.repressed, TERM2GENE=m_t2g, pvalueCutoff = 0.1)
 ```
 
-# Figure 3A-D,F
+# Figure 3B-F
 ## Scale bigWigs
 
 Here we scale the bigWigs based on the size factors generated by DESeq2 to account for differences in read depth. We just use paired end 1 because that is the polymerase location.
@@ -2328,7 +2314,7 @@ cp *.bedGraph.gz $destination
 cp *_merged.bigWig $destination
 ```
 
-## Radiation-activated genes composite plot (Figure 3A)
+## Radiation-activated genes composite plot (Figure 3B)
 
 Here we plot the composite polymerase density for all radiation-activated genes, for each of the radiation and control conditions. For each gene, we first find the peak of paused polymerase density by searching in a window of 500bp around the transcription start site. We center the plot on this summit across genes. We use a much more stringent FDR of 0.0001 to maximize the effect size.
 
@@ -2390,7 +2376,7 @@ load('radiation.composites.stringent.Rdata')
 plot.composites(composite.df, treatment = "radiation_activated_stringent", summit='Midpoint of Pause Peak', col.lines = c("red", "grey60"))
 ```
 
-## Enzalutamide-repressed genes composite plot (Figure 3C)
+## Enzalutamide-repressed genes composite plot (Figure 3D)
 
 Similarly, we plot the composite polymerase density for all enzalutamide-repressed gene, for each of the enzalutamide and vehicle conditions. 
 
@@ -2451,7 +2437,7 @@ load('enzalutamide.composites.stringent.Rdata')
 plot.composites(composite.df, treatment = "enzalutamide_repressed_stringent", summit='Midpoint of Pause Peak', col.lines = c("blue", "grey60"))
 ```
 
-## Pause ratio analysis for above gene classes (Figure 3B,D)
+## Pause ratio analysis for above gene classes (Figure 3C,E)
 
 Now we want to calculate the pause ratio for each gene in the above classes, and the change in pause ratio in response to each treatment. 
 
