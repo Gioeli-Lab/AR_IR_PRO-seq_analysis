@@ -51,7 +51,7 @@ h4 {font-size: 18px;}
 h5 {font-size: 16px;}
 h6 {font-size: 12px;}
 code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-pre:not([class]) { background-color: white }</style>
+</style>
 <script>
 
 /**
@@ -700,7 +700,7 @@ function toggle_visibility(id1) {
 
 
 <h1 class="title toc-ignore">AR-IR PRO-seq Analysis Vignette</h1>
-<h4 class="date">Last compiled on 13 July 2023</h4>
+<h4 class="date">Last compiled on 22 September 2023</h4>
 
 </div>
 
@@ -732,42 +732,40 @@ function toggle_visibility(id1) {
 <li><a href="#figure-1" id="toc-figure-1"><span class="toc-section-number">5</span> Figure 1</a>
 <ul>
 <li><a href="#identify-differentially-expressed-genes-in-experiment-1" id="toc-identify-differentially-expressed-genes-in-experiment-1"><span class="toc-section-number">5.1</span> Identify differentially expressed genes in experiment 1</a></li>
-<li><a href="#principle-component-analysis-figure-1b" id="toc-principle-component-analysis-figure-1b"><span class="toc-section-number">5.2</span> Principle component analysis (Figure 1B)</a></li>
-<li><a href="#heatmap-figure-1c" id="toc-heatmap-figure-1c"><span class="toc-section-number">5.3</span> Heatmap (Figure 1C)</a></li>
-<li><a href="#volcano-plot-figure-1d-and-supplemental-table-1" id="toc-volcano-plot-figure-1d-and-supplemental-table-1"><span class="toc-section-number">5.4</span> Volcano plot (Figure 1D and Supplemental Table 1)</a></li>
-<li><a href="#gene-set-enrichment-analysis-figure-1e" id="toc-gene-set-enrichment-analysis-figure-1e"><span class="toc-section-number">5.5</span> Gene set enrichment analysis (Figure 1E)</a></li>
-<li><a href="#putative-regulatory-element-identification-with-dreg" id="toc-putative-regulatory-element-identification-with-dreg"><span class="toc-section-number">5.6</span> Putative regulatory element identification with dREG</a></li>
-<li><a href="#de-novo-motif-identification-in-differentially-transcribed-putative-regulatory-elements-figure-1f" id="toc-de-novo-motif-identification-in-differentially-transcribed-putative-regulatory-elements-figure-1f"><span class="toc-section-number">5.7</span> de novo motif identification in differentially transcribed putative regulatory elements (Figure 1F)</a></li>
-<li><a href="#differential-motif-abundance-in-putative-regulatory-elements-figure-1gh" id="toc-differential-motif-abundance-in-putative-regulatory-elements-figure-1gh"><span class="toc-section-number">5.8</span> Differential motif abundance in putative regulatory elements (Figure 1G,H)</a></li>
+<li><a href="#heatmap-figure-1c" id="toc-heatmap-figure-1c"><span class="toc-section-number">5.2</span> Heatmap (Figure 1C)</a></li>
+<li><a href="#volcano-plot-figure-1d-and-table-s1" id="toc-volcano-plot-figure-1d-and-table-s1"><span class="toc-section-number">5.3</span> Volcano plot (Figure 1D and Table S1)</a></li>
+<li><a href="#gene-set-enrichment-analysis-figure-1e" id="toc-gene-set-enrichment-analysis-figure-1e"><span class="toc-section-number">5.4</span> Gene set enrichment analysis (Figure 1E)</a></li>
+<li><a href="#putative-regulatory-element-identification-with-dreg" id="toc-putative-regulatory-element-identification-with-dreg"><span class="toc-section-number">5.5</span> Putative regulatory element identification with dREG</a></li>
+<li><a href="#de-novo-motif-identification-in-differentially-transcribed-putative-regulatory-elements-figure-1f" id="toc-de-novo-motif-identification-in-differentially-transcribed-putative-regulatory-elements-figure-1f"><span class="toc-section-number">5.6</span> de novo motif identification in differentially transcribed putative regulatory elements (Figure 1F)</a></li>
+<li><a href="#differential-motif-abundance-in-putative-regulatory-elements-figure-1gh" id="toc-differential-motif-abundance-in-putative-regulatory-elements-figure-1gh"><span class="toc-section-number">5.7</span> Differential motif abundance in putative regulatory elements (Figure 1G,H)</a></li>
 </ul></li>
-<li><a href="#figure-2-and-supplemental-figure-1" id="toc-figure-2-and-supplemental-figure-1"><span class="toc-section-number">6</span> Figure 2 and Supplemental Figure 1</a>
+<li><a href="#figure-2-and-s1" id="toc-figure-2-and-s1"><span class="toc-section-number">6</span> Figure 2 and S1</a>
 <ul>
 <li><a href="#identify-differentially-expressed-genes-for-experiment-2" id="toc-identify-differentially-expressed-genes-for-experiment-2"><span class="toc-section-number">6.1</span> Identify differentially expressed genes for experiment 2</a></li>
-<li><a href="#principle-component-analysis-plot-figure-2d" id="toc-principle-component-analysis-plot-figure-2d"><span class="toc-section-number">6.2</span> Principle component analysis plot (Figure 2D)</a></li>
-<li><a href="#heatmap-figure-2e" id="toc-heatmap-figure-2e"><span class="toc-section-number">6.3</span> Heatmap (Figure 2E)</a></li>
-<li><a href="#volcano-plots-figure-2f-i-and-supplemental-tables-2-and-3-and-ma-plots-supplementary-figure-1" id="toc-volcano-plots-figure-2f-i-and-supplemental-tables-2-and-3-and-ma-plots-supplementary-figure-1"><span class="toc-section-number">6.4</span> Volcano plots (Figure 2F-I and Supplemental Tables 2 and 3) and MA plots (Supplementary Figure 1)</a></li>
-<li><a href="#proximity-analysis-between-enzalutamide-repressed-genes-and-ar-chip-seq-peaksfigure-2j" id="toc-proximity-analysis-between-enzalutamide-repressed-genes-and-ar-chip-seq-peaksfigure-2j"><span class="toc-section-number">6.5</span> Proximity analysis between enzalutamide-repressed genes and AR ChIP-seq peaks(Figure 2J)</a></li>
-<li><a href="#proximity-analysis-between-radiation-activated-genes-and-p53-chip-seq-peaksfigure-2k" id="toc-proximity-analysis-between-radiation-activated-genes-and-p53-chip-seq-peaksfigure-2k"><span class="toc-section-number">6.6</span> Proximity analysis between radiation-activated genes and P53 ChIP-seq peaks(Figure 2K)</a></li>
-<li><a href="#proximity-analysis-between-radiation-responsive-genes-and-ar-chip-seq-peaksfigure-2l" id="toc-proximity-analysis-between-radiation-responsive-genes-and-ar-chip-seq-peaksfigure-2l"><span class="toc-section-number">6.7</span> Proximity analysis between radiation-responsive genes and AR ChIP-seq peaks(Figure 2L)</a></li>
+<li><a href="#heatmap-figure-2d" id="toc-heatmap-figure-2d"><span class="toc-section-number">6.2</span> Heatmap (Figure 2D)</a></li>
+<li><a href="#volcano-plots-figure-2e-h-and-tables-s23-and-ma-plots-figure-s1" id="toc-volcano-plots-figure-2e-h-and-tables-s23-and-ma-plots-figure-s1"><span class="toc-section-number">6.3</span> Volcano plots (Figure 2E-H and Tables S2,3) and MA plots (Figure S1)</a></li>
+<li><a href="#proximity-analysis-between-enzalutamide-repressed-genes-and-ar-chip-seq-peaksfigure-2i" id="toc-proximity-analysis-between-enzalutamide-repressed-genes-and-ar-chip-seq-peaksfigure-2i"><span class="toc-section-number">6.4</span> Proximity analysis between enzalutamide-repressed genes and AR ChIP-seq peaks(Figure 2I)</a></li>
+<li><a href="#proximity-analysis-between-radiation-activated-genes-and-p53-chip-seq-peaksfigure-2j" id="toc-proximity-analysis-between-radiation-activated-genes-and-p53-chip-seq-peaksfigure-2j"><span class="toc-section-number">6.5</span> Proximity analysis between radiation-activated genes and P53 ChIP-seq peaks(Figure 2J)</a></li>
+<li><a href="#proximity-analysis-between-radiation-responsive-genes-and-ar-chip-seq-peaksfigure-2k" id="toc-proximity-analysis-between-radiation-responsive-genes-and-ar-chip-seq-peaksfigure-2k"><span class="toc-section-number">6.6</span> Proximity analysis between radiation-responsive genes and AR ChIP-seq peaks(Figure 2K)</a></li>
 </ul></li>
-<li><a href="#supplemental-figure-2-and-figure-3e" id="toc-supplemental-figure-2-and-figure-3e"><span class="toc-section-number">7</span> Supplemental Figure 2 and Figure 3E</a>
+<li><a href="#figure-s2-and-3a" id="toc-figure-s2-and-3a"><span class="toc-section-number">7</span> Figure S2 and 3A</a>
 <ul>
 <li><a href="#classify-the-gene-sets" id="toc-classify-the-gene-sets"><span class="toc-section-number">7.1</span> Classify the gene sets</a></li>
-<li><a href="#plot-expression-of-enzalutamide-repressed-radiation-activated-genes-figure-3e" id="toc-plot-expression-of-enzalutamide-repressed-radiation-activated-genes-figure-3e"><span class="toc-section-number">7.2</span> Plot expression of enzalutamide-repressed radiation-activated genes (Figure 3E)</a></li>
-<li><a href="#plot-expression-of-enzalutamide-activated-radiation-activated-genes-supplemental-figure-2a" id="toc-plot-expression-of-enzalutamide-activated-radiation-activated-genes-supplemental-figure-2a"><span class="toc-section-number">7.3</span> Plot expression of enzalutamide-activated radiation-activated genes (Supplemental Figure 2A)</a></li>
-<li><a href="#plot-expression-of-enzalutamide-represed-radiation-repressed-genes-supplemental-figure-2b" id="toc-plot-expression-of-enzalutamide-represed-radiation-repressed-genes-supplemental-figure-2b"><span class="toc-section-number">7.4</span> Plot expression of enzalutamide-represed radiation-repressed genes (Supplemental Figure 2B)</a></li>
-<li><a href="#plot-expression-of-enzalutamide-activated-radiation-repressed-genes-supplemental-figure-2c" id="toc-plot-expression-of-enzalutamide-activated-radiation-repressed-genes-supplemental-figure-2c"><span class="toc-section-number">7.5</span> Plot expression of enzalutamide-activated radiation-repressed genes (Supplemental Figure 2C)</a></li>
-<li><a href="#over-representation-analysis-ora-of-gene-classes-supplemental-figure-2d" id="toc-over-representation-analysis-ora-of-gene-classes-supplemental-figure-2d"><span class="toc-section-number">7.6</span> Over-representation analysis (ORA) of gene classes (Supplemental Figure 2D)</a></li>
+<li><a href="#plot-expression-of-enzalutamide-repressed-radiation-activated-genes-figure-3a" id="toc-plot-expression-of-enzalutamide-repressed-radiation-activated-genes-figure-3a"><span class="toc-section-number">7.2</span> Plot expression of enzalutamide-repressed radiation-activated genes (Figure 3A)</a></li>
+<li><a href="#plot-expression-of-enzalutamide-activated-radiation-activated-genes-figure-s2a" id="toc-plot-expression-of-enzalutamide-activated-radiation-activated-genes-figure-s2a"><span class="toc-section-number">7.3</span> Plot expression of enzalutamide-activated radiation-activated genes (Figure S2A)</a></li>
+<li><a href="#plot-expression-of-enzalutamide-represed-radiation-repressed-genes-figure-s2b" id="toc-plot-expression-of-enzalutamide-represed-radiation-repressed-genes-figure-s2b"><span class="toc-section-number">7.4</span> Plot expression of enzalutamide-represed radiation-repressed genes (Figure S2B)</a></li>
+<li><a href="#plot-expression-of-enzalutamide-activated-radiation-repressed-genes-figure-s2c" id="toc-plot-expression-of-enzalutamide-activated-radiation-repressed-genes-figure-s2c"><span class="toc-section-number">7.5</span> Plot expression of enzalutamide-activated radiation-repressed genes (Figure S2C)</a></li>
+<li><a href="#over-representation-analysis-ora-of-gene-classes-figure-s2d" id="toc-over-representation-analysis-ora-of-gene-classes-figure-s2d"><span class="toc-section-number">7.6</span> Over-representation analysis (ORA) of gene classes (Figure S2D)</a></li>
 </ul></li>
-<li><a href="#figure-3a-df" id="toc-figure-3a-df"><span class="toc-section-number">8</span> Figure 3A-D,F</a>
+<li><a href="#figure-3b-f" id="toc-figure-3b-f"><span class="toc-section-number">8</span> Figure 3B-F</a>
 <ul>
 <li><a href="#scale-bigwigs" id="toc-scale-bigwigs"><span class="toc-section-number">8.1</span> Scale bigWigs</a></li>
 <li><a href="#merge-the-scaled-bigwigs-across-replicates" id="toc-merge-the-scaled-bigwigs-across-replicates"><span class="toc-section-number">8.2</span> Merge the scaled bigWigs across replicates</a></li>
 <li><a href="#merge-all-scaled-bigwigs-for-the-experiment" id="toc-merge-all-scaled-bigwigs-for-the-experiment"><span class="toc-section-number">8.3</span> Merge all scaled bigWigs for the experiment</a></li>
 <li><a href="#merge-each-treatment-condition-across-replicates" id="toc-merge-each-treatment-condition-across-replicates"><span class="toc-section-number">8.4</span> Merge each treatment condition across replicates</a></li>
-<li><a href="#radiation-activated-genes-composite-plot-figure-3a" id="toc-radiation-activated-genes-composite-plot-figure-3a"><span class="toc-section-number">8.5</span> Radiation-activated genes composite plot (Figure 3A)</a></li>
-<li><a href="#enzalutamide-repressed-genes-composite-plot-figure-3c" id="toc-enzalutamide-repressed-genes-composite-plot-figure-3c"><span class="toc-section-number">8.6</span> Enzalutamide-repressed genes composite plot (Figure 3C)</a></li>
-<li><a href="#pause-ratio-analysis-for-above-gene-classes-figure-3bd" id="toc-pause-ratio-analysis-for-above-gene-classes-figure-3bd"><span class="toc-section-number">8.7</span> Pause ratio analysis for above gene classes (Figure 3B,D)</a></li>
+<li><a href="#radiation-activated-genes-composite-plot-figure-3b" id="toc-radiation-activated-genes-composite-plot-figure-3b"><span class="toc-section-number">8.5</span> Radiation-activated genes composite plot (Figure 3B)</a></li>
+<li><a href="#enzalutamide-repressed-genes-composite-plot-figure-3d" id="toc-enzalutamide-repressed-genes-composite-plot-figure-3d"><span class="toc-section-number">8.6</span> Enzalutamide-repressed genes composite plot (Figure 3D)</a></li>
+<li><a href="#pause-ratio-analysis-for-above-gene-classes-figure-3ce" id="toc-pause-ratio-analysis-for-above-gene-classes-figure-3ce"><span class="toc-section-number">8.7</span> Pause ratio analysis for above gene classes (Figure 3C,E)</a></li>
 <li><a href="#pause-ratio-analysis-for-the-16-genes-repressed-by-enzalutamide-and-activated-by-ir-figure-3f" id="toc-pause-ratio-analysis-for-the-16-genes-repressed-by-enzalutamide-and-activated-by-ir-figure-3f"><span class="toc-section-number">8.8</span> Pause ratio analysis for the 16 genes repressed by enzalutamide and activated by IR (Figure 3F)</a></li>
 </ul></li>
 </ul>
@@ -1495,9 +1493,6 @@ res.deseq.radiation = res.deseq.radiation[rownames(res.deseq.radiation) %in% gen
 #Also get the non-shrunken fold changes (the other values are the same)
 res.deseq.radiation.unshrunk &lt;- results(deseq.df, contrast = c(&quot;radiation&quot;, &quot;Radiation&quot;, &quot;Control&quot;))
 res.deseq.radiation.unshrunk = res.deseq.radiation.unshrunk[rownames(res.deseq.radiation.unshrunk) %in% gene.symbol$gene,]</code></pre>
-</div>
-<div id="principle-component-analysis-figure-1b" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Principle component analysis (Figure 1B)</h2>
 <p>This function uses the DESeq PCA plotting function but allows us to plot any principle components.</p>
 <pre class="r bg-info"><code>rld_LNCaP = rlogTransformation(deseq.df)
 #Reverse the order for the legend to match the next experiment
@@ -1509,8 +1504,8 @@ plotPCA.any(rld_LNCaP, intgroup=&quot;radiation&quot;) +
   scale_shape_manual(name = &quot;Condition&quot;, values = c(16,16)) 
 dev.off()</code></pre>
 </div>
-<div id="heatmap-figure-1c" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Heatmap (Figure 1C)</h2>
+<div id="heatmap-figure-1c" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Heatmap (Figure 1C)</h2>
 <p>Here we plot the normalized counts for each differentially expressed gene at an FDR of 0.1, scaled by z-score across samples. Hierarchical clustering is performed both on the samples and on the genes.</p>
 <pre class="r bg-info"><code>#Get the normalized counts for each gene with an adjusted p-value &lt; 0.1
 wide_counts = counts(deseq.df[rownames(deseq.df) %in% rownames(res.deseq.radiation)[res.deseq.radiation$padj &lt; .1 &amp; !is.na(res.deseq.radiation$padj)],], normalized = TRUE)
@@ -1529,8 +1524,8 @@ pheatmap(wide_counts, scale = &quot;row&quot;, show_rownames = F, angle_col = 0,
                      cluster_rows = sort_hclust(hclust(dist(t(scale(t(wide_counts)))))))
 dev.off()</code></pre>
 </div>
-<div id="volcano-plot-figure-1d-and-supplemental-table-1" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Volcano plot (Figure 1D and Supplemental Table 1)</h2>
+<div id="volcano-plot-figure-1d-and-table-s1" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Volcano plot (Figure 1D and Table S1)</h2>
 <p>Here we make a volcano plot of the fold changes and the adjusted p-values. The dashed line indicating significance is using an FDR of 0.1. We also write a table of the values for the volcano plot.</p>
 <pre class="r bg-info"><code>#Color and name the points based on significance and direction
 keyvals &lt;- ifelse(
@@ -1572,8 +1567,8 @@ Radiation_batch1_Volcano_plot_data &lt;- merge.data.frame(Radiation_batch1_Volca
 Radiation_batch1_Volcano_plot_data &lt;- Radiation_batch1_Volcano_plot_data[,c(&quot;symbol&quot;, &quot;log2FoldChange&quot;, &quot;padj&quot;)]
 write.table(Radiation_batch1_Volcano_plot_data, file = &quot;Radiation_batch1_Volcano_plot_data_recount.tsv&quot;, row.names=FALSE, sep=&quot;\t&quot;, quote = FALSE)</code></pre>
 </div>
-<div id="gene-set-enrichment-analysis-figure-1e" class="section level2" number="5.5">
-<h2><span class="header-section-number">5.5</span> Gene set enrichment analysis (Figure 1E)</h2>
+<div id="gene-set-enrichment-analysis-figure-1e" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Gene set enrichment analysis (Figure 1E)</h2>
 <p>Here we perform gene set enrichment analysis with the Hallmark gene sets. All genes (not just differentially expressed genes) go into this analysis, a distinguishing feature of GSEA compared to over-representation analysis. Genes are ranked by their shrunken fold changes, which is designed to make the fold changes comparable across a range of gene expression levels. Counts-based data show heteroskedasticity, where the genes with fewer counts have higher variability. Each gene set is assigned a p-value, which is then adjusted for multiple hypothesis testing using the Benjamini-Hochberg (false discovery rate (FDR)) procedure. We plotted the gene sets that were significant at an FDR of 0.05. The Androgen Response gene set had an adjusted p-value of 0.495.</p>
 <pre class="r bg-info"><code>#Rank the genes based on shrunken fold change
 original_gene_list &lt;- res.deseq.radiation$log2FoldChange
@@ -1611,8 +1606,8 @@ ggplot(gse_top, aes(reorder(pathway, NES), NES, fill = log(padj, base = 10))) +
   labs(fill = &quot;log(padj)&quot;)
 dev.off()</code></pre>
 </div>
-<div id="putative-regulatory-element-identification-with-dreg" class="section level2" number="5.6">
-<h2><span class="header-section-number">5.6</span> Putative regulatory element identification with dREG</h2>
+<div id="putative-regulatory-element-identification-with-dreg" class="section level2" number="5.5">
+<h2><span class="header-section-number">5.5</span> Putative regulatory element identification with dREG</h2>
 <p>Here we use our PRO-seq data to identify putative regulatory elements. We use seqOutBias to generate bigWig files from all our samples, separated by paired end and strand, to upload to the dREG portal (<a href="https://dreg.dnasequence.org/" class="uri">https://dreg.dnasequence.org/</a>). The output includes a LNCaP_batch1.dREG.peak.full.bed file that represents the genomic coordinates of each putative regulatory element. These are identified based on a signature of bidirectional transcription that occurs at both promoters and enhancers.</p>
 <pre class="bash"><code>#Get all of the bam files in batch 1
 bams=$(ls *_batch1.bam)
@@ -1650,8 +1645,8 @@ df.deseq.effects.dREG.radiation.lattice = categorize.deseq.df(res.deseq.radiatio
 process.deseq.df(df = df.deseq.effects.dREG.radiation.lattice,
                  filename = &#39;df.deseq.effects.dREG.radiation.lattice.batch1&#39;, fdr = 0.1, log2fold = 0)</code></pre>
 </div>
-<div id="de-novo-motif-identification-in-differentially-transcribed-putative-regulatory-elements-figure-1f" class="section level2" number="5.7">
-<h2><span class="header-section-number">5.7</span> de novo motif identification in differentially transcribed putative regulatory elements (Figure 1F)</h2>
+<div id="de-novo-motif-identification-in-differentially-transcribed-putative-regulatory-elements-figure-1f" class="section level2" number="5.6">
+<h2><span class="header-section-number">5.6</span> de novo motif identification in differentially transcribed putative regulatory elements (Figure 1F)</h2>
 <p>For increased and decreased regions, convert the bed file to a fasta file (the nucleotide sequence).</p>
 <pre class="bash"><code>for bed in *creased*0.1_FDR.bed
 do
@@ -1710,8 +1705,8 @@ do
         -min-overlap 1 -dist ed -evalue -thresh 0.1 $i $motifs
 done</code></pre>
 </div>
-<div id="differential-motif-abundance-in-putative-regulatory-elements-figure-1gh" class="section level2" number="5.8">
-<h2><span class="header-section-number">5.8</span> Differential motif abundance in putative regulatory elements (Figure 1G,H)</h2>
+<div id="differential-motif-abundance-in-putative-regulatory-elements-figure-1gh" class="section level2" number="5.7">
+<h2><span class="header-section-number">5.7</span> Differential motif abundance in putative regulatory elements (Figure 1G,H)</h2>
 <p>We identified the P53 motif in the regulatory elements with increased bidirectional transcription. This does not necessarily mean that the motif is not present in the other classes of regulatory elements. To explicitly compare the motif abundance, we first use FIMO to identify the top 1,000,000 motif instances in the genome. We also do this for the AR motif, as de novo motif analysis is not sensitive enough to detect all motifs.</p>
 <pre class="bash"><code>#Download the motif files if you don&#39;t have them already
 wget https://raw.githubusercontent.com/Gioeli-Lab/AR_IR_PRO-seq_analysis/main/Motif_databases/individual_memes_1/p53_homer_uniprobe_jaspar_edited.txt_meme.txt -P ~/Library/CloudStorage/Box-Box/GuertinLab/Motif_databases/individual_memes
@@ -1741,8 +1736,8 @@ ARE = PeaksWithMotif(&quot;ARE_fimo/1000000_fimo.gff&quot;)
 dev.off()</code></pre>
 </div>
 </div>
-<div id="figure-2-and-supplemental-figure-1" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Figure 2 and Supplemental Figure 1</h1>
+<div id="figure-2-and-s1" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Figure 2 and S1</h1>
 <div id="identify-differentially-expressed-genes-for-experiment-2" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Identify differentially expressed genes for experiment 2</h2>
 <p>This second experiment (batch 2) had 2 replicates each of: mock-treated + vehicle, irradiated + vehicle, mock-treated + enzalutamide, irradiated + enzalutamide.</p>
@@ -1780,18 +1775,8 @@ res.deseq.enza = res.deseq.enza[rownames(res.deseq.enza) %in% gene.symbol$gene,]
 res.deseq.radiation = results(deseq.df, contrast = c(&quot;radiation&quot;, &quot;Radiation&quot;, &quot;Control&quot;))
 res.deseq.radiation = res.deseq.radiation[rownames(res.deseq.radiation) %in% gene.symbol$gene,]</code></pre>
 </div>
-<div id="principle-component-analysis-plot-figure-2d" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Principle component analysis plot (Figure 2D)</h2>
-<p>This function uses the DESeq PCA plotting function but allows us to plot any principle components. Here we plot PC1 and PC3, which separate the samples by radiation treatment and enzalutamide treatment, respectively.</p>
-<pre class="r bg-info"><code>rld_LNCaP = rlogTransformation(deseq.df)
-pdf(&quot;PCA_PC1_PC3_recount.pdf&quot;)
-plotPCA.any(rld_LNCaP, intgroup=&quot;treatment&quot;, pcs = c(1,3)) +
-  scale_color_manual(name = &quot;Condition&quot;, values = col[c(4,4,2,2)]) +
-  scale_shape_manual(name = &quot;Condition&quot;, values = c(17,16,17,16)) 
-dev.off()</code></pre>
-</div>
-<div id="heatmap-figure-2e" class="section level2" number="6.3">
-<h2><span class="header-section-number">6.3</span> Heatmap (Figure 2E)</h2>
+<div id="heatmap-figure-2d" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> Heatmap (Figure 2D)</h2>
 <p>Here we plot the normalized counts for each differentially expressed gene at an FDR of 0.1, scaled by z-score across samples. Hierarchical clustering is performed both on the samples and on the genes.</p>
 <pre class="r bg-info"><code>#Get the normalized counts for each gene with an adjusted p-value &lt; 0.1
 wide_counts = counts(deseq.df[rownames(deseq.df) %in% 
@@ -1818,8 +1803,8 @@ pheatmap(wide_counts, scale = &quot;row&quot;, show_rownames = F, angle_col = 0,
          cluster_rows = sort_hclust(hclust(dist(t(scale(t(wide_counts)))))))
 dev.off()</code></pre>
 </div>
-<div id="volcano-plots-figure-2f-i-and-supplemental-tables-2-and-3-and-ma-plots-supplementary-figure-1" class="section level2" number="6.4">
-<h2><span class="header-section-number">6.4</span> Volcano plots (Figure 2F-I and Supplemental Tables 2 and 3) and MA plots (Supplementary Figure 1)</h2>
+<div id="volcano-plots-figure-2e-h-and-tables-s23-and-ma-plots-figure-s1" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> Volcano plots (Figure 2E-H and Tables S2,3) and MA plots (Figure S1)</h2>
 <p>Here we make volcano plots and MA plots. We do this for each treatment with all genes, as well as focusing on subsets of genes (DNA Repair Hallmark, Androgen Response Hallmark, and our definition of AR target genes as enzalutamide-repressed genes). We also write a table of the values for the volcano plots.</p>
 <pre class="bash"><code>#Enzalutamide volcano plot
 keyvals &lt;- ifelse(
@@ -2290,8 +2275,8 @@ ggplot(MA.df, aes(x = log(baseMean, 10), y = log2FoldChange, color = status)) +
   labs(color=NULL)
 dev.off()</code></pre>
 </div>
-<div id="proximity-analysis-between-enzalutamide-repressed-genes-and-ar-chip-seq-peaksfigure-2j" class="section level2" number="6.5">
-<h2><span class="header-section-number">6.5</span> Proximity analysis between enzalutamide-repressed genes and AR ChIP-seq peaks(Figure 2J)</h2>
+<div id="proximity-analysis-between-enzalutamide-repressed-genes-and-ar-chip-seq-peaksfigure-2i" class="section level2" number="6.4">
+<h2><span class="header-section-number">6.4</span> Proximity analysis between enzalutamide-repressed genes and AR ChIP-seq peaks(Figure 2I)</h2>
 <p>We downloaded publicly available AR ChIP-seq peaks from LNCaP cells (from <a href="https://doi.org/10.7554/eLife.27159" class="uri">https://doi.org/10.7554/eLife.27159</a>, GEO accession GSM2716919) as a bed file from CistromeDB (ID 87052).</p>
 <pre class="bash"><code>#We will re-use some of the code below, so we use define the data frame and treatment here
 df = res.deseq.enza
@@ -2349,8 +2334,8 @@ ks = ks.test(x = log(abs(df.all$dis)[df.all$status == class]),
 ks = formatC(ks, format = &quot;e&quot;, digits = 1)
 ks</code></pre>
 </div>
-<div id="proximity-analysis-between-radiation-activated-genes-and-p53-chip-seq-peaksfigure-2k" class="section level2" number="6.6">
-<h2><span class="header-section-number">6.6</span> Proximity analysis between radiation-activated genes and P53 ChIP-seq peaks(Figure 2K)</h2>
+<div id="proximity-analysis-between-radiation-activated-genes-and-p53-chip-seq-peaksfigure-2j" class="section level2" number="6.5">
+<h2><span class="header-section-number">6.5</span> Proximity analysis between radiation-activated genes and P53 ChIP-seq peaks(Figure 2J)</h2>
 <p>We don’t have P53 ChIP-seq data from LNCaP cells, but we used ENCODE data from two other cell lines (A549 and HepG2 cells) and found similar results. Here we download P53 ChIP-seq peaks from A549 cells as a bed file.</p>
 <pre class="bash"><code>wget https://www.encodeproject.org/files/ENCFF699UTZ/@@download/ENCFF699UTZ.bed.gz
 gunzip ENCFF699UTZ.bed.gz
@@ -2405,8 +2390,8 @@ ks = ks.test(x = log(abs(df.all$dis)[df.all$status == class]),
 ks = formatC(ks, format = &quot;e&quot;, digits = 1)
 ks</code></pre>
 </div>
-<div id="proximity-analysis-between-radiation-responsive-genes-and-ar-chip-seq-peaksfigure-2l" class="section level2" number="6.7">
-<h2><span class="header-section-number">6.7</span> Proximity analysis between radiation-responsive genes and AR ChIP-seq peaks(Figure 2L)</h2>
+<div id="proximity-analysis-between-radiation-responsive-genes-and-ar-chip-seq-peaksfigure-2k" class="section level2" number="6.6">
+<h2><span class="header-section-number">6.6</span> Proximity analysis between radiation-responsive genes and AR ChIP-seq peaks(Figure 2K)</h2>
 <p>Here we repeat the above steps, focusing on both the radiation-activated and radiation-repressed genes, and using the AR ChIP-seq peaks.</p>
 <pre class="bash"><code>col.lines = c(&quot;#FF0000&quot;, &quot;grey60&quot;)
 df.all = cdf.deseq.df(df = df.deseq.effects.lattice, genes = gene.file, chip.peaks =&#39;LNCaP_AR_peaks.bed&#39;, class = class, tf.name = &#39;Androgen Receptor&#39;)
@@ -2485,8 +2470,8 @@ ks = formatC(ks, format = &quot;e&quot;, digits = 1)
 ks</code></pre>
 </div>
 </div>
-<div id="supplemental-figure-2-and-figure-3e" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Supplemental Figure 2 and Figure 3E</h1>
+<div id="figure-s2-and-3a" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Figure S2 and 3A</h1>
 <p>Here we classify sets of genes based on their response to either treatment, each at an FDR of 0.1. For example, enzalutamide-repressed radiation-activated genes are both significantly repressed by enzalutamide (at an FDR of 0.1) and significantly activated by radiation (at an FDR of 0.1). For each set of genes, we plot the average read depth normalized read counts across the four conditions. We then perform over-representation analysis for each gene set.</p>
 <div id="classify-the-gene-sets" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Classify the gene sets</h2>
@@ -2516,8 +2501,8 @@ write.table(enza.repressed.radiation.repressed, &quot;enza.repressed.radiation.r
 write.table(enza.activated.radiation.activated, &quot;enza.activated.radiation.activated_recount.txt&quot;,quote=F, row.names=F, col.names=F)
 write.table(enza.activated.radiation.repressed, &quot;enza.activated.radiation.repressed_recount.txt&quot;,quote=F, row.names=F, col.names=F)</code></pre>
 </div>
-<div id="plot-expression-of-enzalutamide-repressed-radiation-activated-genes-figure-3e" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> Plot expression of enzalutamide-repressed radiation-activated genes (Figure 3E)</h2>
+<div id="plot-expression-of-enzalutamide-repressed-radiation-activated-genes-figure-3a" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Plot expression of enzalutamide-repressed radiation-activated genes (Figure 3A)</h2>
 <p>The steps we use in this step are the same for each set of genes</p>
 <pre class="r bg-info"><code>#Get the read depth normalized counts
 normalized_counts &lt;- counts(deseq.df, normalized=TRUE)
@@ -2573,8 +2558,8 @@ dev.off()
 counts &lt;- spread(gathered_counts[,c(&quot;symbol&quot;, &quot;Condition&quot;, &quot;normalized_counts&quot;)], Condition, normalized_counts)
 write.table(counts, file = &quot;normalized_counts_enza_repressed_radiation_activated_recount.tsv&quot;, row.names=FALSE, sep=&quot;\t&quot;, quote = FALSE)</code></pre>
 </div>
-<div id="plot-expression-of-enzalutamide-activated-radiation-activated-genes-supplemental-figure-2a" class="section level2" number="7.3">
-<h2><span class="header-section-number">7.3</span> Plot expression of enzalutamide-activated radiation-activated genes (Supplemental Figure 2A)</h2>
+<div id="plot-expression-of-enzalutamide-activated-radiation-activated-genes-figure-s2a" class="section level2" number="7.3">
+<h2><span class="header-section-number">7.3</span> Plot expression of enzalutamide-activated radiation-activated genes (Figure S2A)</h2>
 <pre class="r bg-info"><code>normalized_counts &lt;- counts(deseq.df, normalized=TRUE)
 normalized_counts &lt;- normalized_counts %&gt;% 
   data.frame() %&gt;%
@@ -2622,8 +2607,8 @@ dev.off()
 counts &lt;- spread(gathered_counts[,c(&quot;symbol&quot;, &quot;Condition&quot;, &quot;normalized_counts&quot;)], Condition, normalized_counts)
 write.table(counts, file = &quot;normalized_counts_enza_activated_radiation_activated_recount.tsv&quot;, row.names=FALSE, sep=&quot;\t&quot;, quote = FALSE)</code></pre>
 </div>
-<div id="plot-expression-of-enzalutamide-represed-radiation-repressed-genes-supplemental-figure-2b" class="section level2" number="7.4">
-<h2><span class="header-section-number">7.4</span> Plot expression of enzalutamide-represed radiation-repressed genes (Supplemental Figure 2B)</h2>
+<div id="plot-expression-of-enzalutamide-represed-radiation-repressed-genes-figure-s2b" class="section level2" number="7.4">
+<h2><span class="header-section-number">7.4</span> Plot expression of enzalutamide-represed radiation-repressed genes (Figure S2B)</h2>
 <pre class="r bg-info"><code>normalized_counts &lt;- counts(deseq.df, normalized=TRUE)
 normalized_counts &lt;- normalized_counts %&gt;% 
   data.frame() %&gt;%
@@ -2670,8 +2655,8 @@ dev.off()
 counts &lt;- spread(gathered_counts[,c(&quot;symbol&quot;, &quot;Condition&quot;, &quot;normalized_counts&quot;)], Condition, normalized_counts)
 write.table(counts, file = &quot;normalized_counts_enza_repressed_radiation_repressed_recount.tsv&quot;, row.names=FALSE, sep=&quot;\t&quot;, quote = FALSE)</code></pre>
 </div>
-<div id="plot-expression-of-enzalutamide-activated-radiation-repressed-genes-supplemental-figure-2c" class="section level2" number="7.5">
-<h2><span class="header-section-number">7.5</span> Plot expression of enzalutamide-activated radiation-repressed genes (Supplemental Figure 2C)</h2>
+<div id="plot-expression-of-enzalutamide-activated-radiation-repressed-genes-figure-s2c" class="section level2" number="7.5">
+<h2><span class="header-section-number">7.5</span> Plot expression of enzalutamide-activated radiation-repressed genes (Figure S2C)</h2>
 <pre class="r bg-info"><code>normalized_counts &lt;- counts(deseq.df, normalized=TRUE)
 normalized_counts &lt;- normalized_counts %&gt;% 
   data.frame() %&gt;%
@@ -2719,8 +2704,8 @@ dev.off()
 counts &lt;- spread(gathered_counts[gathered_counts$gene != &quot;ENSG00000274452&quot;,c(&quot;symbol&quot;, &quot;Condition&quot;, &quot;normalized_counts&quot;)], Condition, normalized_counts)
 write.table(counts, file = &quot;normalized_counts_enza_activated_radiation_repressed_recount.tsv&quot;, row.names=FALSE, sep=&quot;\t&quot;, quote = FALSE)</code></pre>
 </div>
-<div id="over-representation-analysis-ora-of-gene-classes-supplemental-figure-2d" class="section level2" number="7.6">
-<h2><span class="header-section-number">7.6</span> Over-representation analysis (ORA) of gene classes (Supplemental Figure 2D)</h2>
+<div id="over-representation-analysis-ora-of-gene-classes-figure-s2d" class="section level2" number="7.6">
+<h2><span class="header-section-number">7.6</span> Over-representation analysis (ORA) of gene classes (Figure S2D)</h2>
 <pre class="r bg-info"><code>#Get the Hallmark gene sets
 m_t2g &lt;- msigdbr(species = &quot;Homo sapiens&quot;, category = &quot;H&quot;) %&gt;% 
   dplyr::select(gs_name, human_gene_symbol)
@@ -2811,8 +2796,8 @@ dev.off()
 em &lt;- enricher(enza.activated.radiation.repressed, TERM2GENE=m_t2g, pvalueCutoff = 0.1)</code></pre>
 </div>
 </div>
-<div id="figure-3a-df" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Figure 3A-D,F</h1>
+<div id="figure-3b-f" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Figure 3B-F</h1>
 <div id="scale-bigwigs" class="section level2" number="8.1">
 <h2><span class="header-section-number">8.1</span> Scale bigWigs</h2>
 <p>Here we scale the bigWigs based on the size factors generated by DESeq2 to account for differences in read depth. We just use paired end 1 because that is the polymerase location.</p>
@@ -2963,8 +2948,8 @@ cp *combined*.bigWig $destination
 cp *.bedGraph.gz $destination
 cp *_merged.bigWig $destination</code></pre>
 </div>
-<div id="radiation-activated-genes-composite-plot-figure-3a" class="section level2" number="8.5">
-<h2><span class="header-section-number">8.5</span> Radiation-activated genes composite plot (Figure 3A)</h2>
+<div id="radiation-activated-genes-composite-plot-figure-3b" class="section level2" number="8.5">
+<h2><span class="header-section-number">8.5</span> Radiation-activated genes composite plot (Figure 3B)</h2>
 <p>Here we plot the composite polymerase density for all radiation-activated genes, for each of the radiation and control conditions. For each gene, we first find the peak of paused polymerase density by searching in a window of 500bp around the transcription start site. We center the plot on this summit across genes. We use a much more stringent FDR of 0.0001 to maximize the effect size.</p>
 <pre class="r bg-info"><code>#Isolate the radiation-activated genes
 df.deseq.effects.lattice.radiation = 
@@ -3022,8 +3007,8 @@ load(&#39;radiation.composites.stringent.Rdata&#39;)
 #Plot
 plot.composites(composite.df, treatment = &quot;radiation_activated_stringent&quot;, summit=&#39;Midpoint of Pause Peak&#39;, col.lines = c(&quot;red&quot;, &quot;grey60&quot;))</code></pre>
 </div>
-<div id="enzalutamide-repressed-genes-composite-plot-figure-3c" class="section level2" number="8.6">
-<h2><span class="header-section-number">8.6</span> Enzalutamide-repressed genes composite plot (Figure 3C)</h2>
+<div id="enzalutamide-repressed-genes-composite-plot-figure-3d" class="section level2" number="8.6">
+<h2><span class="header-section-number">8.6</span> Enzalutamide-repressed genes composite plot (Figure 3D)</h2>
 <p>Similarly, we plot the composite polymerase density for all enzalutamide-repressed gene, for each of the enzalutamide and vehicle conditions.</p>
 <pre class="r bg-info"><code>#Isolate the enzalutamide-repressed genes
 df.deseq.effects.lattice.enza = 
@@ -3080,8 +3065,8 @@ load(&#39;enzalutamide.composites.stringent.Rdata&#39;)
 #Plot
 plot.composites(composite.df, treatment = &quot;enzalutamide_repressed_stringent&quot;, summit=&#39;Midpoint of Pause Peak&#39;, col.lines = c(&quot;blue&quot;, &quot;grey60&quot;))</code></pre>
 </div>
-<div id="pause-ratio-analysis-for-above-gene-classes-figure-3bd" class="section level2" number="8.7">
-<h2><span class="header-section-number">8.7</span> Pause ratio analysis for above gene classes (Figure 3B,D)</h2>
+<div id="pause-ratio-analysis-for-above-gene-classes-figure-3ce" class="section level2" number="8.7">
+<h2><span class="header-section-number">8.7</span> Pause ratio analysis for above gene classes (Figure 3C,E)</h2>
 <p>Now we want to calculate the pause ratio for each gene in the above classes, and the change in pause ratio in response to each treatment.</p>
 <pre class="r bg-info"><code>#Get the enzalutamide-repressed genes
 isolated.genes = rownames(df.deseq.effects.lattice.enza)[df.deseq.effects.lattice.enza$treatment == &quot;Enzalutamide Repressed&quot;]
